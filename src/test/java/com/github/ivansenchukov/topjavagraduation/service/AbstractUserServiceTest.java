@@ -1,0 +1,90 @@
+package com.github.ivansenchukov.topjavagraduation.service;
+
+import com.github.ivansenchukov.topjavagraduation.exception.NotFoundException;
+import com.github.ivansenchukov.topjavagraduation.model.Role;
+import com.github.ivansenchukov.topjavagraduation.model.User;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import static com.github.ivansenchukov.topjavagraduation.UserTestData.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class AbstractUserServiceTest extends AbstractServiceTest {
+
+    @Autowired
+    protected UserService service;
+
+    @Test
+    void create() throws Exception {
+        User newUser = new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER));
+        User created = service.create(new User(newUser));
+        newUser.setId(created.getId());
+        assertMatch(newUser, created);
+        assertMatch(service.getAll(), ADMIN, newUser, USER);
+    }
+
+    @Test
+    void duplicateMailCreate() throws Exception {
+        assertThrows(/*TODO - set DataAccessException after implementing data layer*/Throwable.class, () ->
+                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", true, new Date(), Role.ROLE_USER)));
+    }
+
+    @Test
+    void delete() throws Exception {
+        service.delete(USER_ID);
+        assertMatch(service.getAll(), ADMIN);
+    }
+
+    @Test
+    void deletedNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () ->
+                service.delete(1));
+    }
+
+    @Test
+    void get() throws Exception {
+        User user = service.get(ADMIN_ID);
+        assertMatch(user, ADMIN);
+    }
+
+    @Test
+    void getNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () ->
+                service.get(1));
+    }
+
+    @Test
+    void getByEmail() throws Exception {
+        User user = service.getByEmail("admin@gmail.com");
+        assertMatch(user, ADMIN);
+    }
+
+    @Test
+    void update() throws Exception {
+        User updated = new User(USER);
+        updated.setName("UpdatedName");
+        updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
+        service.update(new User(updated));
+        assertMatch(service.get(USER_ID), updated);
+    }
+
+    @Test
+    void getAll() throws Exception {
+        List<User> all = service.getAll();
+        assertMatch(all, ADMIN, USER);
+    }
+
+    @Test
+    void enable() {
+        service.enable(USER_ID, false);
+        assertFalse(service.get(USER_ID).isEnabled());
+        service.enable(USER_ID, true);
+        assertTrue(service.get(USER_ID).isEnabled());
+    }
+}
