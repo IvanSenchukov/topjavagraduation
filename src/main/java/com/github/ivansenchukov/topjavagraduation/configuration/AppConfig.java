@@ -1,6 +1,8 @@
 package com.github.ivansenchukov.topjavagraduation.configuration;
 
+import com.github.ivansenchukov.topjavagraduation.repository.RestaurantRepository;
 import com.github.ivansenchukov.topjavagraduation.repository.UserRepository;
+import com.github.ivansenchukov.topjavagraduation.repository.inmemory.InMemoryRestaurantRepositoryImpl;
 import com.github.ivansenchukov.topjavagraduation.repository.inmemory.InMemoryUserRepositoryImpl;
 import com.github.ivansenchukov.topjavagraduation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,5 +17,10 @@ public class AppConfig {
     @Bean
     public UserRepository userRepository() {
         return new InMemoryUserRepositoryImpl();
+    }
+
+    @Bean
+    public RestaurantRepository restaurantRepository() {
+        return new InMemoryRestaurantRepositoryImpl();
     }
 }

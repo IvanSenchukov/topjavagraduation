@@ -5,10 +5,9 @@ import com.github.ivansenchukov.topjavagraduation.service.AbstractUserServiceTes
 import com.github.ivansenchukov.topjavagraduation.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 
-public class InmemoryUserServiceTestImpl extends AbstractUserServiceTest {
+public class InMemoryUserServiceTestImpl extends AbstractUserServiceTest {
 
     @BeforeEach
-//    TODO - try Autowired
     public void resetRepository() {
         service = new UserService(new InMemoryUserRepositoryImpl());
     }
