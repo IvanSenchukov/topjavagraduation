@@ -25,7 +25,7 @@ public class AbstractRestaurantServiceTest extends AbstractServiceTest {
         Restaurant created = service.create(new Restaurant(newRestaurant));
         newRestaurant.setId(created.getId());
         assertMatch(newRestaurant, created);
-        assertMatch(service.getAll(), DUKE_SUSHI, MCDONNELS, PILZNER, VABI_VOBBLE, VOGUER, newRestaurant);
+        assertMatch(service.getAll(), MCDONNELS, VABI_VOBBLE, newRestaurant);
     }
     //</editor-fold>
 
@@ -47,7 +47,7 @@ public class AbstractRestaurantServiceTest extends AbstractServiceTest {
     @Test
     void getAll() throws Exception {
         List<Restaurant> all = service.getAll();
-        assertMatch(all, DUKE_SUSHI, MCDONNELS, PILZNER, VABI_VOBBLE, VOGUER);
+        assertMatch(all, MCDONNELS, VABI_VOBBLE);
     }
     //</editor-fold>
 
@@ -55,10 +55,10 @@ public class AbstractRestaurantServiceTest extends AbstractServiceTest {
     //<editor-fold desc="UPDATE">
     @Test
     void update() throws Exception {
-        Restaurant updated = new Restaurant(VOGUER);
-        updated.setName("UPDATED Voguer");
+        Restaurant updated = new Restaurant(VABI_VOBBLE);
+        updated.setName("UPDATED Vabi-Vobble");
         service.update(new Restaurant(updated));
-        assertMatch(service.get(VOGUER_ID), updated);
+        assertMatch(service.get(VABI_VOBBLE_ID), updated);
     }
     //</editor-fold>
 
@@ -67,8 +67,8 @@ public class AbstractRestaurantServiceTest extends AbstractServiceTest {
     // TODO - try to use something like Testng Dataprovider here
     @Test
     void delete() throws Exception {
-        service.delete(VOGUER_ID);
-        assertMatch(service.getAll(), DUKE_SUSHI, MCDONNELS, PILZNER, VABI_VOBBLE);
+        service.delete(VABI_VOBBLE_ID);
+        assertMatch(service.getAll(), MCDONNELS);
     }
 
     @Test

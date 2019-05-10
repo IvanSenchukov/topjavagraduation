@@ -13,10 +13,7 @@ public class InMemoryRestaurantRepositoryImpl extends InMemoryBaseRepositoryImpl
     public InMemoryRestaurantRepositoryImpl() {
         entryMap.clear();
         entryMap.put(RestaurantTestData.VABI_VOBBLE_ID, RestaurantTestData.VABI_VOBBLE);
-        entryMap.put(RestaurantTestData.DUKE_SUSHI_ID, RestaurantTestData.DUKE_SUSHI);
         entryMap.put(RestaurantTestData.MCDONNELS_ID, RestaurantTestData.MCDONNELS);
-        entryMap.put(RestaurantTestData.PILZNER_ID, RestaurantTestData.PILZNER);
-        entryMap.put(RestaurantTestData.VOGUER_ID, RestaurantTestData.VOGUER);
     }
 
 

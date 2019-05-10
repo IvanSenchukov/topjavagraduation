@@ -22,7 +22,7 @@ public class RestaurantService {
     }
 
     public Restaurant create(Restaurant restaurant) {
-        Assert.notNull(restaurant, "user must not be null");
+        Assert.notNull(restaurant, "restaurant must not be null");
         return repository.save(restaurant);
     }
 

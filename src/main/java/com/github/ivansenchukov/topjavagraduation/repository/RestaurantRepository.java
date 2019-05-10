@@ -10,6 +10,7 @@ public interface RestaurantRepository {
 
     List<Restaurant> getAll();
 
+    // NULL if not found
     Restaurant get(int id);
 
     // false if not found

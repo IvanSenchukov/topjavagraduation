@@ -11,6 +11,10 @@ public class Restaurant extends AbstractBaseEntity{
     //<editor-fold desc="Constructors">
     public Restaurant() {}
 
+    public Restaurant(Restaurant prototypeRestaurant) {
+        this(prototypeRestaurant.getId(), prototypeRestaurant.getName());
+    }
+
     public Restaurant(String name) {
         this.name = name;
     }
@@ -18,10 +22,6 @@ public class Restaurant extends AbstractBaseEntity{
     public Restaurant(Integer id, String name) {
         super(id);
         this.name = name;
-    }
-
-    public Restaurant(Restaurant prototypeRestaurant) {
-        this(prototypeRestaurant.getId(), prototypeRestaurant.getName());
     }
     //</editor-fold>
 
