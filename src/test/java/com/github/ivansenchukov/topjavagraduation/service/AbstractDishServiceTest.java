@@ -15,7 +15,7 @@ import static com.github.ivansenchukov.topjavagraduation.DishTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // TODO - upgrade all tests after implementing model layer
-public class AbstractDishServiceTest extends AbstractServiceTest {
+public abstract class AbstractDishServiceTest extends AbstractServiceTest {
 
 
     @Autowired
@@ -58,7 +58,7 @@ public class AbstractDishServiceTest extends AbstractServiceTest {
     @Test
     void getByRestaurantAndDate() throws Exception {
         List<Dish> dishes = service.get(RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));
-        assertMatch(dishes, DishTestData.MCDONNELS_BURGER, DishTestData.MCDONNELS_FRIES);
+        assertMatch(dishes, MCDONNELS_BURGER, MCDONNELS_FRIES);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class AbstractDishServiceTest extends AbstractServiceTest {
     @Test
     void getWithEmptyRestaurant() throws Exception {
         assertThrows(NullPointerException.class, () ->
-                service.get(DishTestData.BAD_RESTAURANT_DISH_ID));
+                service.get(BAD_RESTAURANT_DISH_ID));
     }
 
     @Test

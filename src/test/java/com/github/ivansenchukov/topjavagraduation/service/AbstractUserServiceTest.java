@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class AbstractUserServiceTest extends AbstractServiceTest {
+public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected UserService service;
@@ -26,19 +26,19 @@ public class AbstractUserServiceTest extends AbstractServiceTest {
         User created = service.create(new User(newUser));
         newUser.setId(created.getId());
         assertMatch(newUser, created);
-        assertMatch(service.getAll(), ADMIN, newUser, USER);
+        assertMatch(service.getAll(), ADMIN, USER_FIRST, newUser, USER_SECOND);
     }
 
     @Test
     void duplicateMailCreate() throws Exception {
         assertThrows(/*TODO - set DataAccessException after implementing data layer*/Throwable.class, () ->
-                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", true, new Date(), Role.ROLE_USER)));
+                service.create(new User(null, "Duplicate", "firstuser@yandex.ru", "newPass", true, new Date(), Role.ROLE_USER)));
     }
 
     @Test
     void delete() throws Exception {
-        service.delete(USER_ID);
-        assertMatch(service.getAll(), ADMIN);
+        service.delete(USER_FIRST_ID);
+        assertMatch(service.getAll(), ADMIN, USER_SECOND);
     }
 
     @Test
@@ -67,24 +67,24 @@ public class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     void update() throws Exception {
-        User updated = new User(USER);
+        User updated = new User(USER_FIRST);
         updated.setName("UpdatedName");
         updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
         service.update(new User(updated));
-        assertMatch(service.get(USER_ID), updated);
+        assertMatch(service.get(USER_FIRST_ID), updated);
     }
 
     @Test
     void getAll() throws Exception {
         List<User> all = service.getAll();
-        assertMatch(all, ADMIN, USER);
+        assertMatch(all, ADMIN, USER_FIRST, USER_SECOND);
     }
 
     @Test
     void enable() {
-        service.enable(USER_ID, false);
-        assertFalse(service.get(USER_ID).isEnabled());
-        service.enable(USER_ID, true);
-        assertTrue(service.get(USER_ID).isEnabled());
+        service.enable(USER_FIRST_ID, false);
+        assertFalse(service.get(USER_FIRST_ID).isEnabled());
+        service.enable(USER_FIRST_ID, true);
+        assertTrue(service.get(USER_FIRST_ID).isEnabled());
     }
 }

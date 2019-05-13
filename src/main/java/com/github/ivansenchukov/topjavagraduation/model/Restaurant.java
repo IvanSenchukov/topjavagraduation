@@ -1,6 +1,8 @@
 package com.github.ivansenchukov.topjavagraduation.model;
 
-public class Restaurant extends AbstractBaseEntity{
+import java.util.Objects;
+
+public class Restaurant extends AbstractBaseEntity implements Comparable<Restaurant> {
 
 
     //<editor-fold desc="Fields">
@@ -43,5 +45,12 @@ public class Restaurant extends AbstractBaseEntity{
                 "name='" + name + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Restaurant o) {
+        if (Objects.isNull(o) || Objects.isNull(o.getName())) return -1;
+        if (Objects.isNull(getName())) return 1;
+        return this.name.compareTo(o.getName());
     }
 }

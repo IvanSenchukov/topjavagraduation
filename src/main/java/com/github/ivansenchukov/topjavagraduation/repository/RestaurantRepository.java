@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RestaurantRepository {
 
-    Restaurant save(Restaurant user);
+    Restaurant save(Restaurant restaurant);
 
     List<Restaurant> getAll();
 

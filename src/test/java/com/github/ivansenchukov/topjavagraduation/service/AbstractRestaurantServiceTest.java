@@ -12,7 +12,7 @@ import static com.github.ivansenchukov.topjavagraduation.RestaurantTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // TODO - upgrade all tests after implementing model layer
-public class AbstractRestaurantServiceTest extends AbstractServiceTest {
+public abstract class AbstractRestaurantServiceTest extends AbstractServiceTest {
 
 
     @Autowired

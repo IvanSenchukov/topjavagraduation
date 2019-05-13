@@ -10,16 +10,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.github.ivansenchukov.topjavagraduation.UserTestData.ADMIN;
-import static com.github.ivansenchukov.topjavagraduation.UserTestData.USER;
-
 public class InMemoryUserRepositoryImpl extends InMemoryBaseRepositoryImpl<User> implements UserRepository {
 
 
     public InMemoryUserRepositoryImpl() {
         entryMap.clear();
         entryMap.put(UserTestData.ADMIN_ID, UserTestData.ADMIN);
-        entryMap.put(UserTestData.USER_ID, UserTestData.USER);
+        entryMap.put(UserTestData.USER_FIRST_ID, UserTestData.USER_FIRST);
+        entryMap.put(UserTestData.USER_SECOND_ID, UserTestData.USER_SECOND);
     }
 
     @Override

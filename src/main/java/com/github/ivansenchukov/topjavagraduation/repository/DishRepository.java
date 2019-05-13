@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DishRepository {
 
-    Dish save(Dish user);
+    Dish save(Dish dish);
 
     // NULL if not found
     List<Dish> get(Restaurant restaurant, LocalDate date);
