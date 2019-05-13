@@ -11,7 +11,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>Topjava Graduation</name>
-    <!--TODO<url></url>-->
+    <url>https://github.com/IvanSenchukov/topjavagraduation</url>
 
     <properties>
         <java.version>11</java.version>

@@ -70,7 +70,14 @@ public class VoteService {
 
     // TODO - maybe we should not use this method. Maybe should - only for user that makes this vote and only before 11:00
     // TODO - documentate this
-    public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id), id);
+    public void delete(int id, LocalDateTime dateTime) throws NotFoundException {
+
+        Vote presentVote = repository.get(id);
+        if (Objects.nonNull(presentVote)) {
+            Assert.isTrue(dateTime.isBefore(LocalDateTime.of(presentVote.getDate().toLocalDate(), LocalTime.of(11, 00))), "You are unable to delete your vote after 11:00 AM!");
+            checkNotFoundWithId(repository.delete(id), id);
+        } else {
+            checkNotFoundWithId(repository.delete(id), id);
+        }
     }
 }

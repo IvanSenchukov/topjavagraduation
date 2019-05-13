@@ -5,6 +5,7 @@ import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,12 +23,12 @@ public class DishTestData {
     public static final int VABI_VOBBLE_BAD_DATE_ID = START_SEQ + 4;
     public static final int BAD_RESTAURANT_DISH_ID = START_SEQ + 5;
 
-    public static final Dish MCDONNELS_BURGER = new Dish(MCDONNELS_BURGER_ID, "McDonnel's Burger", 200, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));
-    public static final Dish MCDONNELS_FRIES = new Dish(MCDONNELS_FRIES_ID, "McDonnel's Fries", 150, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));
-    public static final Dish VABI_VOBBLE_SUSHI = new Dish(VABI_VOBBLE_SUSHI_ID, "Vabi-Vobble Sushi", 300, RestaurantTestData.VABI_VOBBLE, LocalDate.of(2019, 5, 10));
-    public static final Dish VABI_VOBBLE_SASHIMI = new Dish(VABI_VOBBLE_SASHIMI_ID, "Vabi-Vobble Sashimi", 200, RestaurantTestData.VABI_VOBBLE, LocalDate.of(2019, 5, 10));
-    public static final Dish VABI_VOBBLE_BAD_DATE = new Dish(VABI_VOBBLE_BAD_DATE_ID, "Vabi-Vobble Bad Date Dish", 200, RestaurantTestData.VABI_VOBBLE, null);
-    public static final Dish BAD_RESTAURANT_DISH = new Dish(BAD_RESTAURANT_DISH_ID, "Bad Restaurant Dish", 200, null, LocalDate.of(2019, 5, 10));
+    public static final Dish MCDONNELS_BURGER = new Dish(MCDONNELS_BURGER_ID, "McDonnel's Burger", new BigDecimal(200), RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));
+    public static final Dish MCDONNELS_FRIES = new Dish(MCDONNELS_FRIES_ID, "McDonnel's Fries", new BigDecimal(150), RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));
+    public static final Dish VABI_VOBBLE_SUSHI = new Dish(VABI_VOBBLE_SUSHI_ID, "Vabi-Vobble Sushi", new BigDecimal(300), RestaurantTestData.VABI_VOBBLE, LocalDate.of(2019, 5, 10));
+    public static final Dish VABI_VOBBLE_SASHIMI = new Dish(VABI_VOBBLE_SASHIMI_ID, "Vabi-Vobble Sashimi", new BigDecimal(200), RestaurantTestData.VABI_VOBBLE, LocalDate.of(2019, 5, 10));
+    public static final Dish VABI_VOBBLE_BAD_DATE = new Dish(VABI_VOBBLE_BAD_DATE_ID, "Vabi-Vobble Bad Date Dish", new BigDecimal(200), RestaurantTestData.VABI_VOBBLE, null);
+    public static final Dish BAD_RESTAURANT_DISH = new Dish(BAD_RESTAURANT_DISH_ID, "Bad Restaurant Dish", new BigDecimal(200), null, LocalDate.of(2019, 5, 10));
 
 
     public static void assertMatch(Dish actual, Dish expected) {

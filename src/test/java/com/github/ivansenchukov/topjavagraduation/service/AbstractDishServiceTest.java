@@ -8,6 +8,7 @@ import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public abstract class AbstractDishServiceTest extends AbstractServiceTest {
     //<editor-fold desc="CREATE">
     @Test
     void create() throws Exception {
-        Dish newDish = new Dish("Mc'Donnels HUGE Burger", 300, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));  // TODO - upgrade this after implementing domain model
+        Dish newDish = new Dish("Mc'Donnels HUGE Burger", new BigDecimal(300), RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));  // TODO - upgrade this after implementing domain model
         Dish created = service.create(new Dish(newDish));
         newDish.setId(created.getId());
         assertMatch(newDish, created);
@@ -33,14 +34,14 @@ public abstract class AbstractDishServiceTest extends AbstractServiceTest {
 
     @Test
     void createWithEmptyRestaurant() throws Exception {
-        Dish newDish = new Dish("Mc'Donnels HUGE Burger", 300, null, LocalDate.of(2019, 5, 10));
+        Dish newDish = new Dish("Mc'Donnels HUGE Burger", new BigDecimal(300), null, LocalDate.of(2019, 5, 10));
         assertThrows(IllegalArgumentException.class, () ->
                 service.create(new Dish(newDish)));
     }
 
     @Test
     void createWithEmptyDate() throws Exception {
-        Dish newDish = new Dish("Mc'Donnels HUGE Burger", 300, RestaurantTestData.MCDONNELS, null);
+        Dish newDish = new Dish("Mc'Donnels HUGE Burger", new BigDecimal(300), RestaurantTestData.MCDONNELS, null);
         assertThrows(IllegalArgumentException.class, () ->
                 service.create(new Dish(newDish)));
     }
