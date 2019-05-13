@@ -30,6 +30,11 @@ import static java.util.stream.Collectors.summingLong;
 public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote> implements VoteRepository {
 
     public InMemoryVoteRepositoryImpl() {
+        refreshTestRepository();
+    }
+
+
+    public void refreshTestRepository() {
         entryMap.clear();
         entryMap.put(ADMIN_VOTE_ID, ADMIN_VOTE);
         entryMap.put(FIRST_USER_VOTE_ID, FIRST_USER_VOTE);
@@ -84,6 +89,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
                 .orElse(null);
     }
 
+    // TODO - fix this
     @Override
     public Map<Restaurant, Integer> getVotesCount(LocalDate date, List<Restaurant> restaurants) {
         return getCollection().stream()

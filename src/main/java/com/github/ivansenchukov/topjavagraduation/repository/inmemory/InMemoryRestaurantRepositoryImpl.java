@@ -11,6 +11,10 @@ import java.util.stream.Collectors;
 public class InMemoryRestaurantRepositoryImpl extends InMemoryBaseRepositoryImpl<Restaurant> implements RestaurantRepository {
 
     public InMemoryRestaurantRepositoryImpl() {
+        refreshRepository();
+    }
+
+    public void refreshRepository() {
         entryMap.clear();
         entryMap.put(RestaurantTestData.VABI_VOBBLE_ID, RestaurantTestData.VABI_VOBBLE);
         entryMap.put(RestaurantTestData.MCDONNELS_ID, RestaurantTestData.MCDONNELS);

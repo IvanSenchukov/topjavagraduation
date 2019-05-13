@@ -17,6 +17,10 @@ import static com.github.ivansenchukov.topjavagraduation.DishTestData.*;
 public class InMemoryDishRepositoryImpl extends InMemoryBaseRepositoryImpl<Dish> implements DishRepository {
 
     public InMemoryDishRepositoryImpl() {
+        refreshRepository();
+    }
+
+    public void refreshRepository() {
         entryMap.clear();
         entryMap.put(MCDONNELS_BURGER_ID, MCDONNELS_BURGER);
         entryMap.put(MCDONNELS_FRIES_ID, MCDONNELS_FRIES);

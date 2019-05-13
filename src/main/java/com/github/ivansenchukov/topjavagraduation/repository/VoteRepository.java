@@ -17,7 +17,8 @@ public interface VoteRepository {
     // NULL if not found
     Vote get(int id);
 
-    // NULL if not found
+    // Empty list if not found
+    // TODO - test it!
     List<Vote> get(Restaurant restaurant, LocalDate date);
 
     // NULL if not found
