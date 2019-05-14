@@ -1,4 +1,4 @@
-package com.github.ivansenchukov.topjavagraduation;
+package com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata;
 
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import com.github.ivansenchukov.topjavagraduation.model.Vote;
@@ -22,6 +22,7 @@ public class VoteTestData {
     public static final int BAD_RESTAURANT_VOTE_ID = START_SEQ + 3;
     public static final int BAD_DATE_VOTE_ID = START_SEQ + 4;
 
+    // TODO - delete admin vote, as it is restiction for the admins to make votes
     public static final Vote ADMIN_VOTE = new Vote(ADMIN_VOTE_ID, UserTestData.ADMIN, RestaurantTestData.VABI_VOBBLE, LocalDate.of(2019, 05, 10).atTime(8, 15));
     public static final Vote FIRST_USER_VOTE = new Vote(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 05, 10).atTime(9, 45));
     public static final Vote BAD_USER_VOTE = new Vote(BAD_USER_VOTE_ID, null, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 05, 10).atTime(10, 30));

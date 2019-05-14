@@ -1,4 +1,4 @@
-package com.github.ivansenchukov.topjavagraduation;
+package com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata;
 
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import org.slf4j.Logger;

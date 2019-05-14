@@ -6,7 +6,7 @@ public class Vote extends AbstractBaseEntity {
 
     //<editor-fold desc="Fields">
     private User user;
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
     private Restaurant restaurant;
     //</editor-fold>
 
@@ -16,19 +16,19 @@ public class Vote extends AbstractBaseEntity {
     }
 
     public Vote(Vote prototype) {
-        this(prototype.getId(), prototype.getUser(), prototype.getRestaurant(), prototype.getDate());
+        this(prototype.getId(), prototype.getUser(), prototype.getRestaurant(), prototype.getDateTime());
     }
 
-    public Vote(User user, Restaurant restaurant, LocalDateTime date) {
+    public Vote(User user, Restaurant restaurant, LocalDateTime dateTime) {
         this.user = user;
-        this.date = date;
+        this.dateTime = dateTime;
         this.restaurant = restaurant;
     }
 
-    public Vote(Integer id, User user, Restaurant restaurant, LocalDateTime date) {
+    public Vote(Integer id, User user, Restaurant restaurant, LocalDateTime dateTime) {
         super(id);
         this.user = user;
-        this.date = date;
+        this.dateTime = dateTime;
         this.restaurant = restaurant;
     }
     //</editor-fold>
@@ -43,12 +43,12 @@ public class Vote extends AbstractBaseEntity {
         this.user = user;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public Restaurant getRestaurant() {

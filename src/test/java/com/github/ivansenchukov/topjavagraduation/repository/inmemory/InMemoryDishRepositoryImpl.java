@@ -3,6 +3,7 @@ package com.github.ivansenchukov.topjavagraduation.repository.inmemory;
 import com.github.ivansenchukov.topjavagraduation.model.Dish;
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import com.github.ivansenchukov.topjavagraduation.repository.DishRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
@@ -11,8 +12,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.github.ivansenchukov.topjavagraduation.DishTestData.*;
+import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.DishTestData.*;
 
+@Repository
 public class InMemoryDishRepositoryImpl extends InMemoryBaseRepositoryImpl<Dish> implements DishRepository {
 
     public InMemoryDishRepositoryImpl() {

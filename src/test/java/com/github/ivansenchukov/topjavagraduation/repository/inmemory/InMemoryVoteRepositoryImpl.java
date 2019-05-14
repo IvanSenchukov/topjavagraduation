@@ -4,6 +4,7 @@ import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.model.Vote;
 import com.github.ivansenchukov.topjavagraduation.repository.VoteRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
@@ -14,10 +15,11 @@ import java.util.Objects;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
-import static com.github.ivansenchukov.topjavagraduation.VoteTestData.*;
+import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.VoteTestData.*;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
 
+@Repository
 public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote> implements VoteRepository {
 
     public InMemoryVoteRepositoryImpl() {
@@ -40,7 +42,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         Assert.notNull(vote, "Vote entry must not be null");
         Assert.notNull(vote.getUser(), "Vote 'user' property must not be null");
         Assert.notNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null");
-        Assert.notNull(vote.getDate(), "Vote 'date' property must not be null");
+        Assert.notNull(vote.getDateTime(), "Vote 'date' property must not be null");
 
         return super.save(vote);
     }
@@ -53,7 +55,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
 
         Objects.requireNonNull(vote.getUser(), "Vote 'user' property must not be null. Inconsistent Data in repository!");
         Objects.requireNonNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null. Inconsistent Data in repository!");
-        Objects.requireNonNull(vote.getDate(), "Vote 'date' property must not be null. Inconsistend Data in repository!");
+        Objects.requireNonNull(vote.getDateTime(), "Vote 'date' property must not be null. Inconsistend Data in repository!");
 
         return vote;
     }
@@ -63,7 +65,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         return getCollection().stream()
                 .filter(vote ->
                         Objects.nonNull(vote.getUser())
-                                && Objects.nonNull(vote.getDate()) && dateTime.equals(vote.getDate().toLocalDate())
+                                && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate())
                                 && Objects.nonNull(vote.getRestaurant()) && Objects.equals(vote.getRestaurant(), restaurant))
                 .sorted(Comparator.comparing(Vote::getRestaurant))
                 .collect(Collectors.toList());
@@ -75,7 +77,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         return getCollection().stream()
                 .filter(vote ->
                         Objects.nonNull(vote.getUser()) && Objects.equals(user, vote.getUser())
-                                && Objects.nonNull(vote.getDate()) && dateTime.equals(vote.getDate().toLocalDate()))
+                                && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate()))
                 .findFirst()
                 .orElse(null);
     }
@@ -86,7 +88,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         return getCollection().stream()
                 .filter(vote ->
                         Objects.nonNull(vote.getUser())
-                                && Objects.nonNull(vote.getDate()) && date.equals(vote.getDate().toLocalDate())
+                                && Objects.nonNull(vote.getDateTime()) && date.equals(vote.getDateTime().toLocalDate())
                                 && Objects.nonNull(vote.getRestaurant())
                                 && restaurants.contains(vote.getRestaurant()))
                 .collect(groupingBy(Vote::getRestaurant, summingInt((ToIntFunction<Object>) value -> 1)));

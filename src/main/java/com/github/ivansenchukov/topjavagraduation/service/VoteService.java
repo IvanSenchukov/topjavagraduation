@@ -87,14 +87,14 @@ public class VoteService {
         Assert.notNull(vote, "vote must not be null");
         Assert.notNull(vote.getUser(), "Vote 'user' property must not be null");
         Assert.notNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null");
-        Assert.notNull(vote.getDate(), "Vote 'date' property must not be null");
+        Assert.notNull(vote.getDateTime(), "Vote 'date' property must not be null");
 
         if (!CollectionUtils.contains(vote.getUser().getRoles().iterator(), Role.ROLE_USER)) {
             throw new RestrictedOperationException("Only users with role 'USER' can make votes!");
         }
 
         // This fetch is also a check for correct user is making update
-        Vote presentVote = repository.get(vote.getDate().toLocalDate(), vote.getUser());
+        Vote presentVote = repository.get(vote.getDateTime().toLocalDate(), vote.getUser());
         if (Objects.isNull(presentVote)) {
             return saveNewVote(vote);
         } else {
@@ -107,7 +107,7 @@ public class VoteService {
     }
 
     private Vote updatePresentVote(Vote vote, Vote presentVote) throws RestrictedOperationException {
-        checkStoptime(vote, vote.getDate(), String.format("You can't change your choice after %s", stopVotingTime.toString()));
+        checkStoptime(vote, vote.getDateTime(), String.format("You can't change your choice after %s", stopVotingTime.toString()));
         vote.setId(presentVote.getId());
         vote = repository.save(vote);
         return checkNotFoundWithId(vote, presentVote.getId());
@@ -148,7 +148,7 @@ public class VoteService {
 
 
     private void checkStoptime(Vote vote, LocalDateTime date, String errorMessage) throws RestrictedOperationException {
-        if (date.isAfter(LocalDateTime.of(vote.getDate().toLocalDate(), stopVotingTime))) {
+        if (date.isAfter(LocalDateTime.of(vote.getDateTime().toLocalDate(), stopVotingTime))) {
             throw new RestrictedOperationException(errorMessage);
         }
     }

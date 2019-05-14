@@ -1,8 +1,8 @@
 package com.github.ivansenchukov.topjavagraduation.service;
 
-import com.github.ivansenchukov.topjavagraduation.RestaurantTestData;
-import com.github.ivansenchukov.topjavagraduation.UserTestData;
-import com.github.ivansenchukov.topjavagraduation.VoteTestData;
+import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.RestaurantTestData;
+import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData;
+import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.VoteTestData;
 import com.github.ivansenchukov.topjavagraduation.exception.NotFoundException;
 import com.github.ivansenchukov.topjavagraduation.exception.RestrictedOperationException;
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.github.ivansenchukov.topjavagraduation.VoteTestData.*;
+import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.VoteTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 

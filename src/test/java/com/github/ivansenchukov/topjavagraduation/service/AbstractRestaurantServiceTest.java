@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static com.github.ivansenchukov.topjavagraduation.RestaurantTestData.*;
+import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.RestaurantTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 

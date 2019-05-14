@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static com.github.ivansenchukov.topjavagraduation.UserTestData.*;
+import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractUserServiceTest extends AbstractServiceTest {

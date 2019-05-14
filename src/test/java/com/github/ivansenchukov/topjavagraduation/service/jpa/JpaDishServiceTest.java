@@ -1,5 +1,6 @@
-package com.github.ivansenchukov.topjavagraduation.service.inmemory;
+package com.github.ivansenchukov.topjavagraduation.service.jpa;
 
+import com.github.ivansenchukov.topjavagraduation.configuration.DbConfig;
 import com.github.ivansenchukov.topjavagraduation.configuration.InMemoryAppConfig;
 import com.github.ivansenchukov.topjavagraduation.repository.DishRepository;
 import com.github.ivansenchukov.topjavagraduation.repository.inmemory.InMemoryDishRepositoryImpl;
@@ -8,15 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-@SpringJUnitConfig(InMemoryAppConfig.class)
-public class InMemoryDishServiceTest extends AbstractDishServiceTest {
-
-    @Autowired
-    public DishRepository dishRepository;
-
-    @BeforeEach
-    public void resetRepository() {
-        ((InMemoryDishRepositoryImpl) dishRepository).refreshRepository();
-    }
+@SpringJUnitConfig(DbConfig.class)
+public class JpaDishServiceTest extends AbstractDishServiceTest {
 
 }

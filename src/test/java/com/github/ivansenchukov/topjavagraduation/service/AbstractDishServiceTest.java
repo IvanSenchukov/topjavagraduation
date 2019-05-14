@@ -1,6 +1,6 @@
 package com.github.ivansenchukov.topjavagraduation.service;
 
-import com.github.ivansenchukov.topjavagraduation.RestaurantTestData;
+import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.RestaurantTestData;
 import com.github.ivansenchukov.topjavagraduation.exception.NotFoundException;
 import com.github.ivansenchukov.topjavagraduation.model.Dish;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.github.ivansenchukov.topjavagraduation.DishTestData.*;
+import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.DishTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
