@@ -19,7 +19,7 @@ public class UserTestData {
     public static final int USER_FIRST_ID = START_SEQ + 1;
     public static final int USER_SECOND_ID = START_SEQ + 2;
 
-    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", true, new Date(), Role.ROLE_ADMIN, Role.ROLE_USER);
+    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", true, new Date(), Role.ROLE_ADMIN);
     public static final User USER_FIRST = new User(USER_FIRST_ID, "First User", "firstuser@yandex.ru", "password", true, new Date(), Role.ROLE_USER);
     public static final User USER_SECOND = new User(USER_SECOND_ID, "Second User", "seconduser@yandex.ru", "password", true, new Date(), Role.ROLE_USER);
 

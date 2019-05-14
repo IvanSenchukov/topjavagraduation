@@ -89,6 +89,10 @@ public class VoteService {
         Assert.notNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null");
         Assert.notNull(vote.getDate(), "Vote 'date' property must not be null");
 
+        if (!CollectionUtils.contains(vote.getUser().getRoles().iterator(), Role.ROLE_USER)) {
+            throw new RestrictedOperationException("Only users with role 'USER' can make votes!");
+        }
+
         // This fetch is also a check for correct user is making update
         Vote presentVote = repository.get(vote.getDate().toLocalDate(), vote.getUser());
         if (Objects.isNull(presentVote)) {

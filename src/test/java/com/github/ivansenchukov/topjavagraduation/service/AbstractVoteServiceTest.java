@@ -61,6 +61,13 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    void makeVoteByAdmin() throws Exception {
+        Vote newVote = new Vote(UserTestData.ADMIN, RestaurantTestData.MCDONNELS, getTestDateTimeAllowed());
+        assertThrows(RestrictedOperationException.class, () ->
+                service.makeVote(new Vote(newVote)));
+    }
+
+    @Test
     void makeVoteWithEmptyRestaurant() throws Exception {
         Vote newVote = new Vote(UserTestData.USER_SECOND, null, getTestDateTimeAllowed());
         assertThrows(IllegalArgumentException.class, () ->
