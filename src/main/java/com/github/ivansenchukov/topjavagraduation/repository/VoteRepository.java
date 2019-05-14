@@ -1,12 +1,10 @@
 package com.github.ivansenchukov.topjavagraduation.repository;
 
-import com.github.ivansenchukov.topjavagraduation.model.Dish;
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.model.Vote;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 

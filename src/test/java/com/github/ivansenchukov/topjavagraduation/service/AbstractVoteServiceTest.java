@@ -22,7 +22,7 @@ import java.util.Map;
 import static com.github.ivansenchukov.topjavagraduation.VoteTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// TODO - upgrade all tests after implementing model layer
+
 public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractVoteServiceTest.class.getName());
@@ -31,7 +31,6 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     protected VoteService service;
 
     public static final LocalDate TEST_DATE = LocalDate.of(2019, 05, 10);
-    public static final int LATE_AFTER_HOUR = 11;
 
 
     //<editor-fold desc="CREATE">
@@ -79,7 +78,6 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
 
     //<editor-fold desc="GET">
     @Test
-    // TODO - try to find something like DataProvider in testng and use it here
     void get() throws Exception {
         Vote vote = service.get(FIRST_USER_VOTE_ID);
         assertMatch(vote, FIRST_USER_VOTE);
@@ -124,7 +122,6 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
 
 
     //<editor-fold desc="DELETE">
-    // TODO - try to use something like Testng Dataprovider here
     @Test
     void delete() throws Exception {
 
@@ -165,7 +162,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         Vote created = service.makeVote(new Vote(newVote));
 
         assertThrows(RestrictedOperationException.class, () ->
-                service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST,  getTestDateTimeTooLate()));
+                service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, getTestDateTimeTooLate()));
 
         assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, created);
     }
@@ -177,7 +174,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         Vote created = service.makeVote(new Vote(newVote));
 
         assertThrows(RestrictedOperationException.class, () ->
-                service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_SECOND,  getTestDateTimeTooLate()));
+                service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_SECOND, getTestDateTimeTooLate()));
 
         assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, created);
     }
@@ -216,7 +213,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
 
 
     private LocalDateTime getTestDateTimeAllowed() {
-        int hour = (int) (Math.random() * LATE_AFTER_HOUR);
+        int hour = (int) (Math.random() * service.getStopVotingTime().getHour());
         int min = (int) (Math.random() * 60);
 
         LocalDateTime testDateTimeAllowed = TEST_DATE.atTime(hour, min);
@@ -225,7 +222,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     }
 
     private LocalDateTime getTestDateTimeTooLate() {
-        int hour = (int) Math.abs((Math.random() * 24 - LATE_AFTER_HOUR)) + LATE_AFTER_HOUR;
+        int hour = (int) Math.abs((Math.random() * 24 - service.getStopVotingTime().getHour())) + service.getStopVotingTime().getHour();
         int min = (int) (Math.random() * 60);
 
         LocalDateTime testDateTimeTooLate = TEST_DATE.atTime(hour, min);

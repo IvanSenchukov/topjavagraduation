@@ -21,7 +21,7 @@ public class RestaurantTestData {
 
 
     public static void assertMatch(Restaurant actual, Restaurant expected) {
-        assertThat(actual).isEqualTo(expected); // TODO - upgrade this assertion after implementing model layer
+        assertThat(actual).isEqualTo(expected);
         log.info(String.format("Restaurants are match. %s", actual.toString()));
     }
 
@@ -30,7 +30,7 @@ public class RestaurantTestData {
     }
 
     public static void assertMatch(Iterable<Restaurant> actual, Iterable<Restaurant> expected) {
-        assertThat(actual).isEqualTo(expected); // TODO - upgrade this assertion after implementing model layer
+        assertThat(actual).isEqualTo(expected);
     }
 
 

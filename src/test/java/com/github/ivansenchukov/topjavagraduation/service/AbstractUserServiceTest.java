@@ -1,5 +1,6 @@
 package com.github.ivansenchukov.topjavagraduation.service;
 
+import com.github.ivansenchukov.topjavagraduation.exception.DuplicateException;
 import com.github.ivansenchukov.topjavagraduation.exception.NotFoundException;
 import com.github.ivansenchukov.topjavagraduation.model.Role;
 import com.github.ivansenchukov.topjavagraduation.model.User;
@@ -11,9 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.github.ivansenchukov.topjavagraduation.UserTestData.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
@@ -31,7 +30,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     void duplicateMailCreate() throws Exception {
-        assertThrows(/*TODO - set DataAccessException after implementing data layer*/Throwable.class, () ->
+        assertThrows(DuplicateException.class, () ->
                 service.create(new User(null, "Duplicate", "firstuser@yandex.ru", "newPass", true, new Date(), Role.ROLE_USER)));
     }
 

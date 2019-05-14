@@ -1,10 +1,8 @@
 package com.github.ivansenchukov.topjavagraduation.service;
 
-import com.github.ivansenchukov.topjavagraduation.DishTestData;
 import com.github.ivansenchukov.topjavagraduation.RestaurantTestData;
 import com.github.ivansenchukov.topjavagraduation.exception.NotFoundException;
 import com.github.ivansenchukov.topjavagraduation.model.Dish;
-import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +13,7 @@ import java.util.List;
 import static com.github.ivansenchukov.topjavagraduation.DishTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// TODO - upgrade all tests after implementing model layer
+
 public abstract class AbstractDishServiceTest extends AbstractServiceTest {
 
 
@@ -25,7 +23,7 @@ public abstract class AbstractDishServiceTest extends AbstractServiceTest {
     //<editor-fold desc="CREATE">
     @Test
     void create() throws Exception {
-        Dish newDish = new Dish("Mc'Donnels HUGE Burger", new BigDecimal(300), RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));  // TODO - upgrade this after implementing domain model
+        Dish newDish = new Dish("Mc'Donnels HUGE Burger", new BigDecimal(300), RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));
         Dish created = service.create(new Dish(newDish));
         newDish.setId(created.getId());
         assertMatch(newDish, created);
@@ -50,7 +48,6 @@ public abstract class AbstractDishServiceTest extends AbstractServiceTest {
 
     //<editor-fold desc="GET">
     @Test
-    // TODO - try to find something like DataProvider in testng and use it here
     void get() throws Exception {
         Dish dish = service.get(MCDONNELS_BURGER_ID);
         assertMatch(dish, MCDONNELS_BURGER);
@@ -112,11 +109,10 @@ public abstract class AbstractDishServiceTest extends AbstractServiceTest {
 
 
     //<editor-fold desc="DELETE">
-    // TODO - try to use something like Testng Dataprovider here
     @Test
     void delete() throws Exception {
         service.delete(VABI_VOBBLE_SASHIMI_ID);
-        assertMatch(service.get(RestaurantTestData.VABI_VOBBLE,LocalDate.of(2019, 5, 10)), VABI_VOBBLE_SUSHI);
+        assertMatch(service.get(RestaurantTestData.VABI_VOBBLE, LocalDate.of(2019, 5, 10)), VABI_VOBBLE_SUSHI);
     }
 
     @Test

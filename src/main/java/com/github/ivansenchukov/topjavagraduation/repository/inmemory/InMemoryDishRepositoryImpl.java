@@ -1,6 +1,5 @@
 package com.github.ivansenchukov.topjavagraduation.repository.inmemory;
 
-import com.github.ivansenchukov.topjavagraduation.DishTestData;
 import com.github.ivansenchukov.topjavagraduation.model.Dish;
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import com.github.ivansenchukov.topjavagraduation.repository.DishRepository;

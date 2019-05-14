@@ -3,7 +3,6 @@ package com.github.ivansenchukov.topjavagraduation.service.inmemory;
 import com.github.ivansenchukov.topjavagraduation.repository.VoteRepository;
 import com.github.ivansenchukov.topjavagraduation.repository.inmemory.InMemoryVoteRepositoryImpl;
 import com.github.ivansenchukov.topjavagraduation.service.AbstractVoteServiceTest;
-import com.github.ivansenchukov.topjavagraduation.service.VoteService;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 

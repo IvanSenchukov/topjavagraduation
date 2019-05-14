@@ -26,7 +26,7 @@ public class InMemoryUserRepositoryImpl extends InMemoryBaseRepositoryImpl<User>
 
     @Override
     public User save(User entry) {
-        if(entry.isNew() && checkEmailCollision(entry)) {
+        if (entry.isNew() && checkEmailCollision(entry)) {
             throw new DuplicateException(String.format("User with email %s is already exists", entry.getEmail()));
         }
         return super.save(entry);

@@ -1,6 +1,5 @@
 package com.github.ivansenchukov.topjavagraduation;
 
-import com.github.ivansenchukov.topjavagraduation.model.Dish;
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import com.github.ivansenchukov.topjavagraduation.model.Vote;
 import org.slf4j.Logger;
@@ -31,7 +30,7 @@ public class VoteTestData {
 
 
     public static void assertMatch(Vote actual, Vote expected) {
-        assertThat(actual).isEqualTo(expected); // TODO - upgrade this assertion after implementing model layer
+        assertThat(actual).isEqualTo(expected);
         log.info(String.format("Votes are match. %s", actual.toString()));
     }
 
@@ -40,7 +39,7 @@ public class VoteTestData {
     }
 
     public static void assertMatch(Iterable<Vote> actual, Iterable<Vote> expected) {
-        assertThat(actual).isEqualTo(expected); // TODO - upgrade this assertion after implementing model layer
+        assertThat(actual).isEqualTo(expected);
     }
 
     public static void assertMatch(Map<Restaurant, Integer> actual, Map<Restaurant, Integer> expected) {

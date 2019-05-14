@@ -5,13 +5,12 @@ import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collections;
 import java.util.List;
 
 import static com.github.ivansenchukov.topjavagraduation.RestaurantTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// TODO - upgrade all tests after implementing model layer
+
 public abstract class AbstractRestaurantServiceTest extends AbstractServiceTest {
 
 
@@ -21,7 +20,7 @@ public abstract class AbstractRestaurantServiceTest extends AbstractServiceTest 
     //<editor-fold desc="CREATE">
     @Test
     void create() throws Exception {
-        Restaurant newRestaurant = new Restaurant("Zoo Beer");  // TODO - upgrade this after implementing domain model
+        Restaurant newRestaurant = new Restaurant("Zoo Beer");
         Restaurant created = service.create(new Restaurant(newRestaurant));
         newRestaurant.setId(created.getId());
         assertMatch(newRestaurant, created);
@@ -32,7 +31,6 @@ public abstract class AbstractRestaurantServiceTest extends AbstractServiceTest 
 
     //<editor-fold desc="GET">
     @Test
-    // TODO - try to find something like DataProvider in testng and use it here
     void get() throws Exception {
         Restaurant restaurant = service.get(VABI_VOBBLE_ID);
         assertMatch(restaurant, VABI_VOBBLE);
@@ -64,7 +62,6 @@ public abstract class AbstractRestaurantServiceTest extends AbstractServiceTest 
 
 
     //<editor-fold desc="DELETE">
-    // TODO - try to use something like Testng Dataprovider here
     @Test
     void delete() throws Exception {
         service.delete(VABI_VOBBLE_ID);

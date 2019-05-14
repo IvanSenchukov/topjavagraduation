@@ -8,8 +8,6 @@ import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.model.Vote;
 import com.github.ivansenchukov.topjavagraduation.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -21,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.github.ivansenchukov.topjavagraduation.util.ValidationUtil.checkNotFound;
 import static com.github.ivansenchukov.topjavagraduation.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -29,14 +26,21 @@ public class VoteService {
 
     private VoteRepository repository;
 
+    private LocalTime stopVotingTime;
+
     @Autowired
-    public VoteService(VoteRepository repository) {
+    public VoteService(VoteRepository repository, LocalTime stopVotingTime) {
         this.repository = repository;
+        this.stopVotingTime = stopVotingTime;
     }
 
-    // TODO - implement this!!!
-    @Value("${stoptime}")
-    public static String stoptime;
+
+    //<editor-fold desc="Getters and Setters">
+    public LocalTime getStopVotingTime() {
+        return stopVotingTime;
+    }
+    //</editor-fold>
+
 
     public Vote get(Integer id) {
         return checkNotFoundWithId(repository.get(id), id);
@@ -68,12 +72,12 @@ public class VoteService {
 
 
     /**
-     *  only user with role "USER" can make votes.
-     *
-     *  If vote is absent - create new one
-     *  If vote is present - look at time
-     *   - If time before 11:00 - update vote
-     *   - If time after 11:00 - throw RestrictedOperationException
+     * only user with role "USER" can make votes.
+     * <p>
+     * If vote is absent - create new one
+     * If vote is present - look at time
+     * - If time before stoptime - update vote
+     * - If time after stoptime - throw RestrictedOperationException
      *
      * @param vote - vote, that user wants to make. vote properties 'user', 'restaurant' and 'date' must not be null
      * @return
@@ -99,19 +103,19 @@ public class VoteService {
     }
 
     private Vote updatePresentVote(Vote vote, Vote presentVote) throws RestrictedOperationException {
-        checkStoptime(vote, vote.getDate(), "You can't change your choice after 11:00!");
+        checkStoptime(vote, vote.getDate(), String.format("You can't change your choice after %s", stopVotingTime.toString()));
         vote.setId(presentVote.getId());
         vote = repository.save(vote);
         return checkNotFoundWithId(vote, presentVote.getId());
     }
 
     /**
-     * Delete user's vote, in case he make request for it before stoptime(11:00)
+     * Delete user's vote, in case he make request for it before stoptime
      * Otherwise - RestrictedOperationException
-     *
+     * <p>
      * User can delete only his own votes
      * If another user tries to delete vote - throws RestrictedOperationException
-     *
+     * <p>
      * Admins can delete any user vote at any time
      *
      * @param id
@@ -133,19 +137,20 @@ public class VoteService {
 
     private void checkUserAuthorizationAndStoptime(User user, LocalDateTime dateTime, Vote presentVote) throws RestrictedOperationException {
         checkUserAuthorization(user, presentVote);
-        if (!CollectionUtils.contains(user.getRoles().iterator(), Role.ROLE_ADMIN)){
-            checkStoptime(presentVote, dateTime, "You can't delete your vote after 11:00!");
+        if (!CollectionUtils.contains(user.getRoles().iterator(), Role.ROLE_ADMIN)) {
+            checkStoptime(presentVote, dateTime, String.format("You can't delete your vote after %s!", stopVotingTime.toString()));
         }
     }
 
 
     private void checkStoptime(Vote vote, LocalDateTime date, String errorMessage) throws RestrictedOperationException {
-        if (date.isAfter(LocalDateTime.of(vote.getDate().toLocalDate(), LocalTime.of(11, 00)))) { // TODO - set stoptime here from PropertyPlaceholder
+        if (date.isAfter(LocalDateTime.of(vote.getDate().toLocalDate(), stopVotingTime))) {
             throw new RestrictedOperationException(errorMessage);
         }
     }
 
     private void checkUserAuthorization(User user, Vote presentVote) throws RestrictedOperationException {
-        if (!CollectionUtils.contains(user.getRoles().iterator(), Role.ROLE_ADMIN) && !Objects.equals(presentVote.getUser(), user)) throw new RestrictedOperationException("You can only delete your own votes!");
+        if (!CollectionUtils.contains(user.getRoles().iterator(), Role.ROLE_ADMIN) && !Objects.equals(presentVote.getUser(), user))
+            throw new RestrictedOperationException("You can only delete your own votes!");
     }
 }

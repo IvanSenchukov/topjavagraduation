@@ -11,7 +11,8 @@ public class Restaurant extends AbstractBaseEntity implements Comparable<Restaur
 
 
     //<editor-fold desc="Constructors">
-    public Restaurant() {}
+    public Restaurant() {
+    }
 
     public Restaurant(Restaurant prototypeRestaurant) {
         this(prototypeRestaurant.getId(), prototypeRestaurant.getName());

@@ -1,7 +1,6 @@
 package com.github.ivansenchukov.topjavagraduation;
 
 import com.github.ivansenchukov.topjavagraduation.model.Dish;
-import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,7 @@ public class DishTestData {
 
 
     public static void assertMatch(Dish actual, Dish expected) {
-        assertThat(actual).isEqualTo(expected); // TODO - upgrade this assertion after implementing model layer
+        assertThat(actual).isEqualTo(expected);
         log.info(String.format("Dishes are match. %s", actual.toString()));
     }
 
@@ -41,7 +40,7 @@ public class DishTestData {
     }
 
     public static void assertMatch(Iterable<Dish> actual, Iterable<Dish> expected) {
-        assertThat(actual).isEqualTo(expected); // TODO - upgrade this assertion after implementing model layer
+        assertThat(actual).isEqualTo(expected);
     }
 
 
