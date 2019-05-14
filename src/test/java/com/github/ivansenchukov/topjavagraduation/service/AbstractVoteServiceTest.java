@@ -56,7 +56,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         Vote updated = service.makeVote(new Vote(newVote));
         newVote.setId(updated.getId());
         assertMatch(newVote, updated);
-        assertMatch(service.get(RestaurantTestData.VABI_VOBBLE, TEST_DATE), updated, ADMIN_VOTE);
+        assertMatch(service.get(RestaurantTestData.VABI_VOBBLE, TEST_DATE), updated, SECOND_USER_VOTE);
 
     }
 
@@ -201,7 +201,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
 
         Map<Restaurant, Integer> expected = new HashMap<>(2);
         expected.put(RestaurantTestData.MCDONNELS, 2);
-        expected.put(RestaurantTestData.VABI_VOBBLE, 1);
+        expected.put(RestaurantTestData.VABI_VOBBLE, 0);
 
         Map<Restaurant, Integer> restaurantVotesCount = service.getVotesCount(TEST_DATE, RestaurantTestData.MCDONNELS, RestaurantTestData.VABI_VOBBLE);
         assertMatch(restaurantVotesCount, expected);

@@ -13,8 +13,8 @@ public class RestaurantTestData {
 
     private static final Logger log = LoggerFactory.getLogger(RestaurantTestData.class.getName());
 
-    public static final int MCDONNELS_ID = START_SEQ + 0;
-    public static final int VABI_VOBBLE_ID = START_SEQ + 1;
+    public static final int MCDONNELS_ID = 100003;
+    public static final int VABI_VOBBLE_ID = 100004;
 
     public static final Restaurant MCDONNELS = new Restaurant(MCDONNELS_ID, "McDonnel's");
     public static final Restaurant VABI_VOBBLE = new Restaurant(VABI_VOBBLE_ID, "Vabi-Vobble");

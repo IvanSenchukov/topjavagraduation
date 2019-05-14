@@ -29,8 +29,8 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
 
     public void refreshTestRepository() {
         entryMap.clear();
-        entryMap.put(ADMIN_VOTE_ID, ADMIN_VOTE);
         entryMap.put(FIRST_USER_VOTE_ID, FIRST_USER_VOTE);
+        entryMap.put(SECOND_USER_VOTE_ID, SECOND_USER_VOTE);
         entryMap.put(BAD_USER_VOTE_ID, BAD_USER_VOTE);
         entryMap.put(BAD_RESTAURANT_VOTE_ID, BAD_RESTAURANT_VOTE);
         entryMap.put(BAD_DATE_VOTE_ID, BAD_DATE_VOTE);

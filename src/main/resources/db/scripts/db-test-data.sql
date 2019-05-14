@@ -8,27 +8,29 @@ ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 
 INSERT INTO users (name, email, password) VALUES
-  ('User', 'user@yandex.ru', 'password'),
-  ('Admin', 'admin@gmail.com', 'admin');
+  ('Admin', 'admin@gmail.com', 'admin'),
+  ('First User', 'firstuser@yandex.ru', 'password'),
+  ('Second User', 'seconduser@yandex.ru', 'password');
 
 
 INSERT INTO user_roles (role, user_id) VALUES
-  ('ROLE_USER', 100000),
-  ('ROLE_ADMIN', 100001);
+  ('ROLE_ADMIN', 100000),
+  ('ROLE_USER', 100001),
+  ('ROLE_USER', 100002);
 
 
 INSERT INTO restaurants (name) VALUES
-  ('Vabi-Vobble'),
-  ('McDonnel''s');
+  ('McDonnel''s'),
+  ('Vabi-Vobble');
 
 
--- INSERT INTO dishes (name, price, date, restaurant_id) VALUES
---   ('McDonnel''s Burger',  200, '2019-05-10', 100000),/*todo - check restaurant_id*/
---   ('McDonnel''s Fries',   150, '2019-05-10', 100000),/*todo - check restaurant_id*/
---   ('Vabi-Vobble Sushi',   300, '2019-05-10', 100001),/*todo - check restaurant_id*/
---   ('Vabi-Vobble Sashimi', 200, '2019-05-10', 100001);/*todo - check restaurant_id*/
---
---
--- INSERT INTO votes (user_id, restaurant_id, dateTime)
--- VALUES (100000, 100000, '2019-05-10 08:15:00'),/*todo - check restaurant_id*/
---        (100000, 100000, '2019-05-10 09:45:00');/*todo - check restaurant_id*/
+INSERT INTO dishes (name, price, date, restaurant_id) VALUES
+  ('McDonnel''s Burger',  200, '2019-05-10', 100003),
+  ('McDonnel''s Fries',   150, '2019-05-10', 100003),
+  ('Vabi-Vobble Sushi',   300, '2019-05-10', 100004),
+  ('Vabi-Vobble Sashimi', 200, '2019-05-10', 100004);
+
+
+INSERT INTO votes (user_id, restaurant_id, date_time)
+VALUES (100001, 100003, '2019-05-10 08:15:00'),/*todo - check restaurant_id*/
+       (100002, 100004, '2019-05-10 09:45:00');/*todo - check restaurant_id*/

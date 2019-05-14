@@ -15,12 +15,12 @@ public class DishTestData {
 
     private static final Logger log = LoggerFactory.getLogger(DishTestData.class.getName());
 
-    public static final int MCDONNELS_BURGER_ID = START_SEQ + 0;
-    public static final int MCDONNELS_FRIES_ID = START_SEQ + 1;
-    public static final int VABI_VOBBLE_SUSHI_ID = START_SEQ + 2;
-    public static final int VABI_VOBBLE_SASHIMI_ID = START_SEQ + 3;
-    public static final int VABI_VOBBLE_BAD_DATE_ID = START_SEQ + 4;
-    public static final int BAD_RESTAURANT_DISH_ID = START_SEQ + 5;
+    public static final int MCDONNELS_BURGER_ID = 100005;
+    public static final int MCDONNELS_FRIES_ID = 100006;
+    public static final int VABI_VOBBLE_SUSHI_ID = 100007;
+    public static final int VABI_VOBBLE_SASHIMI_ID = 100008;
+    public static final int VABI_VOBBLE_BAD_DATE_ID = 100009;
+    public static final int BAD_RESTAURANT_DISH_ID = 100010;
 
     public static final Dish MCDONNELS_BURGER = new Dish(MCDONNELS_BURGER_ID, "McDonnel's Burger", new BigDecimal(200), RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));
     public static final Dish MCDONNELS_FRIES = new Dish(MCDONNELS_FRIES_ID, "McDonnel's Fries", new BigDecimal(150), RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));

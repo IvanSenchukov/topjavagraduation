@@ -32,7 +32,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 
     @Override
     public User getByEmail(String email) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
