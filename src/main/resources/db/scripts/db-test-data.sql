@@ -25,10 +25,10 @@ INSERT INTO restaurants (name) VALUES
 
 
 INSERT INTO dishes (name, price, date, restaurant_id) VALUES
-  ('McDonnel''s Burger',  200, '2019-05-10', 100003),
-  ('McDonnel''s Fries',   150, '2019-05-10', 100003),
-  ('Vabi-Vobble Sushi',   300, '2019-05-10', 100004),
-  ('Vabi-Vobble Sashimi', 200, '2019-05-10', 100004);
+  ('McDonnel''s Burger',  200, '2019-05-10 00:00:00', 100003),
+  ('McDonnel''s Fries',   150, '2019-05-10 00:00:00', 100003),
+  ('Vabi-Vobble Sushi',   300, '2019-05-10 00:00:00', 100004),
+  ('Vabi-Vobble Sashimi', 200, '2019-05-10 00:00:00', 100004);
 
 
 INSERT INTO votes (user_id, restaurant_id, date_time)
