@@ -34,7 +34,7 @@ public class JpaRestaurantRepositoryImpl implements RestaurantRepository {
 
     @Override
     public List<Restaurant> getAll() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -1,12 +1,31 @@
 package com.github.ivansenchukov.topjavagraduation.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "votes")
 public class Vote extends AbstractBaseEntity {
 
     //<editor-fold desc="Fields">
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE) // todo - test it
+    @NotNull
     private User user;
+
+    @Column(name = "date_time", nullable = false)
+    @NotNull
     private LocalDateTime dateTime;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)  //  TODO - test this
+    @NotNull
     private Restaurant restaurant;
     //</editor-fold>
 

@@ -40,7 +40,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         Vote created = service.makeVote(new Vote(newVote));
         newVote.setId(created.getId());
         assertMatch(newVote, created);
-        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, newVote);
+        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), newVote, FIRST_USER_VOTE);
     }
 
     @Test
@@ -56,7 +56,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         Vote updated = service.makeVote(new Vote(newVote));
         newVote.setId(updated.getId());
         assertMatch(newVote, updated);
-        assertMatch(service.get(RestaurantTestData.VABI_VOBBLE, TEST_DATE), updated, SECOND_USER_VOTE);
+        assertMatch(service.get(RestaurantTestData.VABI_VOBBLE, TEST_DATE), SECOND_USER_VOTE, updated );
 
     }
 
@@ -171,7 +171,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         assertThrows(RestrictedOperationException.class, () ->
                 service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, getTestDateTimeTooLate()));
 
-        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, created);
+        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), created, FIRST_USER_VOTE);
     }
 
     @Test
@@ -183,7 +183,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         assertThrows(RestrictedOperationException.class, () ->
                 service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_SECOND, getTestDateTimeTooLate()));
 
-        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, created);
+        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), created, FIRST_USER_VOTE);
     }
 
     @Test

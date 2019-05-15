@@ -1,15 +1,35 @@
 package com.github.ivansenchukov.topjavagraduation.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "dishes")
 public class Dish extends AbstractBaseEntity {
 
     //<editor-fold desc="Fields">
+    @NotBlank
+    @Size(min = 2, max = 100)
+    @Column(name = "name", nullable = false)
     private String name;
+    @Column(name = "price", columnDefinition = "BIGINT")
     private BigDecimal price;
 
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)  //  TODO - test this
+    @NotNull
     private Restaurant restaurant;
+
+    @Column(name = "date", nullable = false)
+    @NotNull
     private LocalDate date;
     //</editor-fold>
 

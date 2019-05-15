@@ -16,11 +16,11 @@ public class VoteTestData {
 
     private static final Logger log = LoggerFactory.getLogger(VoteTestData.class.getName());
 
-    public static final int SECOND_USER_VOTE_ID = START_SEQ + 0;
-    public static final int FIRST_USER_VOTE_ID = START_SEQ + 1;
-    public static final int BAD_USER_VOTE_ID = START_SEQ + 2;
-    public static final int BAD_RESTAURANT_VOTE_ID = START_SEQ + 3;
-    public static final int BAD_DATE_VOTE_ID = START_SEQ + 4;
+    public static final int SECOND_USER_VOTE_ID = 100009;
+    public static final int FIRST_USER_VOTE_ID = 100010;
+    public static final int BAD_USER_VOTE_ID = 100011;
+    public static final int BAD_RESTAURANT_VOTE_ID = 100012;
+    public static final int BAD_DATE_VOTE_ID = 100013;
 
     // TODO - delete admin vote, as it is restiction for the admins to make votes
     public static final Vote FIRST_USER_VOTE = new Vote(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 05, 10).atTime(9, 45));
