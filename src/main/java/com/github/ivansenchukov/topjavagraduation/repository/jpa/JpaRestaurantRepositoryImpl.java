@@ -5,6 +5,7 @@ import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.repository.RestaurantRepository;
 import com.github.ivansenchukov.topjavagraduation.repository.UserRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,12 +13,14 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public class JpaRestaurantRepositoryImpl implements RestaurantRepository {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
+    @Transactional
     public Restaurant save(Restaurant restaurant) {
         if (restaurant.isNew()) {
             em.persist(restaurant);
@@ -34,12 +37,14 @@ public class JpaRestaurantRepositoryImpl implements RestaurantRepository {
 
     @Override
     public List<Restaurant> getAll() {
-        throw new UnsupportedOperationException();
+        return em.createNamedQuery(Restaurant.ALL_SORTED, Restaurant.class).getResultList();
     }
 
     @Override
+    @Transactional
     public boolean delete(int id) {
-        Query query = em.createQuery("DELETE FROM Restaurant r WHERE r.id=:id");
-        return query.setParameter("id", id).executeUpdate() != 0;
+        return em.createNamedQuery(Restaurant.DELETE)
+                .setParameter("id", id)
+                .executeUpdate() != 0;
     }
 }

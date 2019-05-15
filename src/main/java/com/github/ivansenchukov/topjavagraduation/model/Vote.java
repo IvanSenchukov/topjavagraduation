@@ -9,12 +9,23 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "votes")
+@NamedQueries({
+        @NamedQuery(name = Vote.GET_BY_RESTAURANT_AND_DATE, query = "SELECT v FROM Vote v WHERE v.restaurant=:restaurant AND cast(v.dateTime as date)=:date ORDER BY v.restaurant, v.user"),
+        @NamedQuery(name = Vote.GET_BY_DATE_AND_USER, query = "SELECT v FROM Vote v WHERE v.user=:user AND cast(v.dateTime as date)=:date ORDER BY v.restaurant, v.user"),
+        @NamedQuery(name = Vote.DELETE, query = "DELETE FROM Vote v WHERE v.id=:id"),
+//        @NamedQuery(name = Vote.GET_VOTES_COUNT, query = "SELECT v FROM Vote v WHERE cast(v.dateTime as date)=:date ORDER BY v.restaurant"), // TODO - implement this
+})
 public class Vote extends AbstractBaseEntity {
+
+    public static final String GET_BY_RESTAURANT_AND_DATE = "Vote.getByRestaurantAndDate";
+    public static final String GET_BY_DATE_AND_USER = "Vote.getByDateAndUser";
+    public static final String GET_VOTES_COUNT = "Vote.getVotesCount";
+    public static final String DELETE = "Vote.delete";
 
     //<editor-fold desc="Fields">
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE) // todo - test it
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private User user;
 
@@ -24,7 +35,7 @@ public class Vote extends AbstractBaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)  //  TODO - test this
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private Restaurant restaurant;
     //</editor-fold>

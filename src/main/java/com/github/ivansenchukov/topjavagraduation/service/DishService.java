@@ -25,6 +25,9 @@ public class DishService {
 
     public Dish create(Dish dish) {
         Assert.notNull(dish, "dish must not be null");
+        Assert.notNull(dish.getDate(), "dish date property must not be null");
+        Assert.notNull(dish.getRestaurant(), "dish restaurant property must not be null");
+
         return repository.save(dish);
     }
 
@@ -39,8 +42,8 @@ public class DishService {
 
     public void update(Dish dish) {
         Assert.notNull(dish, "dish must not be null");
-//        Assert.notNull(dish.getDateTime(), "dish date property must not be null");
-//        Assert.notNull(dish.getRestaurant(), "dish restaurant property must not be null");
+        Assert.notNull(dish.getDate(), "dish date property must not be null");
+        Assert.notNull(dish.getRestaurant(), "dish restaurant property must not be null");
 
         checkNotFoundWithId(repository.save(dish), dish.getId());
     }

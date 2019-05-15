@@ -53,9 +53,16 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
 
         if (Objects.isNull(vote)) return vote;
 
-        Objects.requireNonNull(vote.getUser(), "Vote 'user' property must not be null. Inconsistent Data in repository!");
-        Objects.requireNonNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null. Inconsistent Data in repository!");
-        Objects.requireNonNull(vote.getDateTime(), "Vote 'date' property must not be null. Inconsistend Data in repository!");
+        if (
+                Objects.isNull(vote)
+                        || Objects.isNull(vote.getUser())
+                        || Objects.isNull(vote.getRestaurant())
+                        || Objects.isNull(vote.getDateTime())) return null;
+
+        // TODO - make decision about it. There must be some sort of alerting when inconsistend Data in repository!
+//        Objects.requireNonNull(vote.getUser(), "Vote 'user' property must not be null. Inconsistent Data in repository!");
+//        Objects.requireNonNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null. Inconsistent Data in repository!");
+//        Objects.requireNonNull(vote.getDateTime(), "Vote 'date' property must not be null. Inconsistend Data in repository!");
 
         return vote;
     }
@@ -67,7 +74,15 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
                         Objects.nonNull(vote.getUser())
                                 && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate())
                                 && Objects.nonNull(vote.getRestaurant()) && Objects.equals(vote.getRestaurant(), restaurant))
-                .sorted(Comparator.comparing(Vote::getRestaurant))
+                .sorted(new Comparator<Vote>() {
+                    @Override
+                    public int compare(Vote o1, Vote o2) {
+                        int restaurantCompare = o1.getRestaurant().getName().compareTo(o2.getRestaurant().getName());
+                        if (restaurantCompare != 0) return restaurantCompare;
+                        int userCompare = o1.getUser().getName().compareTo(o2.getUser().getName());
+                        return userCompare;
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

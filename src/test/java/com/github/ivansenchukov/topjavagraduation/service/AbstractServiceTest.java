@@ -4,6 +4,7 @@ import com.github.ivansenchukov.topjavagraduation.configuration.AppConfig;
 import com.github.ivansenchukov.topjavagraduation.configuration.DbConfig;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.github.ivansenchukov.topjavagraduation.util.ValidationUtil.getRootCause;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringJUnitConfig(classes = {
         AppConfig.class
 })
+@Transactional
 abstract class AbstractServiceTest {
 
     static {

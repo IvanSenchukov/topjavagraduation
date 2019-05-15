@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,16 +38,20 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
         return em.find(Vote.class, id);
     }
 
-    // todo - implement this
     @Override
     public List<Vote> get(Restaurant restaurant, LocalDate date) {
-        throw new UnsupportedOperationException();
+        return em.createNamedQuery(Vote.GET_BY_RESTAURANT_AND_DATE)
+                .setParameter("restaurant", restaurant)
+                .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .getResultList();
     }
 
-    // todo - implement this
     @Override
     public Vote get(LocalDate date, User user) {
-        throw new UnsupportedOperationException();
+        return (Vote) em.createNamedQuery(Vote.GET_BY_DATE_AND_USER)
+                .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .setParameter("user", user)
+                .getSingleResult();
     }
 
     // todo - implement this
@@ -56,7 +62,8 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
 
     @Override
     public boolean delete(int id) {
-        Query query = em.createQuery("DELETE FROM Dish d WHERE d.id=:id");
-        return query.setParameter("id", id).executeUpdate() != 0;
+        return em.createNamedQuery(Vote.DELETE)
+                .setParameter("id", id)
+                .executeUpdate() != 0;
     }
 }

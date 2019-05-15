@@ -12,7 +12,14 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "dishes")
+@NamedQueries({
+        @NamedQuery(name = Dish.GET_BY_RESTAURANT_AND_DATE, query = "SELECT d FROM Dish d WHERE d.restaurant=:restaurant AND d.date=:date ORDER BY d.name"),
+        @NamedQuery(name = Dish.DELETE, query = "DELETE FROM Dish d WHERE d.id=:id"),
+})
 public class Dish extends AbstractBaseEntity {
+
+    public static final String GET_BY_RESTAURANT_AND_DATE = "Dish.getByRestaurantAndDate";
+    public static final String DELETE = "Dish.delete";
 
     //<editor-fold desc="Fields">
     @NotBlank
@@ -23,13 +30,13 @@ public class Dish extends AbstractBaseEntity {
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)  //  TODO - test this
-    @NotNull
+    @JoinColumn(name = "restaurant_id", nullable = false)   // TODO - doesn't work. Workaround in service
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull                                                // TODO - doesn't work. Workaround in service
     private Restaurant restaurant;
 
-    @Column(name = "date", nullable = false)
-    @NotNull
+    @Column(name = "date", nullable = false)                // TODO - doesn't work. Workaround in service
+    @NotNull                                                // TODO - doesn't work. Workaround in service
     private LocalDate date;
     //</editor-fold>
 

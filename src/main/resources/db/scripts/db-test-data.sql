@@ -32,5 +32,5 @@ INSERT INTO dishes (name, price, date, restaurant_id) VALUES
 
 
 INSERT INTO votes (user_id, restaurant_id, date_time)
-VALUES (100001, 100003, '2019-05-10 08:15:00'),/*todo - check restaurant_id*/
-       (100002, 100004, '2019-05-10 09:45:00');/*todo - check restaurant_id*/
+VALUES (100001, 100003, '2019-05-10 08:15:00'),
+       (100002, 100004, '2019-05-10 09:45:00');

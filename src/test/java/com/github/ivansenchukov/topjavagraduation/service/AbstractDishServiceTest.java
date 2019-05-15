@@ -3,6 +3,7 @@ package com.github.ivansenchukov.topjavagraduation.service;
 import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.RestaurantTestData;
 import com.github.ivansenchukov.topjavagraduation.exception.NotFoundException;
 import com.github.ivansenchukov.topjavagraduation.model.Dish;
+import org.assertj.core.condition.Not;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -67,13 +68,13 @@ public abstract class AbstractDishServiceTest extends AbstractServiceTest {
 
     @Test
     void getWithEmptyRestaurant() throws Exception {
-        assertThrows(NullPointerException.class, () ->
+        assertThrows(NotFoundException.class, () ->
                 service.get(BAD_RESTAURANT_DISH_ID));
     }
 
     @Test
     void getEmptyDate() throws Exception {
-        assertThrows(NullPointerException.class, () ->
+        assertThrows(NotFoundException.class, () ->
                 service.get(VABI_VOBBLE_BAD_DATE_ID));
     }
     //</editor-fold>

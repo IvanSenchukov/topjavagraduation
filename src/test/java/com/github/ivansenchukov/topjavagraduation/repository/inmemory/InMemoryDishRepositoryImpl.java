@@ -45,10 +45,10 @@ public class InMemoryDishRepositoryImpl extends InMemoryBaseRepositoryImpl<Dish>
     public Dish get(int id) {
         Dish dish = super.get(id);
 
-        if (Objects.isNull(dish)) return dish;
-
-        Objects.requireNonNull(dish.getRestaurant(), "Dish 'restaurant' property must not be null. Inconsistent Data in repository!");
-        Objects.requireNonNull(dish.getDate(), "Dish 'date' property must not be null. Inconsistend Data in repository!");
+        if (
+                Objects.isNull(dish)
+                        || Objects.isNull(dish.getRestaurant())
+                        || Objects.isNull(dish.getDate())) return null;
 
         return dish;
     }

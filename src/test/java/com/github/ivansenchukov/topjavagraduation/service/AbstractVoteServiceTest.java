@@ -40,7 +40,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         Vote created = service.makeVote(new Vote(newVote));
         newVote.setId(created.getId());
         assertMatch(newVote, created);
-        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), newVote, FIRST_USER_VOTE);
+        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, newVote);
     }
 
     @Test
@@ -56,7 +56,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         Vote updated = service.makeVote(new Vote(newVote));
         newVote.setId(updated.getId());
         assertMatch(newVote, updated);
-        assertMatch(service.get(RestaurantTestData.VABI_VOBBLE, TEST_DATE), SECOND_USER_VOTE, updated );
+        assertMatch(service.get(RestaurantTestData.VABI_VOBBLE, TEST_DATE), updated, SECOND_USER_VOTE);
 
     }
 
@@ -110,19 +110,19 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
 
     @Test
     void getEmptyUser() throws Exception {
-        assertThrows(NullPointerException.class, () ->
+        assertThrows(NotFoundException.class, () ->
                 service.get(VoteTestData.BAD_USER_VOTE_ID));
     }
 
     @Test
     void getWithEmptyRestaurant() throws Exception {
-        assertThrows(NullPointerException.class, () ->
+        assertThrows(NotFoundException.class, () ->
                 service.get(VoteTestData.BAD_RESTAURANT_VOTE_ID));
     }
 
     @Test
     void getEmptyDate() throws Exception {
-        assertThrows(NullPointerException.class, () ->
+        assertThrows(NotFoundException.class, () ->
                 service.get(VoteTestData.BAD_DATE_VOTE_ID));
     }
     //</editor-fold>
@@ -171,7 +171,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         assertThrows(RestrictedOperationException.class, () ->
                 service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, getTestDateTimeTooLate()));
 
-        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), created, FIRST_USER_VOTE);
+        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, created);
     }
 
     @Test
@@ -183,7 +183,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         assertThrows(RestrictedOperationException.class, () ->
                 service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_SECOND, getTestDateTimeTooLate()));
 
-        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), created, FIRST_USER_VOTE);
+        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, created);
     }
 
     @Test

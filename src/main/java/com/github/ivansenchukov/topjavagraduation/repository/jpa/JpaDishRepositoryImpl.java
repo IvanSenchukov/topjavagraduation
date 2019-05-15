@@ -33,15 +33,18 @@ public class JpaDishRepositoryImpl implements DishRepository {
         return em.find(Dish.class, id);
     }
 
-    // todo - implement this
     @Override
     public List<Dish> get(Restaurant restaurant, LocalDate date) {
-        throw new UnsupportedOperationException();
+        return em.createNamedQuery(Dish.GET_BY_RESTAURANT_AND_DATE)
+                .setParameter("restaurant", restaurant)
+                .setParameter("date", date)
+                .getResultList();
     }
 
     @Override
     public boolean delete(int id) {
-        Query query = em.createQuery("DELETE FROM Dish d WHERE d.id=:id");
-        return query.setParameter("id", id).executeUpdate() != 0;
+        return em.createNamedQuery(Dish.DELETE)
+                .setParameter("id", id)
+                .executeUpdate() != 0;
     }
 }

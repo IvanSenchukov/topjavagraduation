@@ -2,7 +2,10 @@ package com.github.ivansenchukov.topjavagraduation.repository.jpa;
 
 import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.repository.UserRepository;
+import org.hibernate.jpa.QueryHints;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,12 +13,14 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public class JpaUserRepositoryImpl implements UserRepository {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
+    @Transactional
     public User save(User user) {
         if (user.isNew()) {
             em.persist(user);
@@ -32,17 +37,23 @@ public class JpaUserRepositoryImpl implements UserRepository {
 
     @Override
     public User getByEmail(String email) {
-        throw new UnsupportedOperationException();
+        List<User> users = em.createNamedQuery(User.BY_EMAIL, User.class)
+                .setParameter(1, email)
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
+                .getResultList();
+        return DataAccessUtils.singleResult(users);
     }
 
     @Override
     public List<User> getAll() {
-        return null;
+        return em.createNamedQuery(User.ALL_SORTED, User.class).getResultList();
     }
 
     @Override
+    @Transactional
     public boolean delete(int id) {
-        Query query = em.createQuery("DELETE FROM User u WHERE u.id=:id");
-        return query.setParameter("id", id).executeUpdate() != 0;
+        return em.createNamedQuery(User.DELETE)
+                .setParameter("id", id)
+                .executeUpdate() != 0;
     }
 }
