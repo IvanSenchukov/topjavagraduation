@@ -1,4 +1,4 @@
-package com.github.ivansenchukov.topjavagraduation.configuration;
+package com.github.ivansenchukov.topjavagraduation.configuration.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-@EnableWebMvc
 @Configuration
+@EnableWebMvc
 @ComponentScan(basePackages = {"com.github.ivansenchukov.topjavagraduation.web"})
 public class WebConfiguration implements WebMvcConfigurer {
 

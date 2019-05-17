@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @PropertySource(
         value = {"classpath:app.properties"}
 )
-public class AppConfig {
+public class RootApplicationConfig {
 
     @Value("${stoptime}")
     String stoptime;

@@ -1,7 +1,6 @@
 package com.github.ivansenchukov.topjavagraduation.service;
 
-import com.github.ivansenchukov.topjavagraduation.configuration.AppConfig;
-import com.github.ivansenchukov.topjavagraduation.configuration.DbConfig;
+import com.github.ivansenchukov.topjavagraduation.configuration.RootApplicationConfig;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // TODO - make normal context loading here and loading of another context in InMemoryService tests if it is possible
 @SpringJUnitConfig(classes = {
-        AppConfig.class
+        RootApplicationConfig.class
 })
 @Transactional
 abstract class AbstractServiceTest {

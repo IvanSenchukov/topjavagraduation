@@ -6,9 +6,12 @@ import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.model.Vote;
 import com.github.ivansenchukov.topjavagraduation.repository.DishRepository;
 import com.github.ivansenchukov.topjavagraduation.repository.VoteRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.time.LocalDate;
@@ -19,6 +22,8 @@ import java.util.Map;
 
 @Repository
 public class JpaVoteRepositoryImpl implements VoteRepository {
+
+    private static final Logger log = LoggerFactory.getLogger(JpaVoteRepositoryImpl.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -48,10 +53,18 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
 
     @Override
     public Vote get(LocalDate date, User user) {
-        return (Vote) em.createNamedQuery(Vote.GET_BY_DATE_AND_USER)
-                .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                .setParameter("user", user)
-                .getSingleResult();
+        Vote vote = null;
+
+        try {
+            vote = (Vote) em.createNamedQuery(Vote.GET_BY_DATE_AND_USER)
+                    .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                    .setParameter("user", user)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            log.warn(String.format("No result found for user=|%s| and date=|%s|", user.toString(), date.toString()));
+        }
+
+        return vote;
     }
 
     // todo - implement this

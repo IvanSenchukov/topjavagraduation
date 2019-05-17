@@ -36,11 +36,11 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     //<editor-fold desc="CREATE">
     @Test
     void makeVote() throws Exception {
-        Vote newVote = new Vote(UserTestData.USER_SECOND, RestaurantTestData.MCDONNELS, getTestDateTimeAllowed());
+        Vote newVote = new Vote(UserTestData.USER_SECOND, RestaurantTestData.MCDONNELS, getTestDateTimeAllowed().plusDays(1));
         Vote created = service.makeVote(new Vote(newVote));
         newVote.setId(created.getId());
         assertMatch(newVote, created);
-        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, newVote);
+        assertMatch(service.get(RestaurantTestData.MCDONNELS, TEST_DATE.plusDays(1)), newVote);
     }
 
     @Test

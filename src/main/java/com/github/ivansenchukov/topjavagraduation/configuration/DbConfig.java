@@ -3,6 +3,7 @@ package com.github.ivansenchukov.topjavagraduation.configuration;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -30,11 +31,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.github.ivansenchukov.topjavagraduation.repository.jpa")
 public class DbConfig {
-
-    @Value("${classpath:db/scripts/db-schema.sql}")
-    private Resource schemaScript;
-    @Value("${classpath:db/scripts/db-test-data.sql}")
-    private Resource dataScript;
 
 
     //        <!--no pooling-->
@@ -86,16 +82,21 @@ public class DbConfig {
 
     @Bean
     @Autowired
-    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource, Environment environment) {
+    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource, Environment environment, ApplicationContext applicationContext) {
         final DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);
-        initializer.setDatabasePopulator(databasePopulator());
+        initializer.setDatabasePopulator(databasePopulator(applicationContext));
         initializer.setEnabled(Boolean.valueOf(environment.getRequiredProperty("database.init")));
         return initializer;
     }
 
-    private DatabasePopulator databasePopulator() {
+    private DatabasePopulator databasePopulator(ApplicationContext appContext) {
+
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+
+        Resource schemaScript = appContext.getResource("classpath:db/scripts/db-schema.sql");
+        Resource dataScript = appContext.getResource("classpath:db/scripts/db-test-data.sql");
+
         populator.addScript(schemaScript);
         populator.addScript(dataScript);
         return populator;

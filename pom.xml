@@ -6,7 +6,7 @@
 
     <groupId>com.github.IvanSenchukov</groupId>
     <artifactId>topjava.graduation</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <version>1.0-SNAPSHOT</version>
 
