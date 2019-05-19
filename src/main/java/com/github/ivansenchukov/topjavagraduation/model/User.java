@@ -158,4 +158,17 @@ public class User extends AbstractBaseEntity {
     }
     //</editor-fold>
 
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", registered=" + registered +
+                ", roles=" + roles +
+                ", id=" + id +
+                '}';
+    }
 }

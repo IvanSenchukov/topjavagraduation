@@ -1,9 +1,8 @@
 package com.github.ivansenchukov.topjavagraduation.service;
 
-import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.RestaurantTestData;
 import com.github.ivansenchukov.topjavagraduation.exception.NotFoundException;
 import com.github.ivansenchukov.topjavagraduation.model.Dish;
-import org.assertj.core.condition.Not;
+import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.RestaurantTestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

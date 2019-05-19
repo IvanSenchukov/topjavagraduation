@@ -6,7 +6,6 @@ import com.github.ivansenchukov.topjavagraduation.model.Role;
 import com.github.ivansenchukov.topjavagraduation.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Date;

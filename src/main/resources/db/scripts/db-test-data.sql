@@ -9,8 +9,8 @@ ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password) VALUES
   ('Admin', 'admin@gmail.com', 'admin'),
-  ('First User', 'firstuser@yandex.ru', 'password'),
-  ('Second User', 'seconduser@yandex.ru', 'password');
+  ('First_User', 'firstuser@yandex.ru', 'password'),
+  ('Second_User', 'seconduser@yandex.ru', 'password');
 
 
 INSERT INTO user_roles (role, user_id) VALUES

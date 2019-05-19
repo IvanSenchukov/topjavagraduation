@@ -7,17 +7,12 @@ import com.github.ivansenchukov.topjavagraduation.repository.UserRepository;
 import com.github.ivansenchukov.topjavagraduation.repository.inmemory.InMemoryUserRepositoryImpl;
 import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData;
 import com.github.ivansenchukov.topjavagraduation.web.user.AdminRestController;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import web.AbstractControllerTest;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData.ADMIN;
@@ -46,7 +41,7 @@ class InMemoryAdminRestControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         controller.delete(UserTestData.USER_FIRST_ID);
         Collection<User> users = controller.getAll();
-        assertEquals(users.size(), 1);
+        assertEquals(2, users.size());
         assertEquals(users.iterator().next(), ADMIN);
     }
 
