@@ -4,6 +4,8 @@ import com.github.ivansenchukov.topjavagraduation.exception.DuplicateException;
 import com.github.ivansenchukov.topjavagraduation.exception.NotFoundException;
 import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.repository.UserRepository;
+import com.github.ivansenchukov.topjavagraduation.to.UserTo;
+import com.github.ivansenchukov.topjavagraduation.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +59,12 @@ public class UserService {
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
         checkNotFoundWithId(repository.save(user), user.getId());
+    }
+
+    @Transactional
+    public void update(UserTo userTo) {
+        User user = get(userTo.getId());
+        repository.save(UserUtil.updateFromTo(user, userTo));
     }
 
     @Transactional

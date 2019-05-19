@@ -61,7 +61,7 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
                     .setParameter("user", user)
                     .getSingleResult();
         } catch (NoResultException e) {
-            log.warn(String.format("No result found for user=|%s| and date=|%s|", user.toString(), date.toString()));
+            log.warn("No result found for user=|{}| and date=|{}|", user.toString(), date.toString());
         }
 
         return vote;
