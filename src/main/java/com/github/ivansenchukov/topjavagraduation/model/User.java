@@ -32,7 +32,7 @@ public class User extends AbstractBaseEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email", nullable = false, unique = true)    //TODO - unique doesn't work! Workaround in UserService
+    @Column(name = "email", nullable = false, unique = true)    //TODO - unique doesn't work! Workaround in UserServiceImpl
     @Email
     @NotBlank
     @Size(max = 100)
