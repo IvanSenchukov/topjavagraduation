@@ -1,9 +1,6 @@
 package web.user;
 
 import com.github.ivansenchukov.topjavagraduation.configuration.DbConfig;
-import com.github.ivansenchukov.topjavagraduation.configuration.InMemoryAppConfig;
-import com.github.ivansenchukov.topjavagraduation.configuration.RootApplicationConfig;
-import com.github.ivansenchukov.topjavagraduation.configuration.web.WebConfig;
 import com.github.ivansenchukov.topjavagraduation.model.Role;
 import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.web.json.JsonUtil;

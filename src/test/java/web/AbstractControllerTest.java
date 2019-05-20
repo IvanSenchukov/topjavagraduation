@@ -1,6 +1,7 @@
 package web;
 
 import com.github.ivansenchukov.topjavagraduation.configuration.RootApplicationConfig;
+import com.github.ivansenchukov.topjavagraduation.configuration.security.SecurityConfig;
 import com.github.ivansenchukov.topjavagraduation.configuration.web.WebConfig;
 import com.github.ivansenchukov.topjavagraduation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,13 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.annotation.PostConstruct;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
 // TODO - make normal context loading here and loading of another context in InMemoryService tests if it is possible
 @SpringJUnitWebConfig(classes = {
         RootApplicationConfig.class,
-        WebConfig.class
+        WebConfig.class,
+        SecurityConfig.class
 })
 @Transactional
 abstract public class AbstractControllerTest {
@@ -49,7 +53,7 @@ abstract public class AbstractControllerTest {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .addFilter(CHARACTER_ENCODING_FILTER)
-//                .apply(springSecurity())
+                .apply(springSecurity())
                 .build();
     }
 

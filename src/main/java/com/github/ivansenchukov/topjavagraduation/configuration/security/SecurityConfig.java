@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -13,17 +15,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
+        // todo - change it to undeprecated
+        PasswordEncoder encoder = NoOpPasswordEncoder.getInstance();
         // todo - make this right, based on DB users table data
-       auth.inMemoryAuthentication().withUser("First_User").password("password").roles(Role.ROLE_USER.getRoleName());
-       auth.inMemoryAuthentication().withUser("Second_User").password("password").roles(Role.ROLE_USER.getRoleName());
-       auth.inMemoryAuthentication().withUser("Admin").password("admin").roles(Role.ROLE_ADMIN.getRoleName());
+        // todo - translate this to test spring config after tests is done
+        auth.inMemoryAuthentication().passwordEncoder(encoder).withUser("First_User").password("password").roles(Role.ROLE_USER.getRoleName());
+        auth.inMemoryAuthentication().passwordEncoder(encoder).withUser("Second_User").password("password").roles(Role.ROLE_USER.getRoleName());
+        auth.inMemoryAuthentication().passwordEncoder(encoder).withUser("Admin").password("admin").roles(Role.ROLE_ADMIN.getRoleName());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/rest/admin/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/rest/**").access("isAuthenticated()")
+                .antMatchers("/**").access("isAuthenticated()")
                 .and().formLogin().defaultSuccessUrl("/", false);
+        http.csrf().disable();
     }
 }
