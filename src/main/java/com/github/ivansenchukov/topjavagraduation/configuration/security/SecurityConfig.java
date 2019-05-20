@@ -1,9 +1,11 @@
 package com.github.ivansenchukov.topjavagraduation.configuration.security;
 
+import com.github.ivansenchukov.topjavagraduation.configuration.RootApplicationConfig;
 import com.github.ivansenchukov.topjavagraduation.model.Role;
 import com.github.ivansenchukov.topjavagraduation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -51,10 +53,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/rest/admin/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/**").access("isAuthenticated()")
-                .and().formLogin().defaultSuccessUrl("/", false);
-        http.csrf().disable();
+
+        http.httpBasic().and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/rest/admin/*").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/*").access("isAuthenticated()");
+//                .and().formLogin().defaultSuccessUrl("/", false);
     }
 }

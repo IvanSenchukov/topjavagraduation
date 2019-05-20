@@ -1,9 +1,12 @@
 package com.github.ivansenchukov.topjavagraduation.configuration.web;
 
+import com.github.ivansenchukov.topjavagraduation.configuration.RootApplicationConfig;
+import com.github.ivansenchukov.topjavagraduation.configuration.security.SecurityConfig;
 import com.github.ivansenchukov.topjavagraduation.web.json.JacksonObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
@@ -16,6 +19,9 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
+@Import({
+        SecurityConfig.class
+})
 @ComponentScan(basePackages = {"com.github.ivansenchukov.topjavagraduation.web"})
 public class WebConfig implements WebMvcConfigurer {
 

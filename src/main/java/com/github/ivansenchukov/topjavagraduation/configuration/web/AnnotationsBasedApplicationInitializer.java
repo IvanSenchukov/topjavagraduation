@@ -21,25 +21,4 @@ public class AnnotationsBasedApplicationInitializer extends AbstractAnnotationCo
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
-
-
-//
-//    @Override
-//    protected WebApplicationContext createRootApplicationContext() {
-//        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-//        rootContext.register(RootApplicationConfig.class, DbConfig.class);
-//        return rootContext;
-//    }
-//
-//    @Override
-//    protected WebApplicationContext createServletApplicationContext() {
-//        AnnotationConfigWebApplicationContext webAppContext = new AnnotationConfigWebApplicationContext();
-//        webAppContext.register(WebConfiguration.class);
-//        return webAppContext;
-//    }
-//
-//    @Override
-//    protected String[] getServletMappings() {
-//        return new String[]{"/"};
-//    }
 }

@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
     public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = repository.getByEmail(email.toLowerCase());
         if (user == null) {
-            throw new UsernameNotFoundException("User " + email + " is not found");
+            throw new UsernameNotFoundException("User " + email + " not found");
         }
         return new AuthorizedUser(user);
     }
