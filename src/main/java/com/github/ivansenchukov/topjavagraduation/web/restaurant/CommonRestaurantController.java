@@ -2,14 +2,14 @@ package com.github.ivansenchukov.topjavagraduation.web.restaurant;
 
 
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
+import com.github.ivansenchukov.topjavagraduation.to.RestaurantOfferTo;
 import com.github.ivansenchukov.topjavagraduation.web.WebUtil;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -26,10 +26,15 @@ public class CommonRestaurantController extends AbstractRestaurantController {
         return super.getAll();
     }
 
+
     @Override
-    @GetMapping("/{id}")
-    public Restaurant get(@PathVariable int id) {
-        return super.get(id);
+    @GetMapping(value = "/offer")
+    public RestaurantOfferTo get(
+            @RequestParam(required = true) int id,
+            @RequestParam(required = false, name = "requestDate") String requestDateString // todo - map this right
+    ) {
+
+        return super.get(id, requestDateString);
     }
     //</editor-fold>
 }

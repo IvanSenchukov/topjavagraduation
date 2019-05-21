@@ -9,8 +9,6 @@ import java.util.Date;
 
 public class UserUtil {
 
-    public static final int DEFAULT_CALORIES_PER_DAY = 2000;
-
     public static User createNewFromTo(UserTo newUser) {
         return new User(null, newUser.getName(), newUser.getEmail().toLowerCase(), newUser.getPassword(),Boolean.TRUE, new Date(), Role.ROLE_USER);
     }

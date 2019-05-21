@@ -1,15 +1,16 @@
 package com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata;
 
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
+import com.github.ivansenchukov.topjavagraduation.to.RestaurantOfferTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readFromJsonMvcResult;
 import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readListFromJsonMvcResult;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestaurantTestData {
 
@@ -27,6 +28,11 @@ public class RestaurantTestData {
         log.info(String.format("Restaurants are match. %s", actual.toString()));
     }
 
+    public static void assertMatch(RestaurantOfferTo actual, RestaurantOfferTo expected) {
+        assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
+        log.info(String.format("Restaurant offers are match. %s", actual.toString()));
+    }
+
     public static void assertMatch(Iterable<Restaurant> actual, Restaurant... expected) {
         assertMatch(actual, List.of(expected));
     }
@@ -42,5 +48,9 @@ public class RestaurantTestData {
 
     public static ResultMatcher contentJson(Restaurant expected) {
         return result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), expected);
+    }
+
+    public static ResultMatcher contentJson(RestaurantOfferTo expected) {
+        return result -> assertMatch(readFromJsonMvcResult(result, RestaurantOfferTo.class), expected);
     }
 }

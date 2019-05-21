@@ -50,11 +50,16 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         assertThrows(NotFoundException.class, () ->
                 service.get(1));
     }
-
     @Test
     void getByEmail() throws Exception {
         User user = service.getByEmail("admin@gmail.com");
         assertMatch(user, ADMIN);
+    }
+
+    @Test
+    void getByEmailNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () ->
+                service.getByEmail("notFoundEmail@example.com"));
     }
 
     @Test
