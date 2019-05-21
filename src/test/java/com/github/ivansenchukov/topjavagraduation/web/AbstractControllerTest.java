@@ -1,8 +1,9 @@
-package web;
+package com.github.ivansenchukov.topjavagraduation.web;
 
 import com.github.ivansenchukov.topjavagraduation.configuration.RootApplicationConfig;
 import com.github.ivansenchukov.topjavagraduation.configuration.security.SecurityConfig;
 import com.github.ivansenchukov.topjavagraduation.configuration.web.WebConfig;
+import com.github.ivansenchukov.topjavagraduation.service.RestaurantService;
 import com.github.ivansenchukov.topjavagraduation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
@@ -44,6 +45,9 @@ abstract public class AbstractControllerTest {
 
     @Autowired
     protected UserService userService;
+
+    @Autowired
+    protected RestaurantService restaurantService;
 
     @Autowired
     private WebApplicationContext webApplicationContext;

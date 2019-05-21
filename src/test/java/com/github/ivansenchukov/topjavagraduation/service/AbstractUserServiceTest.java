@@ -19,6 +19,8 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Autowired
     protected UserService service;
 
+
+    //<editor-fold desc="CREATE">
     @Test
     void create() throws Exception {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER));
@@ -33,19 +35,10 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         assertThrows(DuplicateException.class, () ->
                 service.create(new User(null, "Duplicate", "firstuser@yandex.ru", "newPass", true, new Date(), Role.ROLE_USER)));
     }
+    //</editor-fold>
 
-    @Test
-    void delete() throws Exception {
-        service.delete(USER_FIRST_ID);
-        assertMatch(service.getAll(), ADMIN, USER_SECOND);
-    }
 
-    @Test
-    void deletedNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () ->
-                service.delete(1));
-    }
-
+    //<editor-fold desc="GET">
     @Test
     void get() throws Exception {
         User user = service.get(ADMIN_ID);
@@ -65,6 +58,15 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    void getAll() throws Exception {
+        List<User> all = service.getAll();
+        assertMatch(all, ADMIN, USER_FIRST, USER_SECOND);
+    }
+    //</editor-fold>
+
+
+    //<editor-fold desc="UPDATE">
+    @Test
     void update() throws Exception {
         User updated = new User(USER_FIRST);
         updated.setName("UpdatedName");
@@ -74,16 +76,26 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void getAll() throws Exception {
-        List<User> all = service.getAll();
-        assertMatch(all, ADMIN, USER_FIRST, USER_SECOND);
-    }
-
-    @Test
     void enable() {
         service.enable(USER_FIRST_ID, false);
         assertFalse(service.get(USER_FIRST_ID).isEnabled());
         service.enable(USER_FIRST_ID, true);
         assertTrue(service.get(USER_FIRST_ID).isEnabled());
     }
+    //</editor-fold>
+
+
+    //<editor-fold desc="DELETE">
+    @Test
+    void delete() throws Exception {
+        service.delete(USER_FIRST_ID);
+        assertMatch(service.getAll(), ADMIN, USER_SECOND);
+    }
+
+    @Test
+    void deletedNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () ->
+                service.delete(1));
+    }
+    //</editor-fold>
 }

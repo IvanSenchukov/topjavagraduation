@@ -1,4 +1,4 @@
-package web;
+package com.github.ivansenchukov.topjavagraduation.web;
 
 import com.github.ivansenchukov.topjavagraduation.AuthorizedUser;
 import com.github.ivansenchukov.topjavagraduation.model.User;

@@ -1,4 +1,4 @@
-package web.user;
+package com.github.ivansenchukov.topjavagraduation.web.user;
 
 import com.github.ivansenchukov.topjavagraduation.configuration.InMemoryAppConfig;
 import com.github.ivansenchukov.topjavagraduation.exception.NotFoundException;
@@ -6,12 +6,11 @@ import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.repository.UserRepository;
 import com.github.ivansenchukov.topjavagraduation.repository.inmemory.InMemoryUserRepositoryImpl;
 import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData;
-import com.github.ivansenchukov.topjavagraduation.web.user.AdminRestController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import web.AbstractControllerTest;
+import com.github.ivansenchukov.topjavagraduation.web.AbstractControllerTest;
 
 import java.util.Collection;
 

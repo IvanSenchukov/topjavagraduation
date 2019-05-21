@@ -1,14 +1,14 @@
-package web.user;
+package com.github.ivansenchukov.topjavagraduation.web.user;
 
 import com.github.ivansenchukov.topjavagraduation.configuration.DbConfig;
 import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.to.UserTo;
 import com.github.ivansenchukov.topjavagraduation.util.UserUtil;
+import com.github.ivansenchukov.topjavagraduation.web.AbstractControllerTest;
 import com.github.ivansenchukov.topjavagraduation.web.json.JsonUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import web.AbstractControllerTest;
 
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData.*;
 import static com.github.ivansenchukov.topjavagraduation.web.user.ProfileRestController.REST_URL;
@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static web.TestUtil.userHttpBasic;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.userHttpBasic;
 
 @SpringJUnitConfig(DbConfig.class)
 class ProfileRestControllerTest extends AbstractControllerTest {

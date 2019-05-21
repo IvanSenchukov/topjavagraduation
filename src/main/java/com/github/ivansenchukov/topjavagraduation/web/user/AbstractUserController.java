@@ -19,46 +19,59 @@ public abstract class AbstractUserController {
     @Autowired
     private UserService service;
 
+
+    //<editor-fold desc="GET">
     public List<User> getAll() {
-        log.info("getAll");
+        log.info("get all users");
         return service.getAll();
     }
 
     public User get(int id) {
-        log.info("get {}", id);
+        log.info("get user with id |{}|", id);
         return service.get(id);
     }
 
+    public User getByMail(String email) {
+        log.info("get user by email |{}|", email);
+        return service.getByEmail(email);
+    }
+    //</editor-fold>
+
+
+    //<editor-fold desc="CREATE">
     public User create(User user) {
-        log.info("create {}", user);
+        log.info("create user |{}|", user);
         checkNew(user);
         return service.create(user);
     }
+    //</editor-fold>
 
-    public void delete(int id) {
-        log.info("delete {}", id);
-        service.delete(id);
-    }
 
+    //<editor-fold desc="UPDATE">
     public void update(User user, int id) {
-        log.info("update {} with id={}", user, id);
+        log.info("update user |{}| with id=|{}|", user, id);
         assureIdConsistent(user, id);
         service.update(user);
     }
 
     public void update(UserTo userTo, int id) {
-        log.info("update {} with id={}", userTo, id);
+        log.info("update user |{}| with id=|{}|", userTo, id);
         assureIdConsistent(userTo, id);
         service.update(userTo);
     }
 
-    public User getByMail(String email) {
-        log.info("getByEmail {}", email);
-        return service.getByEmail(email);
-    }
-
+    // todo - make implementation for it or delete
     public void enable(int id, boolean enabled) {
-        log.info(enabled ? "enable {}" : "disable {}", id);
+        log.info(enabled ? "enable user with id=|{}|" : "disable user with id=|{}|", id);
         service.enable(id, enabled);
     }
+    //</editor-fold>
+
+
+    //<editor-fold desc="DELETE">
+    public void delete(int id) {
+        log.info("delete user with id=|{}|", id);
+        service.delete(id);
+    }
+    //</editor-fold>
 }

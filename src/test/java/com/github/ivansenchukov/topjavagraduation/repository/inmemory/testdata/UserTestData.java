@@ -9,10 +9,9 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import java.util.Date;
 import java.util.List;
 
-import static com.github.ivansenchukov.topjavagraduation.model.AbstractBaseEntity.START_SEQ;
 import static org.assertj.core.api.Assertions.assertThat;
-import static web.TestUtil.readFromJsonMvcResult;
-import static web.TestUtil.readListFromJsonMvcResult;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readFromJsonMvcResult;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readListFromJsonMvcResult;
 
 public class UserTestData {
 

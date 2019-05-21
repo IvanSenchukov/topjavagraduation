@@ -1,15 +1,14 @@
-package web.user;
+package com.github.ivansenchukov.topjavagraduation.web.user;
 
 import com.github.ivansenchukov.topjavagraduation.configuration.DbConfig;
 import com.github.ivansenchukov.topjavagraduation.model.Role;
 import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.web.json.JsonUtil;
-import com.github.ivansenchukov.topjavagraduation.web.user.AdminRestController;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.ResultActions;
-import web.AbstractControllerTest;
+import com.github.ivansenchukov.topjavagraduation.web.AbstractControllerTest;
 
 import java.util.Collections;
 import java.util.Date;
@@ -19,14 +18,34 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static web.TestUtil.readFromJson;
-import static web.TestUtil.userHttpBasic;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readFromJson;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.userHttpBasic;
 
 @SpringJUnitConfig(DbConfig.class)
 class AdminRestControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = AdminRestController.REST_URL + '/';
 
+    //<editor-fold desc="CREATE">
+    @Test
+    void testCreate() throws Exception {
+        // todo - change all email domains in tests to @example
+        User expected = new User(new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER)));
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(expected)))
+                .andExpect(status().isCreated());
+
+        User returned = readFromJson(action, User.class);
+        expected.setId(returned.getId());
+
+        assertMatch(returned, expected);
+        assertMatch(userService.getAll(), ADMIN, USER_FIRST, expected, USER_SECOND);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="GET">
     @Test
     void testGet() throws Exception {
         mockMvc.perform(get(REST_URL + ADMIN_ID)
@@ -48,12 +67,12 @@ class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testDelete() throws Exception {
-        mockMvc.perform(delete(REST_URL + USER_FIRST_ID)
+    void testGetAll() throws Exception {
+        mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(ADMIN)))
-                .andDo(print())
-                .andExpect(status().isNoContent());
-        assertMatch(userService.getAll(), ADMIN, USER_SECOND);
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(ADMIN, USER_FIRST, USER_SECOND));
     }
 
     @Test
@@ -68,7 +87,9 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(USER_FIRST)))
                 .andExpect(status().isForbidden());
     }
+    //</editor-fold>
 
+    //<editor-fold desc="UPDATE">
     @Test
     void testUpdate() throws Exception {
         User updated = new User(USER_FIRST);
@@ -82,29 +103,16 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
         assertMatch(userService.get(USER_FIRST_ID), updated);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="DELETE">
     @Test
-    void testCreate() throws Exception {
-        User expected = new User(new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER)));
-        ResultActions action = mockMvc.perform(post(REST_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(expected)))
-                .andExpect(status().isCreated());
-
-        User returned = readFromJson(action, User.class);
-        expected.setId(returned.getId());
-
-        assertMatch(returned, expected);
-        assertMatch(userService.getAll(), ADMIN, USER_FIRST, expected, USER_SECOND);
-    }
-
-    @Test
-    void testGetAll() throws Exception {
-        mockMvc.perform(get(REST_URL)
+    void testDelete() throws Exception {
+        mockMvc.perform(delete(REST_URL + USER_FIRST_ID)
                 .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(ADMIN, USER_FIRST, USER_SECOND));
+                .andDo(print())
+                .andExpect(status().isNoContent());
+        assertMatch(userService.getAll(), ADMIN, USER_SECOND);
     }
+    //</editor-fold>
 }

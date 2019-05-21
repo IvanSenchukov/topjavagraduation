@@ -3,11 +3,13 @@ package com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata;
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.List;
 
-import static com.github.ivansenchukov.topjavagraduation.model.AbstractBaseEntity.START_SEQ;
 import static org.assertj.core.api.Assertions.assertThat;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readFromJsonMvcResult;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readListFromJsonMvcResult;
 
 public class RestaurantTestData {
 
@@ -34,4 +36,11 @@ public class RestaurantTestData {
     }
 
 
+    public static ResultMatcher contentJson(Restaurant... expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, Restaurant.class), List.of(expected));
+    }
+
+    public static ResultMatcher contentJson(Restaurant expected) {
+        return result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), expected);
+    }
 }
