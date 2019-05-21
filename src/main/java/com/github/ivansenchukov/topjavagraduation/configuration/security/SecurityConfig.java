@@ -40,25 +40,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-        // todo - make this right, based on DB users table data
-        // todo - translate this to test spring config after tests is done
-//        // todo - change this hardcode to UserTestData properties after transfering this config to "test" directory
-//        auth.inMemoryAuthentication().passwordEncoder(encoder()).withUser("firstuser@yandex.ru").password("password").roles(Role.ROLE_USER.getRoleName());
-//        auth.inMemoryAuthentication().passwordEncoder(encoder()).withUser("seconduser@yandex.ru").password("password").roles(Role.ROLE_USER.getRoleName());
-//        auth.inMemoryAuthentication().passwordEncoder(encoder()).withUser("admin@gmail.com").password("admin").roles(Role.ROLE_ADMIN.getRoleName());
-
         auth.authenticationProvider(authenticationProvider());
-
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.httpBasic().and()
+        http
+                .httpBasic().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/rest/admin/*").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/*").access("isAuthenticated()");
-//                .and().formLogin().defaultSuccessUrl("/", false);
+                .antMatchers("/rest/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/**").access("isAuthenticated()")
+                .and().formLogin().defaultSuccessUrl("/", false);
     }
 }
