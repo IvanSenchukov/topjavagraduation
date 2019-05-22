@@ -19,24 +19,28 @@ public class AdminRestController extends AbstractUserController {
 
     public static final String REST_URL = WebUtil.ADMIN_URL + "/users";
 
+    //todo - make documentation
     @Override
     @GetMapping
     public List<User> getAll() {
         return super.getAll();
     }
 
+    //todo - make documentation
     @Override
     @GetMapping("/{id}")
     public User get(@PathVariable int id) {
         return super.get(id);
     }
 
+    //todo - make documentation
     @Override
     @GetMapping("/by")
     public User getByMail(@RequestParam String email) {
         return super.getByMail(email);
     }
 
+    //todo - make documentation
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createWithLocation(@RequestBody User user) {
         User created = super.create(user);
@@ -46,6 +50,7 @@ public class AdminRestController extends AbstractUserController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    //todo - make documentation
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
@@ -53,6 +58,7 @@ public class AdminRestController extends AbstractUserController {
         super.update(user, id);
     }
 
+    //todo - make documentation
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

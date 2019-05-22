@@ -68,12 +68,28 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
     }
 
     @Override
-    public List<Vote> get(Restaurant restaurant, LocalDate dateTime) {
+    public List<Vote> getByRestaurantAndDate(Restaurant restaurant, LocalDate dateTime) {
         return getCollection().stream()
                 .filter(vote ->
                         Objects.nonNull(vote.getUser())
                                 && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate())
                                 && Objects.nonNull(vote.getRestaurant()) && Objects.equals(vote.getRestaurant(), restaurant))
+                .sorted((o1, o2) -> {
+                    int restaurantCompare = o1.getRestaurant().getName().compareTo(o2.getRestaurant().getName());
+                    if (restaurantCompare != 0) return restaurantCompare;
+                    int userCompare = o1.getUser().getName().compareTo(o2.getUser().getName());
+                    return userCompare;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Vote> getByRestaurantAndDate(Integer restaurantId, LocalDate dateTime) {
+        return getCollection().stream()
+                .filter(vote ->
+                        Objects.nonNull(vote.getUser())
+                                && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate())
+                                && Objects.nonNull(vote.getRestaurant()) && Objects.equals(vote.getRestaurant().getId(), restaurantId))
                 .sorted(new Comparator<Vote>() {
                     @Override
                     public int compare(Vote o1, Vote o2) {
@@ -87,7 +103,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
     }
 
     @Override
-    public Vote get(LocalDate dateTime, User user) {
+    public Vote getByUserAndDate(User user, LocalDate dateTime) {
 
         return getCollection().stream()
                 .filter(vote ->
@@ -95,6 +111,29 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
                                 && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public Vote getByUserAndDate(Integer userId, LocalDate dateTime) {
+
+        return getCollection().stream()
+                .filter(vote ->
+                        Objects.nonNull(vote.getUser()) && Objects.equals(userId, vote.getUser().getId())
+                                && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate()))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public List<Vote> getByUser(Integer userId) {
+
+        return getCollection().stream()
+                .filter(vote ->
+                        Objects.nonNull(vote.getUser())
+                                && Objects.nonNull(vote.getUser().getId())
+                                && Objects.equals(userId, vote.getUser().getId()))
+                .sorted(Comparator.comparing(Vote::getDateTime))
+                .collect(Collectors.toList());
     }
 
     // TODO - fix this

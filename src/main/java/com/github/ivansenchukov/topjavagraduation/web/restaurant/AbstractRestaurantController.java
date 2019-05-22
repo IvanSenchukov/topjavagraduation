@@ -32,27 +32,30 @@ public abstract class AbstractRestaurantController {
     private VoteService voteService;
 
     //<editor-fold desc="GET">
+    //todo - make documentation
     public List<Restaurant> getAll() {
         log.info("get all restaurants");
         return restaurantService.getAll();
     }
 
+    //todo - make documentation
     public Restaurant get(int id) {
         log.info("get restaurant by id=|{}|", id);
         return restaurantService.get(id);
     }
 
+    //todo - make documentation
     @Transactional(readOnly = true)
-    public RestaurantOfferTo get(int id, String requestDateStr) {
-        log.info("get restaurantOfferTo by id=|{}|", id);
+    public RestaurantOfferTo get(int restaurantId, String requestDateStr) {
+        log.info("get restaurantOfferTo by restaurantId=|{}| and date=|{}|", restaurantId, requestDateStr);
 
         LocalDate date = requestDateStr != null
                 ? LocalDate.parse(requestDateStr)   // todo - map this in request parameter.
                 : LocalDate.now();
 
-        Restaurant restaurant = restaurantService.get(id);
+        Restaurant restaurant = restaurantService.get(restaurantId);
         List<Dish> dishes = dishService.get(restaurant, date);
-        List<Vote> votes = voteService.get(restaurant, date);
+        List<Vote> votes = voteService.getByRestaurantAndDate(restaurant, date);
 
 
         RestaurantOfferTo restaurantOffer = new RestaurantOfferTo(
@@ -67,6 +70,7 @@ public abstract class AbstractRestaurantController {
     //</editor-fold>
 
     //<editor-fold desc="CREATE">
+    //todo - make documentation
     public Restaurant create(Restaurant restaurant) {
         log.info("create restaurant |{}|", restaurant);
         checkNew(restaurant);
@@ -75,6 +79,7 @@ public abstract class AbstractRestaurantController {
     //</editor-fold>
 
     //<editor-fold desc="UPDATE">
+    //todo - make documentation
     public void update(Restaurant restaurant, int id) {
         log.info("update restaurant |{}| with id=|{}|", restaurant, id);
         assureIdConsistent(restaurant, id);
@@ -83,6 +88,7 @@ public abstract class AbstractRestaurantController {
     //</editor-fold>
 
     //<editor-fold desc="DELETE">
+    //todo - make documentation
     public void delete(int id) {
         log.info("delete restaurant with id=|{}|", id);
         restaurantService.delete(id);

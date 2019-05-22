@@ -20,6 +20,7 @@ public class CommonRestaurantController extends AbstractRestaurantController {
 
 
     //<editor-fold desc="GET">
+    //todo - make documentation
     @Override
     @GetMapping
     public List<Restaurant> getAll() {
@@ -27,14 +28,15 @@ public class CommonRestaurantController extends AbstractRestaurantController {
     }
 
 
+    //todo - make documentation
     @Override
     @GetMapping(value = "/offer")
     public RestaurantOfferTo get(
-            @RequestParam(required = true) int id,
+            @RequestParam(required = true) int restaurantId,
             @RequestParam(required = false, name = "requestDate") String requestDateString // todo - map this right
     ) {
 
-        return super.get(id, requestDateString);
+        return super.get(restaurantId, requestDateString);
     }
     //</editor-fold>
 }

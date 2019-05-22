@@ -12,15 +12,25 @@ public interface VoteRepository {
 
     Vote save(Vote vote);
 
+    //<editor-fold desc="GET">
     // NULL if not found
     Vote get(int id);
 
     // Empty list if not found
     // TODO - test it!
-    List<Vote> get(Restaurant restaurant, LocalDate date);
+    List<Vote> getByRestaurantAndDate(Restaurant restaurant, LocalDate date);
+
+    // Empty list if not found
+    List<Vote> getByRestaurantAndDate(Integer restaurantId, LocalDate date);
 
     // NULL if not found
-    Vote get(LocalDate date, User user);
+    Vote getByUserAndDate(User user, LocalDate date);
+
+    // NULL if not found
+    Vote getByUserAndDate(Integer userId, LocalDate date);
+    //</editor-fold>
+
+    List<Vote> getByUser(Integer userId);
 
     // false if not found
     boolean delete(int id);

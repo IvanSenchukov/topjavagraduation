@@ -54,8 +54,24 @@ public class VoteService {
      * @param date
      * @return
      */
-    public List<Vote> get(Restaurant restaurant, LocalDate date) {
-        return repository.get(restaurant, date);
+    public List<Vote> getByRestaurantAndDate(Restaurant restaurant, LocalDate date) {
+        return repository.getByRestaurantAndDate(restaurant, date);
+    }
+
+    /**
+     * Returns the list of votes on given restaurant and date
+     * Returns empty list if no vote is present
+     *
+     * @param restaurantId
+     * @param date
+     * @return
+     */
+    public List<Vote> getByRestaurantAndDate(Integer restaurantId, LocalDate date) {
+        return repository.getByRestaurantAndDate(restaurantId, date);
+    }
+
+    public List<Vote> getByUser(Integer userId) {
+        return repository.getByUser(userId);
     }
 
     /**
@@ -83,18 +99,19 @@ public class VoteService {
      * @return
      * @throws RestrictedOperationException - in case that vote is present and update request is coming after stoptime
      */
-    public Vote makeVote(Vote vote) throws RestrictedOperationException {
+    // todo - make test, when one user make vote for another one
+    public Vote makeVote(Vote vote, User voteUser) throws RestrictedOperationException {
         Assert.notNull(vote, "vote must not be null");
         Assert.notNull(vote.getUser(), "Vote 'user' property must not be null");
         Assert.notNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null");
         Assert.notNull(vote.getDateTime(), "Vote 'date' property must not be null");
 
-        if (!CollectionUtils.contains(vote.getUser().getRoles().iterator(), Role.ROLE_USER)) {
+        if (!CollectionUtils.contains(voteUser.getRoles().iterator(), Role.ROLE_USER)) {
             throw new RestrictedOperationException("Only users with role 'USER' can make votes!");
         }
 
         // This fetch is also a check for correct user is making update
-        Vote presentVote = repository.get(vote.getDateTime().toLocalDate(), vote.getUser());
+        Vote presentVote = repository.getByUserAndDate(vote.getUser(), vote.getDateTime().toLocalDate());
         if (Objects.isNull(presentVote)) {
             return saveNewVote(vote);
         } else {

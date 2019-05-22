@@ -1,10 +1,8 @@
 package com.github.ivansenchukov.topjavagraduation.repository.jpa;
 
-import com.github.ivansenchukov.topjavagraduation.model.Dish;
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.model.Vote;
-import com.github.ivansenchukov.topjavagraduation.repository.DishRepository;
 import com.github.ivansenchukov.topjavagraduation.repository.VoteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -44,7 +41,7 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
-    public List<Vote> get(Restaurant restaurant, LocalDate date) {
+    public List<Vote> getByRestaurantAndDate(Restaurant restaurant, LocalDate date) {
         return em.createNamedQuery(Vote.GET_BY_RESTAURANT_AND_DATE)
                 .setParameter("restaurant", restaurant)
                 .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
@@ -52,11 +49,19 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
-    public Vote get(LocalDate date, User user) {
+    public List<Vote> getByRestaurantAndDate(Integer restaurantId, LocalDate date) {
+        return em.createNamedQuery(Vote.GET_BY_RESTAURANT_ID_AND_DATE)
+                .setParameter("restaurantId", restaurantId)
+                .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .getResultList();
+    }
+
+    @Override
+    public Vote getByUserAndDate(User user, LocalDate date) {
         Vote vote = null;
 
         try {
-            vote = (Vote) em.createNamedQuery(Vote.GET_BY_DATE_AND_USER)
+            vote = (Vote) em.createNamedQuery(Vote.GET_BY_USER_AND_DATE)
                     .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
                     .setParameter("user", user)
                     .getSingleResult();
@@ -65,6 +70,37 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
         }
 
         return vote;
+    }
+
+    @Override
+    public Vote getByUserAndDate(Integer userId, LocalDate date) {
+        Vote vote = null;
+
+        try {
+            vote = (Vote) em.createNamedQuery(Vote.GET_BY_USER_AND_DATE)
+                    .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                    .setParameter("user", userId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            log.warn("No result found for userId=|{}| and date=|{}|", userId.toString(), date.toString());
+        }
+
+        return vote;
+    }
+
+    @Override
+    public List<Vote> getByUser(Integer userId) {
+        List<Vote> votes = null;
+
+        try {
+            votes = em.createNamedQuery(Vote.GET_BY_USER_ID)
+                    .setParameter("userId", userId)
+                    .getResultList();
+        } catch (NoResultException e) {
+            log.warn("No result found for userId=|{}|", userId.toString());
+        }
+
+        return votes;
     }
 
     // todo - implement this

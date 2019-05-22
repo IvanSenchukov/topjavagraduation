@@ -16,17 +16,20 @@ public class ProfileRestController extends AbstractUserController {
 
     public static final String REST_URL = WebUtil.COMMON_URL + "/profile";
 
+    //todo - make documentation
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public User get() {
         return super.get(authUserId());
     }
 
+    //todo - make documentation
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete() {
         super.delete(authUserId());
     }
 
+    //todo - make documentation
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody UserTo userTo) {

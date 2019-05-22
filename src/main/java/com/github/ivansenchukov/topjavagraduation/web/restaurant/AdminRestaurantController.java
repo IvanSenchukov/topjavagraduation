@@ -19,14 +19,15 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     public static final String REST_URL = WebUtil.ADMIN_URL + "/restaurants";
 
 
-
     //<editor-fold desc="GET">
+    //todo - make documentation
     @Override
     @GetMapping
     public List<Restaurant> getAll() {
         return super.getAll();
     }
 
+    //todo - make documentation
     @Override
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {
@@ -36,6 +37,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
 
     //<editor-fold desc="CREATE">
+    //todo - make documentation
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant user) {
         Restaurant created = super.create(user);
@@ -48,6 +50,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
 
     //<editor-fold desc="UPDATE">
+    //todo - make documentation
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
@@ -57,6 +60,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     //</editor-fold>
 
     //<editor-fold desc="DELETE">
+    //todo - make documentation
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
