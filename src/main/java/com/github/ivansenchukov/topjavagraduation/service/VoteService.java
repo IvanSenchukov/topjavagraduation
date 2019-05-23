@@ -164,8 +164,9 @@ public class VoteService {
     }
 
 
+    // todo - rebuild this
     private void checkStoptime(Vote vote, LocalDateTime date, String errorMessage) throws RestrictedOperationException {
-        if (date.isAfter(LocalDateTime.of(vote.getDateTime().toLocalDate(), stopVotingTime))) {
+        if (date.isAfter(LocalDate.now().atTime(stopVotingTime))) {
             throw new RestrictedOperationException(errorMessage);
         }
     }

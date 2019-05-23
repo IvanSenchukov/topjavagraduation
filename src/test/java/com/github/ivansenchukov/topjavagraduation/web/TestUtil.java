@@ -1,7 +1,10 @@
 package com.github.ivansenchukov.topjavagraduation.web;
 
 import com.github.ivansenchukov.topjavagraduation.AuthorizedUser;
+import com.github.ivansenchukov.topjavagraduation.exception.RestrictedOperationException;
 import com.github.ivansenchukov.topjavagraduation.model.User;
+import com.github.ivansenchukov.topjavagraduation.model.Vote;
+import com.github.ivansenchukov.topjavagraduation.service.VoteService;
 import com.github.ivansenchukov.topjavagraduation.web.json.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,8 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
@@ -23,6 +28,10 @@ public class TestUtil {
     private static final Logger log = LoggerFactory.getLogger(TestUtil.class.getName());
     public static final LocalDate TEST_DATE = LocalDate.of(2019, 05, 10);
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Vote createTestVote(Vote vote, User user, VoteService voteService/*Todo - delete this after making TestUtil as bean*/) throws RestrictedOperationException {
+        return voteService.makeVote(vote, user);
+    }
 
     public static String getContent(MvcResult result) throws UnsupportedEncodingException {
         return result.getResponse().getContentAsString();

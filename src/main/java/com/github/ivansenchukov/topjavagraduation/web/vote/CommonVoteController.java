@@ -26,12 +26,13 @@ public class CommonVoteController extends AbstractVoteController {
     @Override
     @GetMapping("/by_restaurant")
     public List<Vote> getByRestaurantAndDate(
-            @RequestBody int restaurantId,
-            @RequestBody String requestDateStr
+            @RequestParam int restaurantId,
+            @RequestParam(name = "requestDate") String requestDateStr
     ) {
         return super.getByRestaurantAndDate(restaurantId, requestDateStr);
     }
 
+    //todo - make documentation
     @GetMapping("/by_user")
     public List<Vote> getByUserId() {
         return super.getByUserId(SecurityUtil.authUserId());

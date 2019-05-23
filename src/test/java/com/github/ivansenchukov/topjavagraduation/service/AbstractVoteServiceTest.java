@@ -49,7 +49,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
 
     @Test
     void makeVoteIfPresentAndTimeIsUp() throws Exception {
-        Vote newVote = new Vote(UserTestData.USER_FIRST, RestaurantTestData.VABI_VOBBLE, getTestDateTimeTooLate(stopVotingTime));
+        Vote newVote = new Vote(UserTestData.USER_FIRST, RestaurantTestData.VABI_VOBBLE, TEST_DATE.atTime(stopVotingTime).plusMinutes(1));
         assertThrows(RestrictedOperationException.class, () ->
                 service.makeVote(new Vote(newVote), USER_FIRST));
     }

@@ -29,15 +29,15 @@ public class AdminVoteController extends AbstractVoteController {
     @Override
     @GetMapping("/by_restaurant")
     public List<Vote> getByRestaurantAndDate(
-            @RequestBody int restaurantId,
-            @RequestBody String requestDateStr
+            @RequestParam int restaurantId,
+            @RequestParam String requestDateStr
     ) {
         return super.getByRestaurantAndDate(restaurantId, requestDateStr);
     }
 
     @Override
     @GetMapping("/by_user")
-    public List<Vote> getByUserId(@RequestBody int userId) {
+    public List<Vote> getByUserId(@RequestParam int userId) {
         return super.getByUserId(userId);
     }
 

@@ -4,12 +4,14 @@ import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import com.github.ivansenchukov.topjavagraduation.model.Vote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 import static com.github.ivansenchukov.topjavagraduation.model.AbstractBaseEntity.START_SEQ;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readListFromJsonMvcResult;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class VoteTestData {
@@ -47,4 +49,7 @@ public class VoteTestData {
         assertThat(actual).containsAllEntriesOf(expected).hasSameSizeAs(expected);
     }
 
+    public static ResultMatcher contentJson(Vote... expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, Vote.class), List.of(expected));
+    }
 }
