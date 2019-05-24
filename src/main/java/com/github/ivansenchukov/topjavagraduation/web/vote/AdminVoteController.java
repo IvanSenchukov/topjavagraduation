@@ -30,7 +30,7 @@ public class AdminVoteController extends AbstractVoteController {
     @GetMapping("/by_restaurant")
     public List<Vote> getByRestaurantAndDate(
             @RequestParam int restaurantId,
-            @RequestParam String requestDateStr
+            @RequestParam (name = "requestDate") String requestDateStr
     ) {
         return super.getByRestaurantAndDate(restaurantId, requestDateStr);
     }
@@ -39,19 +39,6 @@ public class AdminVoteController extends AbstractVoteController {
     @GetMapping("/by_user")
     public List<Vote> getByUserId(@RequestParam int userId) {
         return super.getByUserId(userId);
-    }
-
-    //</editor-fold>
-
-
-    //<editor-fold desc="MAKE VOTE">
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Vote makeVote(
-            @RequestParam int restaurantId,
-            @RequestParam String requestDateStr
-    ) throws RestrictedOperationException {
-        throw new RestrictedOperationException("Admins not allowed to make votes!");
     }
 
     //</editor-fold>

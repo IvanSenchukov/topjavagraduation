@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+// todo - make tests for common users, that try to send request on admin servlet
 @SpringJUnitConfig(DbConfig.class)
 class AdminRestaurantControllerTest extends AbstractControllerTest {
 
