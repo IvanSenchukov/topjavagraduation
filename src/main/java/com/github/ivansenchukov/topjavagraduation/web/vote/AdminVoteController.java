@@ -30,7 +30,7 @@ public class AdminVoteController extends AbstractVoteController {
     @GetMapping("/by_restaurant")
     public List<Vote> getByRestaurantAndDate(
             @RequestParam int restaurantId,
-            @RequestParam (name = "requestDate") String requestDateStr
+            @RequestParam (required = false, name = "requestDate") String requestDateStr
     ) {
         return super.getByRestaurantAndDate(restaurantId, requestDateStr);
     }

@@ -27,7 +27,7 @@ public class CommonVoteController extends AbstractVoteController {
     @GetMapping("/by_restaurant")
     public List<Vote> getByRestaurantAndDate(
             @RequestParam int restaurantId,
-            @RequestParam(name = "requestDate") String requestDateStr
+            @RequestParam(required = false, name = "requestDate") String requestDateStr
     ) {
         return super.getByRestaurantAndDate(restaurantId, requestDateStr);
     }
@@ -46,7 +46,7 @@ public class CommonVoteController extends AbstractVoteController {
     @PostMapping
     public ResponseEntity<Vote> makeVote(
             @RequestParam int restaurantId,
-            @RequestParam String requestDate
+            @RequestParam (required = false)String requestDate
     ) throws RestrictedOperationException {
         Vote created = super.createVote(restaurantId, requestDate);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

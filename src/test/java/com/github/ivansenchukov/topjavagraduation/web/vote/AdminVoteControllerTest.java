@@ -64,6 +64,21 @@ class AdminVoteControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void getByRestaurantIdAndDateToday() throws Exception {
+
+        LocalDate testDate = LocalDate.now();
+        Vote expected = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDate.atStartOfDay());
+        Vote returned = voteService.makeVote(expected, testDate.atStartOfDay());
+
+        mockMvc.perform(get(REST_URL + "by_restaurant")
+                .param("restaurantId", String.valueOf(MCDONNELS_ID))
+                .with(TestUtil.userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(VoteTestData.contentJson(returned));
+    }
+
+    @Test
     void getEmptyListByRestaurantAndDate() throws Exception {
 
         LocalDate requestDate = TEST_DATE;
