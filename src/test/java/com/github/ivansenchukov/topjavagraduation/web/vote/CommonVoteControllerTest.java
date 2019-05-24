@@ -19,8 +19,7 @@ import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
-import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.RestaurantTestData.MCDONNELS;
-import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.RestaurantTestData.MCDONNELS_ID;
+import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.RestaurantTestData.*;
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData.*;
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.VoteTestData.*;
 import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.*;
@@ -134,16 +133,9 @@ class CommonVoteControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @Disabled
-        // todo - implement this. Got troubles with creating test vote. It is needed, because on this level we don't have control on stopVotingTime
     void makeVoteIfPresent() throws Exception {
 
-//        LocalDate allowedDate = getDateAllowed();
-//
-//        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.VABI_VOBBLE, allowedDate.atTime(stopVotingTime));
-//        new TestUtil().createTestVote(newVote, USER_FIRST, voteService); // todo - refactor this. Make a bean or something like that!
-
-        LocalDate testDate = getDateAllowed();
+        LocalDate testDate = LocalDate.now().plusDays(1);
 
         Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate);
         Vote created = voteService.makeVote(new Vote(newVote), testDate.atStartOfDay());
@@ -151,7 +143,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
 
         ResultActions action = mockMvc.perform(post(REST_URL)
-                .param("restaurantId", String.valueOf(MCDONNELS_ID))
+                .param("restaurantId", String.valueOf(VABI_VOBBLE_ID))
                 .param("requestDate", testDate.toString())
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
                 .andDo(print())
@@ -160,7 +152,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
         Vote returned = TestUtil.readFromJson(action, Vote.class);
 
         assertMatch(returned, created);
-        assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), returned);  // todo - error in this linr
+        assertMatch(voteService.getByRestaurantAndDate(VABI_VOBBLE, testDate), returned);
     }
 
     @Test

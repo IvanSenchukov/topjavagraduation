@@ -78,7 +78,7 @@ public abstract class AbstractVoteController {
 
         log.info("User |{}| making vote |{}|...", vote.getUser(), vote);
 
-        return voteService.makeVote(vote, votingDate.atTime(now));
+        return voteService.makeVote(vote, LocalDateTime.now());
     }
     //</editor-fold>
 
