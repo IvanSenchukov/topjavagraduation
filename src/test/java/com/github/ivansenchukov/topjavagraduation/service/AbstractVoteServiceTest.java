@@ -47,6 +47,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
         Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDateTime);
         Vote created = service.makeVote(new Vote(newVote), testDateTime);
         newVote.setId(created.getId());
+
         assertMatch(newVote, created);
         assertMatch(service.getByRestaurantAndDate(RestaurantTestData.MCDONNELS, TEST_DATE.plusDays(1)), newVote);
     }
@@ -127,13 +128,15 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
 
     @Test
     void getByUser() throws Exception {
+        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
+
         List<Vote> votes = service.getByUser(UserTestData.USER_FIRST_ID);
-        assertMatch(votes, FIRST_USER_VOTE);
+        assertMatch(votes, YESTERDAY_FIRST_USER_VOTE, FIRST_USER_VOTE);
     }
 
     @Test
     void getEmptyListByRestaurantAndDate() throws Exception {
-        List<Vote> votes = service.getByRestaurantAndDate(RestaurantTestData.MCDONNELS, TEST_DATE.minusDays(1));
+        List<Vote> votes = service.getByRestaurantAndDate(RestaurantTestData.MCDONNELS, TEST_DATE.minusDays(2));
         assertMatch(votes, Collections.emptyList());
     }
 

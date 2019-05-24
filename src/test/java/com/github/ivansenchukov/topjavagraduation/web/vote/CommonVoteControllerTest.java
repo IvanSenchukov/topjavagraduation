@@ -61,7 +61,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(VoteTestData.contentJson(FIRST_USER_VOTE));
+                .andExpect(VoteTestData.contentJson(YESTERDAY_FIRST_USER_VOTE, FIRST_USER_VOTE));
     }
 
     @Test

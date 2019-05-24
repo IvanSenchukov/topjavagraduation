@@ -31,6 +31,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         entryMap.clear();
         entryMap.put(FIRST_USER_VOTE_ID, FIRST_USER_VOTE);
         entryMap.put(SECOND_USER_VOTE_ID, SECOND_USER_VOTE);
+        entryMap.put(YESTERDAY_FIRST_USER_VOTE_ID, YESTERDAY_FIRST_USER_VOTE);
         entryMap.put(BAD_USER_VOTE_ID, BAD_USER_VOTE);
         entryMap.put(BAD_RESTAURANT_VOTE_ID, BAD_RESTAURANT_VOTE);
         entryMap.put(BAD_DATE_VOTE_ID, BAD_DATE_VOTE);
@@ -129,11 +130,16 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
 
         return getCollection().stream()
                 .filter(vote ->
-                        Objects.nonNull(vote.getUser())
+                        Objects.nonNull(vote.getUser()) && Objects.nonNull(vote.getDateTime()) && Objects.nonNull(vote.getRestaurant())
                                 && Objects.nonNull(vote.getUser().getId())
                                 && Objects.equals(userId, vote.getUser().getId()))
-                .sorted(Comparator.comparing(Vote::getDateTime))
+                .sorted((o1, o2) -> {
+                    if (Objects.isNull(o1) || Objects.isNull(o1.getDateTime())) return 1;
+                    if (Objects.isNull(o2) || Objects.isNull(o2.getDateTime())) return -1;
+                    return o1.getDateTime().compareTo(o2.getDateTime());
+                })
                 .collect(Collectors.toList());
+
     }
 
     // TODO - fix this

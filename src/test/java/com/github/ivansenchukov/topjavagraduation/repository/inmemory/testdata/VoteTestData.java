@@ -19,13 +19,15 @@ public class VoteTestData {
     private static final Logger log = LoggerFactory.getLogger(VoteTestData.class.getName());
 
     public static final int FIRST_USER_VOTE_ID = 100009;
-    public static final int SECOND_USER_VOTE_ID = 100010;
-    public static final int BAD_USER_VOTE_ID = 100011;
-    public static final int BAD_RESTAURANT_VOTE_ID = 100012;
-    public static final int BAD_DATE_VOTE_ID = 100013;
+    public static final int YESTERDAY_FIRST_USER_VOTE_ID = 100010;
+    public static final int SECOND_USER_VOTE_ID = 100011;
+    public static final int BAD_USER_VOTE_ID = 100012;
+    public static final int BAD_RESTAURANT_VOTE_ID = 100013;
+    public static final int BAD_DATE_VOTE_ID = 100014;
 
     // TODO - delete admin vote, as it is restiction for the admins to make votes
     public static final Vote FIRST_USER_VOTE = new Vote(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 05, 10).atTime(9, 45));
+    public static final Vote YESTERDAY_FIRST_USER_VOTE = new Vote(YESTERDAY_FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 05, 9).atTime(9, 45));
     public static final Vote SECOND_USER_VOTE = new Vote(SECOND_USER_VOTE_ID, UserTestData.USER_SECOND, RestaurantTestData.VABI_VOBBLE, LocalDate.of(2019, 05, 10).atTime(8, 15));
     public static final Vote BAD_USER_VOTE = new Vote(BAD_USER_VOTE_ID, null, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 05, 10).atTime(10, 30));
     public static final Vote BAD_RESTAURANT_VOTE = new Vote(BAD_RESTAURANT_VOTE_ID, UserTestData.USER_FIRST, null, LocalDate.of(2019, 05, 10).atTime(7, 40));

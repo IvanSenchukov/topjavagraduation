@@ -31,6 +31,7 @@ INSERT INTO dishes (name, price, date, restaurant_id) VALUES
   ('Vabi-Vobble Sashimi', 200, '2019-05-10 00:00:00', 100004);
 
 
-INSERT INTO votes (user_id, restaurant_id, date_time)
-VALUES (100001, 100003, '2019-05-10 08:15:00'),
+INSERT INTO votes (user_id, restaurant_id, date_time) VALUES
+       (100001, 100003, '2019-05-10 08:15:00'),
+       (100001, 100004, '2019-05-09 08:15:00'),
        (100002, 100004, '2019-05-10 09:45:00');

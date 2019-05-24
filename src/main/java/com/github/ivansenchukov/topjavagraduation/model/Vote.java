@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
         @NamedQuery(name = Vote.GET_BY_RESTAURANT_ID_AND_DATE, query = "SELECT v FROM Vote v WHERE v.restaurant.id=:restaurantId AND cast(v.dateTime as date)=:date ORDER BY v.restaurant, v.user"),
         @NamedQuery(name = Vote.GET_BY_USER_AND_DATE, query = "SELECT v FROM Vote v WHERE v.user=:user AND cast(v.dateTime as date)=:date ORDER BY v.restaurant, v.user"),
         @NamedQuery(name = Vote.GET_BY_USER_ID_AND_DATE, query = "SELECT v FROM Vote v WHERE v.user.id=:userId AND cast(v.dateTime as date)=:date ORDER BY v.restaurant, v.user"),
-        @NamedQuery(name = Vote.GET_BY_USER_ID, query = "SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.restaurant, v.user"),
+        @NamedQuery(name = Vote.GET_BY_USER_ID, query = "SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.dateTime"),
         @NamedQuery(name = Vote.DELETE, query = "DELETE FROM Vote v WHERE v.id=:id"),
 //        @NamedQuery(name = Vote.GET_VOTES_COUNT, query = "SELECT v FROM Vote v WHERE cast(v.dateTime as date)=:date ORDER BY v.restaurant"), // TODO - implement this
 })
