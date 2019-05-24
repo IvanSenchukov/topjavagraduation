@@ -43,7 +43,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         Assert.notNull(vote, "Vote entry must not be null");
         Assert.notNull(vote.getUser(), "Vote 'user' property must not be null");
         Assert.notNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null");
-        Assert.notNull(vote.getDateTime(), "Vote 'date' property must not be null");
+        Assert.notNull(vote.getDate(), "Vote 'date' property must not be null");
 
         return super.save(vote);
     }
@@ -58,12 +58,12 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
                 Objects.isNull(vote)
                         || Objects.isNull(vote.getUser())
                         || Objects.isNull(vote.getRestaurant())
-                        || Objects.isNull(vote.getDateTime())) return null;
+                        || Objects.isNull(vote.getDate())) return null;
 
         // TODO - make decision about it. There must be some sort of alerting when inconsistend Data in repository!
 //        Objects.requireNonNull(vote.getUser(), "Vote 'user' property must not be null. Inconsistent Data in repository!");
 //        Objects.requireNonNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null. Inconsistent Data in repository!");
-//        Objects.requireNonNull(vote.getDateTime(), "Vote 'date' property must not be null. Inconsistend Data in repository!");
+//        Objects.requireNonNull(vote.getDate(), "Vote 'date' property must not be null. Inconsistend Data in repository!");
 
         return vote;
     }
@@ -73,7 +73,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         return getCollection().stream()
                 .filter(vote ->
                         Objects.nonNull(vote.getUser())
-                                && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate())
+                                && Objects.nonNull(vote.getDate()) && dateTime.equals(vote.getDate())
                                 && Objects.nonNull(vote.getRestaurant()) && Objects.equals(vote.getRestaurant(), restaurant))
                 .sorted((o1, o2) -> {
                     int restaurantCompare = o1.getRestaurant().getName().compareTo(o2.getRestaurant().getName());
@@ -89,7 +89,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         return getCollection().stream()
                 .filter(vote ->
                         Objects.nonNull(vote.getUser())
-                                && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate())
+                                && Objects.nonNull(vote.getDate()) && dateTime.equals(vote.getDate())
                                 && Objects.nonNull(vote.getRestaurant()) && Objects.equals(vote.getRestaurant().getId(), restaurantId))
                 .sorted(new Comparator<Vote>() {
                     @Override
@@ -109,7 +109,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         return getCollection().stream()
                 .filter(vote ->
                         Objects.nonNull(vote.getUser()) && Objects.equals(user, vote.getUser())
-                                && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate()))
+                                && Objects.nonNull(vote.getDate()) && dateTime.equals(vote.getDate()))
                 .findFirst()
                 .orElse(null);
     }
@@ -120,7 +120,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         return getCollection().stream()
                 .filter(vote ->
                         Objects.nonNull(vote.getUser()) && Objects.equals(userId, vote.getUser().getId())
-                                && Objects.nonNull(vote.getDateTime()) && dateTime.equals(vote.getDateTime().toLocalDate()))
+                                && Objects.nonNull(vote.getDate()) && dateTime.equals(vote.getDate()))
                 .findFirst()
                 .orElse(null);
     }
@@ -130,13 +130,13 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
 
         return getCollection().stream()
                 .filter(vote ->
-                        Objects.nonNull(vote.getUser()) && Objects.nonNull(vote.getDateTime()) && Objects.nonNull(vote.getRestaurant())
+                        Objects.nonNull(vote.getUser()) && Objects.nonNull(vote.getDate()) && Objects.nonNull(vote.getRestaurant())
                                 && Objects.nonNull(vote.getUser().getId())
                                 && Objects.equals(userId, vote.getUser().getId()))
                 .sorted((o1, o2) -> {
-                    if (Objects.isNull(o1) || Objects.isNull(o1.getDateTime())) return 1;
-                    if (Objects.isNull(o2) || Objects.isNull(o2.getDateTime())) return -1;
-                    return o1.getDateTime().compareTo(o2.getDateTime());
+                    if (Objects.isNull(o1) || Objects.isNull(o1.getDate())) return 1;
+                    if (Objects.isNull(o2) || Objects.isNull(o2.getDate())) return -1;
+                    return o1.getDate().compareTo(o2.getDate());
                 })
                 .collect(Collectors.toList());
 
@@ -148,7 +148,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         return getCollection().stream()
                 .filter(vote ->
                         Objects.nonNull(vote.getUser())
-                                && Objects.nonNull(vote.getDateTime()) && date.equals(vote.getDateTime().toLocalDate())
+                                && Objects.nonNull(vote.getDate()) && date.equals(vote.getDate())
                                 && Objects.nonNull(vote.getRestaurant())
                                 && restaurants.contains(vote.getRestaurant()))
                 .collect(groupingBy(Vote::getRestaurant, summingInt((ToIntFunction<Object>) value -> 1)));

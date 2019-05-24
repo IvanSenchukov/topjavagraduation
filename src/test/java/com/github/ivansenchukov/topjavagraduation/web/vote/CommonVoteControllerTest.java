@@ -58,7 +58,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
     void getByRestaurantIdAndDateToday() throws Exception {
 
         LocalDate testDate = LocalDate.now();
-        Vote expected = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDate.atStartOfDay());
+        Vote expected = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDate);
         Vote returned = voteService.makeVote(expected, testDate.atStartOfDay());
 
         mockMvc.perform(get(REST_URL + "by_restaurant")
@@ -101,7 +101,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
     void makeVote() throws Exception {
 
         LocalDate allowedDate = getDateAllowed();
-        Vote expected = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, allowedDate.atStartOfDay());
+        Vote expected = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, allowedDate);
 
         ResultActions action = mockMvc.perform(post(REST_URL)
                 .param("restaurantId", String.valueOf(MCDONNELS_ID))
@@ -145,7 +145,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         LocalDate testDate = getDateAllowed();
 
-        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate.atStartOfDay());
+        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate);
         Vote created = voteService.makeVote(new Vote(newVote), testDate.atStartOfDay());
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
@@ -202,7 +202,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         LocalDate testDate = getDateAllowed();
 
-        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate.atStartOfDay());
+        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate);
         Vote created = voteService.makeVote(new Vote(newVote), testDate.atStartOfDay());
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
@@ -222,7 +222,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         LocalDate testDate = getDateAllowed();
 
-        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate.atStartOfDay());
+        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate);
         Vote created = voteService.makeVote(new Vote(newVote), testDate.atStartOfDay());
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
@@ -242,7 +242,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         LocalDate testDate = getDateTooLate();
 
-        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate.atStartOfDay());
+        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate);
         Vote created = voteService.makeVote(new Vote(newVote), testDate.atStartOfDay());
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
@@ -262,7 +262,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         LocalDate testDate = getDateTooLate();
 
-        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate.atStartOfDay());
+        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate);
         Vote created = voteService.makeVote(new Vote(newVote), testDate.atStartOfDay());
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
@@ -284,7 +284,7 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         LocalDate testDate = getDateAllowed();
 
-        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate.atStartOfDay());
+        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate);
         Vote created = voteService.makeVote(new Vote(newVote), testDate.atStartOfDay());
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);

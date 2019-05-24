@@ -44,7 +44,7 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
     public List<Vote> getByRestaurantAndDate(Restaurant restaurant, LocalDate date) {
         return em.createNamedQuery(Vote.GET_BY_RESTAURANT_AND_DATE)
                 .setParameter("restaurant", restaurant)
-                .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .setParameter("date", date)
                 .getResultList();
     }
 
@@ -52,7 +52,7 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
     public List<Vote> getByRestaurantAndDate(Integer restaurantId, LocalDate date) {
         return em.createNamedQuery(Vote.GET_BY_RESTAURANT_ID_AND_DATE)
                 .setParameter("restaurantId", restaurantId)
-                .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .setParameter("date", date)
                 .getResultList();
     }
 
@@ -62,7 +62,7 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
 
         try {
             vote = (Vote) em.createNamedQuery(Vote.GET_BY_USER_AND_DATE)
-                    .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                    .setParameter("date", date)
                     .setParameter("user", user)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -78,7 +78,7 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
 
         try {
             vote = (Vote) em.createNamedQuery(Vote.GET_BY_USER_AND_DATE)
-                    .setParameter("date", Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                    .setParameter("date", date)
                     .setParameter("user", userId)
                     .getSingleResult();
         } catch (NoResultException e) {

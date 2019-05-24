@@ -5,18 +5,18 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "votes")
 @NamedQueries({
-        @NamedQuery(name = Vote.GET_BY_RESTAURANT_AND_DATE, query = "SELECT v FROM Vote v WHERE v.restaurant=:restaurant AND cast(v.dateTime as date)=:date ORDER BY v.restaurant, v.user"),
-        @NamedQuery(name = Vote.GET_BY_RESTAURANT_ID_AND_DATE, query = "SELECT v FROM Vote v WHERE v.restaurant.id=:restaurantId AND cast(v.dateTime as date)=:date ORDER BY v.restaurant, v.user"),
-        @NamedQuery(name = Vote.GET_BY_USER_AND_DATE, query = "SELECT v FROM Vote v WHERE v.user=:user AND cast(v.dateTime as date)=:date ORDER BY v.restaurant, v.user"),
-        @NamedQuery(name = Vote.GET_BY_USER_ID_AND_DATE, query = "SELECT v FROM Vote v WHERE v.user.id=:userId AND cast(v.dateTime as date)=:date ORDER BY v.restaurant, v.user"),
-        @NamedQuery(name = Vote.GET_BY_USER_ID, query = "SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.dateTime"),
+        @NamedQuery(name = Vote.GET_BY_RESTAURANT_AND_DATE, query = "SELECT v FROM Vote v WHERE v.restaurant=:restaurant AND v.date=:date ORDER BY v.restaurant, v.user"),
+        @NamedQuery(name = Vote.GET_BY_RESTAURANT_ID_AND_DATE, query = "SELECT v FROM Vote v WHERE v.restaurant.id=:restaurantId AND v.date=:date ORDER BY v.restaurant, v.user"),
+        @NamedQuery(name = Vote.GET_BY_USER_AND_DATE, query = "SELECT v FROM Vote v WHERE v.user=:user AND v.date=:date ORDER BY v.restaurant, v.user"),
+        @NamedQuery(name = Vote.GET_BY_USER_ID_AND_DATE, query = "SELECT v FROM Vote v WHERE v.user.id=:userId AND v.date=:date ORDER BY v.restaurant, v.user"),
+        @NamedQuery(name = Vote.GET_BY_USER_ID, query = "SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.date"),
         @NamedQuery(name = Vote.DELETE, query = "DELETE FROM Vote v WHERE v.id=:id"),
-//        @NamedQuery(name = Vote.GET_VOTES_COUNT, query = "SELECT v FROM Vote v WHERE cast(v.dateTime as date)=:date ORDER BY v.restaurant"), // TODO - implement this
+//        @NamedQuery(name = Vote.GET_VOTES_COUNT, query = "SELECT v FROM Vote v WHERE cast(v.date as date)=:date ORDER BY v.restaurant"), // TODO - implement this
 })
 public class Vote extends AbstractBaseEntity {
 
@@ -36,9 +36,9 @@ public class Vote extends AbstractBaseEntity {
     private User user;
 
     // todo - change this to "LocalDate" only
-    @Column(name = "date_time", nullable = false)
+    @Column(name = "date", nullable = false)
     @NotNull
-    private LocalDateTime dateTime;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -53,19 +53,19 @@ public class Vote extends AbstractBaseEntity {
     }
 
     public Vote(Vote prototype) {
-        this(prototype.getId(), prototype.getUser(), prototype.getRestaurant(), prototype.getDateTime());
+        this(prototype.getId(), prototype.getUser(), prototype.getRestaurant(), prototype.getDate());
     }
 
-    public Vote(User user, Restaurant restaurant, LocalDateTime dateTime) {
+    public Vote(User user, Restaurant restaurant, LocalDate date) {
         this.user = user;
-        this.dateTime = dateTime;
+        this.date = date;
         this.restaurant = restaurant;
     }
 
-    public Vote(Integer id, User user, Restaurant restaurant, LocalDateTime dateTime) {
+    public Vote(Integer id, User user, Restaurant restaurant, LocalDate date) {
         super(id);
         this.user = user;
-        this.dateTime = dateTime;
+        this.date = date;
         this.restaurant = restaurant;
     }
     //</editor-fold>
@@ -80,12 +80,12 @@ public class Vote extends AbstractBaseEntity {
         this.user = user;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Restaurant getRestaurant() {

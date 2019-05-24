@@ -67,7 +67,7 @@ class AdminVoteControllerTest extends AbstractControllerTest {
     void getByRestaurantIdAndDateToday() throws Exception {
 
         LocalDate testDate = LocalDate.now();
-        Vote expected = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDate.atStartOfDay());
+        Vote expected = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDate);
         Vote returned = voteService.makeVote(expected, testDate.atStartOfDay());
 
         mockMvc.perform(get(REST_URL + "by_restaurant")
@@ -129,7 +129,7 @@ class AdminVoteControllerTest extends AbstractControllerTest {
 
         LocalDate testDate = getDateAllowed();
 
-        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate.atStartOfDay());
+        Vote newVote = new Vote(USER_FIRST, RestaurantTestData.MCDONNELS, testDate);
         Vote created = voteService.makeVote(new Vote(newVote), testDate.atStartOfDay());
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);

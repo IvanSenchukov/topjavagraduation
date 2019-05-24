@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collections;
@@ -42,10 +43,9 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     //<editor-fold desc="MAKE VOTE">
     @Test
     void makeVote() throws Exception {
-        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime).plusDays(1);
 
-        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDateTime);
-        Vote created = service.makeVote(new Vote(newVote), testDateTime);
+        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, TEST_DATE.plusDays(1));
+        Vote created = service.makeVote(new Vote(newVote), TEST_DATE.plusDays(1).atStartOfDay());
         newVote.setId(created.getId());
 
         assertMatch(newVote, created);
@@ -57,7 +57,7 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
 
         LocalDateTime testDateTime = TEST_DATE.atTime(stopVotingTime).plusMinutes(1);
 
-        Vote newVote = new Vote(UserTestData.USER_FIRST, RestaurantTestData.VABI_VOBBLE, testDateTime);
+        Vote newVote = new Vote(UserTestData.USER_FIRST, RestaurantTestData.VABI_VOBBLE, testDateTime.toLocalDate());
         assertThrows(RestrictedOperationException.class, () ->
                 service.makeVote(new Vote(newVote), testDateTime));
     }
@@ -65,44 +65,35 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     @Test
     void makeVoteIfPresent() throws Exception {
 
-        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
-
-        Vote newVote = new Vote(UserTestData.USER_FIRST, RestaurantTestData.VABI_VOBBLE, testDateTime);
-        Vote updated = service.makeVote(new Vote(newVote), testDateTime);
+        Vote newVote = new Vote(UserTestData.USER_FIRST, RestaurantTestData.VABI_VOBBLE, TEST_DATE);
+        Vote updated = service.makeVote(new Vote(newVote), TEST_DATE.atStartOfDay());
         newVote.setId(updated.getId());
         assertMatch(newVote, updated);
         assertMatch(service.getByRestaurantAndDate(RestaurantTestData.VABI_VOBBLE, TEST_DATE), updated, SECOND_USER_VOTE);
-
     }
 
     @Test
     void makeVoteByAdmin() throws Exception {
 
-        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
-
-        Vote newVote = new Vote(UserTestData.ADMIN, RestaurantTestData.MCDONNELS, testDateTime);
+        Vote newVote = new Vote(UserTestData.ADMIN, RestaurantTestData.MCDONNELS, TEST_DATE);
         assertThrows(RestrictedOperationException.class, () ->
-                service.makeVote(new Vote(newVote), testDateTime));
+                service.makeVote(new Vote(newVote), TEST_DATE.atStartOfDay()));
     }
 
     @Test
     void makeVoteWithEmptyRestaurant() throws Exception {
 
-        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
-
-        Vote newVote = new Vote(USER_SECOND, null, testDateTime);
+        Vote newVote = new Vote(USER_SECOND, null, TEST_DATE);
         assertThrows(IllegalArgumentException.class, () ->
-                service.makeVote(new Vote(newVote), testDateTime));
+                service.makeVote(new Vote(newVote), TEST_DATE.atStartOfDay()));
     }
 
     @Test
     void makeVoteWithEmptyDate() throws Exception {
 
-        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
-
         Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, null);
         assertThrows(IllegalArgumentException.class, () ->
-                service.makeVote(new Vote(newVote), testDateTime));
+                service.makeVote(new Vote(newVote), TEST_DATE.atStartOfDay()));
     }
     //</editor-fold>
 
@@ -170,10 +161,8 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     @Test
     void delete() throws Exception {
 
-        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
-
-        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDateTime);
-        Vote created = service.makeVote(new Vote(newVote), testDateTime);
+        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, TEST_DATE);
+        Vote created = service.makeVote(new Vote(newVote), TEST_DATE.atStartOfDay());
 
         service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, getTestDateTimeAllowed(stopVotingTime));
 
@@ -183,10 +172,8 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     @Test
     void deleteByAdmin() throws Exception {
 
-        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
-
-        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDateTime);
-        Vote created = service.makeVote(new Vote(newVote), testDateTime);
+        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, TEST_DATE);
+        Vote created = service.makeVote(new Vote(newVote), TEST_DATE.atStartOfDay());
 
         service.delete(FIRST_USER_VOTE_ID, UserTestData.ADMIN, getTestDateTimeAllowed(stopVotingTime));
 
@@ -196,12 +183,10 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     @Test
     void deleteByAdminWhenTimeIsUp() throws Exception {
 
-        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
+        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, TEST_DATE);
+        Vote created = service.makeVote(new Vote(newVote), TEST_DATE.atStartOfDay());
 
-        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDateTime);
-        Vote created = service.makeVote(new Vote(newVote), testDateTime);
-
-        service.delete(FIRST_USER_VOTE_ID, UserTestData.ADMIN, getTestDateTimeTooLate(stopVotingTime));
+        service.delete(FIRST_USER_VOTE_ID, UserTestData.ADMIN, TEST_DATE.atTime(stopVotingTime));
 
         assertMatch(service.getByRestaurantAndDate(RestaurantTestData.MCDONNELS, TEST_DATE), created);
     }
@@ -209,13 +194,11 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     @Test
     void deleteWhenTimeIsUp() throws Exception {
 
-        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
-
-        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDateTime);
-        Vote created = service.makeVote(new Vote(newVote), testDateTime);
+        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, TEST_DATE);
+        Vote created = service.makeVote(new Vote(newVote), TEST_DATE.atStartOfDay());
 
         assertThrows(RestrictedOperationException.class, () ->
-                service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, getTestDateTimeTooLate(stopVotingTime)));
+                service.delete(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, TEST_DATE.atTime(stopVotingTime).plusMinutes(1)));
 
         assertMatch(service.getByRestaurantAndDate(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, created);
     }
@@ -225,11 +208,11 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
 
         LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
 
-        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDateTime);
+        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, TEST_DATE);
         Vote created = service.makeVote(new Vote(newVote), testDateTime);
 
         assertThrows(RestrictedOperationException.class, () ->
-                service.delete(FIRST_USER_VOTE_ID, USER_SECOND, getTestDateTimeTooLate(stopVotingTime)));
+                service.delete(FIRST_USER_VOTE_ID, USER_SECOND, TEST_DATE.atTime(stopVotingTime)));
 
         assertMatch(service.getByRestaurantAndDate(RestaurantTestData.MCDONNELS, TEST_DATE), FIRST_USER_VOTE, created);
     }
@@ -246,10 +229,8 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     @Disabled
     void getVotesCount() throws Exception {
 
-        LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
-
-        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDateTime);
-        Vote created = service.makeVote(new Vote(newVote), testDateTime);
+        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, TEST_DATE);
+        Vote created = service.makeVote(new Vote(newVote), TEST_DATE.atStartOfDay());
 
         Map<Restaurant, Integer> expected = new HashMap<>(2);
         expected.put(RestaurantTestData.MCDONNELS, 2);

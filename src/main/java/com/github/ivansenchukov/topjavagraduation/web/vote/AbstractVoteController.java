@@ -73,7 +73,7 @@ public abstract class AbstractVoteController {
                 : LocalDate.now();
         LocalTime now = LocalTime.now();
 
-        Vote vote = new Vote(voteMaker, restaurant, votingDate.atTime(now));
+        Vote vote = new Vote(voteMaker, restaurant, votingDate);
 
 
         log.info("User |{}| making vote |{}|...", vote.getUser(), vote);
