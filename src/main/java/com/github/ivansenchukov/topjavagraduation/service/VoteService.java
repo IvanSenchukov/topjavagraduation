@@ -99,14 +99,13 @@ public class VoteService {
      * @return
      * @throws RestrictedOperationException - in case that vote is present and update request is coming after stoptime
      */
-    // todo - make test, when one user make vote for another one
-    public Vote makeVote(Vote vote, User voteUser) throws RestrictedOperationException {
+    public Vote makeVote(Vote vote, LocalDateTime votingTime) throws RestrictedOperationException {
         Assert.notNull(vote, "vote must not be null");
         Assert.notNull(vote.getUser(), "Vote 'user' property must not be null");
         Assert.notNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null");
         Assert.notNull(vote.getDateTime(), "Vote 'date' property must not be null");
 
-        if (!CollectionUtils.contains(voteUser.getRoles().iterator(), Role.ROLE_USER)) {
+        if (!CollectionUtils.contains(vote.getUser().getRoles().iterator(), Role.ROLE_USER)) {
             throw new RestrictedOperationException("Only users with role 'USER' can make votes!");
         }
 
@@ -115,7 +114,7 @@ public class VoteService {
         if (Objects.isNull(presentVote)) {
             return saveNewVote(vote);
         } else {
-            return updatePresentVote(vote, presentVote);
+            return updatePresentVote(vote, presentVote, votingTime);
         }
     }
 
@@ -123,8 +122,8 @@ public class VoteService {
         return repository.save(vote);
     }
 
-    private Vote updatePresentVote(Vote vote, Vote presentVote) throws RestrictedOperationException {
-        checkStoptime(vote, vote.getDateTime(), String.format("You can't change your choice after %s", stopVotingTime.toString()));
+    private Vote updatePresentVote(Vote vote, Vote presentVote, LocalDateTime votingTime) throws RestrictedOperationException {
+        checkStoptime(presentVote, votingTime, String.format("You can't change your choice after %s", stopVotingTime.toString()));
         vote.setId(presentVote.getId());
         vote = repository.save(vote);
         return checkNotFoundWithId(vote, presentVote.getId());
@@ -164,9 +163,16 @@ public class VoteService {
     }
 
 
-    // todo - rebuild this
-    private void checkStoptime(Vote vote, LocalDateTime date, String errorMessage) throws RestrictedOperationException {
-        if (date.isAfter(LocalDate.now().atTime(stopVotingTime))) {
+    /**
+     *  User can change his vote only before stoptime at his voting date
+     *
+     * @param presentVote - vote, that has been made by user in the past
+     * @param votingDate - date and time of current user request
+     * @param errorMessage
+     * @throws RestrictedOperationException - if voting date and time is after current vote's date and stoptime
+     */
+    private void checkStoptime(Vote presentVote, LocalDateTime votingDate, String errorMessage) throws RestrictedOperationException {
+        if (votingDate.isAfter(presentVote.getDateTime().toLocalDate().atTime(stopVotingTime))) {
             throw new RestrictedOperationException(errorMessage);
         }
     }

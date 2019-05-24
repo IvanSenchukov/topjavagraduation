@@ -68,19 +68,17 @@ public abstract class AbstractVoteController {
 
         User voteMaker = userService.get(SecurityUtil.authUserId());
         Restaurant restaurant = restaurantService.get(restaurantId);
-        LocalDate date = requestDateStr != null
+        LocalDate votingDate = requestDateStr != null
                 ? LocalDate.parse(requestDateStr)   // todo - map this in request parameter.
                 : LocalDate.now();
         LocalTime now = LocalTime.now();
 
-        Vote vote = new Vote(voteMaker, restaurant, date.atTime(now));
+        Vote vote = new Vote(voteMaker, restaurant, votingDate.atTime(now));
 
 
-        log.info("User |{}| making vote |{}|...", voteMaker, vote);
+        log.info("User |{}| making vote |{}|...", vote.getUser(), vote);
 
-
-        // todo - reengineer makeVote to take date input.
-        return voteService.makeVote(vote, voteMaker);
+        return voteService.makeVote(vote, votingDate.atTime(now));
     }
     //</editor-fold>
 
