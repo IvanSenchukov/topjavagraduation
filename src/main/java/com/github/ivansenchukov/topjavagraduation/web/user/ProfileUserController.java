@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import static com.github.ivansenchukov.topjavagraduation.util.SecurityUtil.authUserId;
 
 @RestController
-@RequestMapping(ProfileRestController.REST_URL)
-public class ProfileRestController extends AbstractUserController {
+@RequestMapping(ProfileUserController.REST_URL)
+public class ProfileUserController extends AbstractUserController {
 
     public static final String REST_URL = WebUtil.COMMON_URL + "/profile";
 

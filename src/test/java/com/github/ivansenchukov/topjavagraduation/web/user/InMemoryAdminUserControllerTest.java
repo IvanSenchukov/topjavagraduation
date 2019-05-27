@@ -18,36 +18,34 @@ import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.tes
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// todo - make tests for common users, that try to send request on admin servlet
 @SpringJUnitConfig(classes = {
         InMemoryAppConfig.class
 })
-public class InMemoryAdminRestControllerSpringTest extends AbstractControllerTest {
+class InMemoryAdminUserControllerTest extends AbstractControllerTest {
 
     @Autowired
-    private AdminRestController controller;
+    private AdminUserController controller;
 
     @Autowired
     public UserRepository userRepository;
 
+
     @BeforeEach
-    public void resetRepository() {
+    void setUp() throws Exception {
         // re-initialize
         ((InMemoryUserRepositoryImpl) userRepository).refreshRepository();
     }
 
     @Test
-    void testDelete() throws Exception {
-
+    void delete() throws Exception {
         controller.delete(UserTestData.USER_FIRST_ID);
-
         Collection<User> users = controller.getAll();
         assertEquals(2, users.size());
         assertEquals(users.iterator().next(), ADMIN);
     }
 
     @Test
-    void testDeleteNotFound() throws Exception {
+    void deleteNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
                 controller.delete(10));
     }

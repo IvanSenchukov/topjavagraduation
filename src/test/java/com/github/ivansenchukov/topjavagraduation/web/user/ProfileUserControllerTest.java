@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData.*;
-import static com.github.ivansenchukov.topjavagraduation.web.user.ProfileRestController.REST_URL;
+import static com.github.ivansenchukov.topjavagraduation.web.user.ProfileUserController.REST_URL;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.userHttpBasic;
 
 @SpringJUnitConfig(DbConfig.class)
-class ProfileRestControllerTest extends AbstractControllerTest {
+class ProfileUserControllerTest extends AbstractControllerTest {
 
     @Test
     void testGet() throws Exception {
