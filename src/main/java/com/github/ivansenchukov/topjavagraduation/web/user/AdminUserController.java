@@ -14,8 +14,8 @@ import java.util.List;
 
 //todo - rename this to AdminUserController
 @RestController
-@RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminRestController extends AbstractUserController {
+@RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminUserController extends AbstractUserController {
 
     public static final String REST_URL = WebUtil.ADMIN_URL + "/users";
 

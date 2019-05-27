@@ -23,9 +23,9 @@ import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.userHttpBa
 
 @SpringJUnitConfig(DbConfig.class)
 // todo - make tests for common users, that try to send request on admin servlet
-class AdminRestControllerTest extends AbstractControllerTest {
+class AdminUserControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = AdminRestController.REST_URL + '/';
+    private static final String REST_URL = AdminUserController.REST_URL + '/';
 
     //<editor-fold desc="CREATE">
     @Test

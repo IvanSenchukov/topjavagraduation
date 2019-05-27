@@ -24,6 +24,7 @@
         <javax.servlet.version>3.1.0</javax.servlet.version>
         <jstl.version>1.2</jstl.version>
         <jackson-json.version>2.9.8</jackson-json.version>
+        <swagger.version>2.9.2</swagger.version>
 
         <!--    Database  -->
         <spring-data-jpa.version>2.1.5.RELEASE</spring-data-jpa.version>
@@ -96,6 +97,18 @@
             <artifactId>javax.annotation-api</artifactId>
             <version>1.3.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Web documentation - Swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
 
         <!--todo - do I really need this?-->
