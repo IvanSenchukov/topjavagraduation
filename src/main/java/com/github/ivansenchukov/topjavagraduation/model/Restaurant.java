@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
+// todo - set unique constraints for restaurant names.
 @Entity
 @Table(name = "restaurants")
 @NamedQueries({

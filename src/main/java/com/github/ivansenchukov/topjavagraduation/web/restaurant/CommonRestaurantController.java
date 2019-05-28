@@ -23,8 +23,8 @@ public class CommonRestaurantController extends AbstractRestaurantController {
     //todo - make documentation
     @Override
     @GetMapping
-    public List<Restaurant> getAll() {
-        return super.getAll();
+    public List<Restaurant> getAllRestaurants() {
+        return super.getAllRestaurants();
     }
 
 

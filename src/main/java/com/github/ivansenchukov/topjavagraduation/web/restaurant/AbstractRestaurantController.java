@@ -33,13 +33,13 @@ public abstract class AbstractRestaurantController {
 
     //<editor-fold desc="GET">
     //todo - make documentation
-    public List<Restaurant> getAll() {
+    public List<Restaurant> getAllRestaurants() {
         log.info("get all restaurants");
         return restaurantService.getAll();
     }
 
     //todo - make documentation
-    public Restaurant get(int id) {
+    public Restaurant getRestaurant(int id) {
         log.info("get restaurant by id=|{}|", id);
         return restaurantService.get(id);
     }
