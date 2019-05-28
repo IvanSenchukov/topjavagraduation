@@ -53,20 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .httpBasic().authenticationEntryPoint(swaggerAuthenticationEntryPoint())
+                .httpBasic()
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/rest/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers(AUTH_LIST).access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/**").access("isAuthenticated()")
-                .antMatchers(AUTH_LIST).authenticated()
                 .and()
                 .formLogin().defaultSuccessUrl("/", false);
-    }
-
-    private BasicAuthenticationEntryPoint swaggerAuthenticationEntryPoint() {
-        BasicAuthenticationEntryPoint entryPoint = new BasicAuthenticationEntryPoint();
-        entryPoint.setRealmName("Swagger Realm");
-        return entryPoint;
     }
 }
