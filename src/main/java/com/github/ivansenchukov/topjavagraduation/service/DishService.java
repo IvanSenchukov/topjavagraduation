@@ -36,8 +36,12 @@ public class DishService {
         return checkNotFoundWithId(repository.get(id), id);
     }
 
-    public List<Dish> get(Restaurant restaurant, LocalDate date) {
-        return repository.get(restaurant, date);
+    public List<Dish> getByRestaurantAndDate(Restaurant restaurant, LocalDate date) {
+        return repository.getByRestaurantAndDate(restaurant, date);
+    }
+
+    public List<Dish> getByRestaurantIdAndDate(Integer restaurantId, LocalDate date) {
+        return repository.getByRestaurantIdAndDate(restaurantId, date);
     }
 
     public void update(Dish dish) {

@@ -71,7 +71,6 @@ public abstract class AbstractVoteController {
         LocalDate votingDate = requestDateStr != null
                 ? LocalDate.parse(requestDateStr)   // todo - map this in request parameter.
                 : LocalDate.now();
-        LocalTime now = LocalTime.now();
 
         Vote vote = new Vote(voteMaker, restaurant, votingDate);
 

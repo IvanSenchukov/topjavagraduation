@@ -54,7 +54,7 @@ public abstract class AbstractRestaurantController {
                 : LocalDate.now();
 
         Restaurant restaurant = restaurantService.get(restaurantId);
-        List<Dish> dishes = dishService.get(restaurant, date);
+        List<Dish> dishes = dishService.getByRestaurantAndDate(restaurant, date);
         List<Vote> votes = voteService.getByRestaurantAndDate(restaurant, date);
 
 

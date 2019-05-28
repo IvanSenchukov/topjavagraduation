@@ -54,9 +54,17 @@ public class InMemoryDishRepositoryImpl extends InMemoryBaseRepositoryImpl<Dish>
     }
 
     @Override
-    public List<Dish> get(Restaurant restaurant, LocalDate date) {
+    public List<Dish> getByRestaurantAndDate(Restaurant restaurant, LocalDate date) {
         return getCollection().stream()
                 .filter(dish -> date.equals(dish.getDate()) && Objects.equals(dish.getRestaurant(), restaurant))
+                .sorted(Comparator.comparing(Dish::getName))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Dish> getByRestaurantIdAndDate(Integer restaurantId, LocalDate date) {
+        return getCollection().stream()
+                .filter(dish -> date.equals(dish.getDate()) && Objects.equals(dish.getRestaurant().getId(), restaurantId))
                 .sorted(Comparator.comparing(Dish::getName))
                 .collect(Collectors.toList());
     }

@@ -34,9 +34,17 @@ public class JpaDishRepositoryImpl implements DishRepository {
     }
 
     @Override
-    public List<Dish> get(Restaurant restaurant, LocalDate date) {
+    public List<Dish> getByRestaurantAndDate(Restaurant restaurant, LocalDate date) {
         return em.createNamedQuery(Dish.GET_BY_RESTAURANT_AND_DATE)
                 .setParameter("restaurant", restaurant)
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    @Override
+    public List<Dish> getByRestaurantIdAndDate(Integer restaurantId, LocalDate date) {
+        return em.createNamedQuery(Dish.GET_BY_RESTAURANT_ID_AND_DATE)
+                .setParameter("restaurantId", restaurantId)
                 .setParameter("date", date)
                 .getResultList();
     }

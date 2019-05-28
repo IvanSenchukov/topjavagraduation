@@ -27,7 +27,7 @@ public abstract class AbstractDishServiceTest extends AbstractServiceTest {
         Dish created = service.create(new Dish(newDish));
         newDish.setId(created.getId());
         assertMatch(newDish, created);
-        assertMatch(service.get(RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10)), newDish, MCDONNELS_BURGER, MCDONNELS_FRIES);
+        assertMatch(service.getByRestaurantAndDate(RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10)), newDish, MCDONNELS_BURGER, MCDONNELS_FRIES);
     }
 
     @Test
@@ -55,7 +55,7 @@ public abstract class AbstractDishServiceTest extends AbstractServiceTest {
 
     @Test
     void getByRestaurantAndDate() throws Exception {
-        List<Dish> dishes = service.get(RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));
+        List<Dish> dishes = service.getByRestaurantAndDate(RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));
         assertMatch(dishes, MCDONNELS_BURGER, MCDONNELS_FRIES);
     }
 
@@ -112,7 +112,7 @@ public abstract class AbstractDishServiceTest extends AbstractServiceTest {
     @Test
     void delete() throws Exception {
         service.delete(VABI_VOBBLE_SASHIMI_ID);
-        assertMatch(service.get(RestaurantTestData.VABI_VOBBLE, LocalDate.of(2019, 5, 10)), VABI_VOBBLE_SUSHI);
+        assertMatch(service.getByRestaurantAndDate(RestaurantTestData.VABI_VOBBLE, LocalDate.of(2019, 5, 10)), VABI_VOBBLE_SUSHI);
     }
 
     @Test

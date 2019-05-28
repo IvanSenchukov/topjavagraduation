@@ -49,7 +49,7 @@ class CommonRestaurantControllerTest extends AbstractControllerTest {
         LocalDate requestDate = TEST_DATE;
 
         Restaurant restaurant = MCDONNELS;
-        List<Dish> dishes = dishService.get(restaurant, requestDate);
+        List<Dish> dishes = dishService.getByRestaurantAndDate(restaurant, requestDate);
         List<Vote> votes = voteService.getByRestaurantAndDate(restaurant, requestDate);
 
         RestaurantOfferTo expected = new RestaurantOfferTo(requestDate, restaurant, dishes, votes);
@@ -69,7 +69,7 @@ class CommonRestaurantControllerTest extends AbstractControllerTest {
         LocalDate requestDate = LocalDate.now();
 
         Restaurant restaurant = MCDONNELS;
-        List<Dish> dishes = dishService.get(restaurant, requestDate);
+        List<Dish> dishes = dishService.getByRestaurantAndDate(restaurant, requestDate);
         List<Vote> votes = voteService.getByRestaurantAndDate(restaurant, requestDate);
 
         RestaurantOfferTo expected = new RestaurantOfferTo(requestDate, restaurant, dishes, votes);

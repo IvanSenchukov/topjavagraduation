@@ -14,11 +14,13 @@ import java.time.LocalDate;
 @Table(name = "dishes")
 @NamedQueries({
         @NamedQuery(name = Dish.GET_BY_RESTAURANT_AND_DATE, query = "SELECT d FROM Dish d WHERE d.restaurant=:restaurant AND d.date=:date ORDER BY d.name"),
+        @NamedQuery(name = Dish.GET_BY_RESTAURANT_ID_AND_DATE, query = "SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId AND d.date=:date ORDER BY d.name"),
         @NamedQuery(name = Dish.DELETE, query = "DELETE FROM Dish d WHERE d.id=:id"),
 })
 public class Dish extends AbstractBaseEntity {
 
     public static final String GET_BY_RESTAURANT_AND_DATE = "Dish.getByRestaurantAndDate";
+    public static final String GET_BY_RESTAURANT_ID_AND_DATE = "Dish.getByRestaurantIdAndDate";
     public static final String DELETE = "Dish.delete";
 
     //<editor-fold desc="Fields">
