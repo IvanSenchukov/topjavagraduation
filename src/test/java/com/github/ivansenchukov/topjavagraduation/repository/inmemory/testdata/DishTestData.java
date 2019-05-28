@@ -3,12 +3,14 @@ package com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata;
 import com.github.ivansenchukov.topjavagraduation.model.Dish;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.github.ivansenchukov.topjavagraduation.model.AbstractBaseEntity.START_SEQ;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readFromJsonMvcResult;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readListFromJsonMvcResult;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DishTestData {
@@ -43,5 +45,11 @@ public class DishTestData {
         assertThat(actual).isEqualTo(expected);
     }
 
+    public static ResultMatcher contentJson(Dish... expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, Dish.class), List.of(expected));
+    }
 
+    public static ResultMatcher contentJson(Dish expected) {
+        return result -> assertMatch(readFromJsonMvcResult(result, Dish.class), expected);
+    }
 }

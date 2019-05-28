@@ -3,6 +3,7 @@ package com.github.ivansenchukov.topjavagraduation.web;
 import com.github.ivansenchukov.topjavagraduation.configuration.RootApplicationConfig;
 import com.github.ivansenchukov.topjavagraduation.configuration.security.SecurityConfig;
 import com.github.ivansenchukov.topjavagraduation.configuration.web.WebConfig;
+import com.github.ivansenchukov.topjavagraduation.service.DishService;
 import com.github.ivansenchukov.topjavagraduation.service.RestaurantService;
 import com.github.ivansenchukov.topjavagraduation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,9 @@ abstract public class AbstractControllerTest {
 
     @Autowired
     protected RestaurantService restaurantService;
+
+    @Autowired
+    protected DishService dishService;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
