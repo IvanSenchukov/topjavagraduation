@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.DishTestData.*;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.TEST_DATE;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
@@ -57,6 +59,24 @@ public abstract class AbstractDishServiceTest extends AbstractServiceTest {
     void getByRestaurantAndDate() throws Exception {
         List<Dish> dishes = service.getByRestaurantAndDate(RestaurantTestData.MCDONNELS, LocalDate.of(2019, 5, 10));
         assertMatch(dishes, MCDONNELS_BURGER, MCDONNELS_FRIES);
+    }
+
+    @Test
+    void getByRestaurantAndDateEmptyList() throws Exception {
+        List<Dish> dishes = service.getByRestaurantAndDate(RestaurantTestData.MCDONNELS, TEST_DATE.minusYears(1));
+        assertMatch(dishes, Collections.EMPTY_LIST);
+    }
+
+    @Test
+    void getByRestaurantIdAndDate() throws Exception {
+        List<Dish> dishes = service.getByRestaurantIdAndDate(RestaurantTestData.MCDONNELS_ID, LocalDate.of(2019, 5, 10));
+        assertMatch(dishes, MCDONNELS_BURGER, MCDONNELS_FRIES);
+    }
+
+    @Test
+    void getByRestaurantIdAndDateEmptyList() throws Exception {
+        List<Dish> dishes = service.getByRestaurantIdAndDate(RestaurantTestData.MCDONNELS_ID, TEST_DATE.minusYears(1));
+        assertMatch(dishes, Collections.EMPTY_LIST);
     }
 
     @Test
