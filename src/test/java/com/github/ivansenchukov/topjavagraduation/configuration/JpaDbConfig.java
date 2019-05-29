@@ -2,12 +2,13 @@ package com.github.ivansenchukov.topjavagraduation.configuration;
 
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
@@ -27,9 +28,8 @@ import java.util.Properties;
         value = {"classpath:db/hsqldb.properties"}
 )
 @EnableTransactionManagement
-@ComponentScan(basePackages = "com.github.ivansenchukov.topjavagraduation.repository.datajpa")
-@EnableJpaRepositories(basePackages = "com.github.ivansenchukov.topjavagraduation.repository.datajpa")
-public class DbConfig {
+@ComponentScan(basePackages = "com.github.ivansenchukov.topjavagraduation.repository.jpa")
+public class JpaDbConfig {
 
 
     //        <!--no pooling-->
