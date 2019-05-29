@@ -31,7 +31,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
     @Test
     void testCreate() throws Exception {
         // todo - change all email domains in tests to @example
-        User expected = new User(new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER)));
+        User expected = new User(new User(null, "New", "new@example.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER)));
         ResultActions action = mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))

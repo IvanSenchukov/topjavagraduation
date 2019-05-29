@@ -23,7 +23,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     //<editor-fold desc="CREATE">
     @Test
     void create() throws Exception {
-        User newUser = new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER));
+        User newUser = new User(null, "New", "new@example.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER));
         User created = service.create(new User(newUser));
         newUser.setId(created.getId());
         assertMatch(newUser, created);
@@ -33,7 +33,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Test
     void duplicateMailCreate() throws Exception {
         assertThrows(DuplicateException.class, () ->
-                service.create(new User(null, "Duplicate", "firstuser@yandex.ru", "newPass", true, new Date(), Role.ROLE_USER)));
+                service.create(new User(null, "Duplicate", "firstuser@example.com", "newPass", true, new Date(), Role.ROLE_USER)));
     }
     //</editor-fold>
 
@@ -52,7 +52,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     }
     @Test
     void getByEmail() throws Exception {
-        User user = service.getByEmail("admin@gmail.com");
+        User user = service.getByEmail("admin@example.com");
         assertMatch(user, ADMIN);
     }
 

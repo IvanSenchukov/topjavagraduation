@@ -21,9 +21,9 @@ public class UserTestData {
     public static final int USER_FIRST_ID = 100001;
     public static final int USER_SECOND_ID = 100002;
 
-    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", true, new Date(), Role.ROLE_ADMIN);
-    public static final User USER_FIRST = new User(USER_FIRST_ID, "First_User", "firstuser@yandex.ru", "password", true, new Date(), Role.ROLE_USER);
-    public static final User USER_SECOND = new User(USER_SECOND_ID, "Second_User", "seconduser@yandex.ru", "password", true, new Date(), Role.ROLE_USER);
+    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@example.com", "admin", true, new Date(), Role.ROLE_ADMIN);
+    public static final User USER_FIRST = new User(USER_FIRST_ID, "First_User", "firstuser@example.com", "password", true, new Date(), Role.ROLE_USER);
+    public static final User USER_SECOND = new User(USER_SECOND_ID, "Second_User", "seconduser@example.com", "password", true, new Date(), Role.ROLE_USER);
 
     public static void assertMatch(User actual, User expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered");
