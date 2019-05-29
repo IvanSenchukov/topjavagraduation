@@ -223,33 +223,4 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
                 service.delete(1, UserTestData.ADMIN, getTestDateTimeAllowed(stopVotingTime)));
     }
     //</editor-fold>
-
-    // todo - implement this functional
-    @Test
-    @Disabled
-    void getVotesCount() throws Exception {
-
-        Vote newVote = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, TEST_DATE);
-        Vote created = service.makeVote(new Vote(newVote), TEST_DATE.atStartOfDay());
-
-        Map<Restaurant, Integer> expected = new HashMap<>(2);
-        expected.put(RestaurantTestData.MCDONNELS, 2);
-        expected.put(RestaurantTestData.VABI_VOBBLE, 0);
-
-        Map<Restaurant, Integer> restaurantVotesCount = service.getVotesCount(TEST_DATE, RestaurantTestData.MCDONNELS, RestaurantTestData.VABI_VOBBLE);
-        assertMatch(restaurantVotesCount, expected);
-    }
-
-    // todo - implement this functional
-    @Test
-    @Disabled
-    void getVotesCountWithZeroes() throws Exception {
-
-        Map<Restaurant, Integer> expected = new HashMap<>(2);
-        expected.put(RestaurantTestData.MCDONNELS, 0);
-        expected.put(RestaurantTestData.VABI_VOBBLE, 0);
-
-        Map<Restaurant, Integer> restaurantVotesCount = service.getVotesCount(TEST_DATE.minusDays(1), RestaurantTestData.MCDONNELS, RestaurantTestData.VABI_VOBBLE);
-        assertMatch(restaurantVotesCount, expected);
-    }
 }

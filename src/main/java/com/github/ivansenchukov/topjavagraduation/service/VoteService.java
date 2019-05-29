@@ -74,18 +74,6 @@ public class VoteService {
         return repository.getByUser(userId);
     }
 
-    /**
-     * Returns number of votes, that given restaurants have on a given date
-     * Returns list of given restaurants and zeroes if no vote is present
-     *
-     * @param date
-     * @param restaurants
-     * @return
-     */
-    public Map<Restaurant, Integer> getVotesCount(LocalDate date, Restaurant... restaurants) {
-        return repository.getVotesCount(date, List.of(restaurants));
-    }
-
 
     /**
      * only user with role "USER" can make votes.

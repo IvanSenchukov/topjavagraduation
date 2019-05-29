@@ -91,12 +91,6 @@ public class DataJpaVoteRepositoryImpl implements VoteRepository {
         return votes;
     }
 
-    // todo - implement this
-    @Override
-    public Map<Restaurant, Integer> getVotesCount(LocalDate date, List<Restaurant> restaurants) {
-        throw new UnsupportedOperationException();
-    }
-
     @Override
     public boolean delete(int id) {
         return voteDataJpaRepository.delete(id) != 0;

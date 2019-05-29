@@ -59,12 +59,6 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
                         || Objects.isNull(vote.getUser())
                         || Objects.isNull(vote.getRestaurant())
                         || Objects.isNull(vote.getDate())) return null;
-
-        // TODO - make decision about it. There must be some sort of alerting when inconsistend Data in repository!
-//        Objects.requireNonNull(vote.getUser(), "Vote 'user' property must not be null. Inconsistent Data in repository!");
-//        Objects.requireNonNull(vote.getRestaurant(), "Vote 'restaurant' property must not be null. Inconsistent Data in repository!");
-//        Objects.requireNonNull(vote.getDate(), "Vote 'date' property must not be null. Inconsistend Data in repository!");
-
         return vote;
     }
 
@@ -140,17 +134,5 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
                 })
                 .collect(Collectors.toList());
 
-    }
-
-    // TODO - fix this
-    @Override
-    public Map<Restaurant, Integer> getVotesCount(LocalDate date, List<Restaurant> restaurants) {
-        return getCollection().stream()
-                .filter(vote ->
-                        Objects.nonNull(vote.getUser())
-                                && Objects.nonNull(vote.getDate()) && date.equals(vote.getDate())
-                                && Objects.nonNull(vote.getRestaurant())
-                                && restaurants.contains(vote.getRestaurant()))
-                .collect(groupingBy(Vote::getRestaurant, summingInt((ToIntFunction<Object>) value -> 1)));
     }
 }

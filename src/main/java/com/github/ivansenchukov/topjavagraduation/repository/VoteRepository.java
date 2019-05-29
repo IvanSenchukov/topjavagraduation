@@ -34,7 +34,4 @@ public interface VoteRepository {
 
     // false if not found
     boolean delete(int id);
-
-    // map<Restaurant, 0> if votes is absent
-    Map<Restaurant, Integer> getVotesCount(LocalDate date, List<Restaurant> restaurants);
 }
