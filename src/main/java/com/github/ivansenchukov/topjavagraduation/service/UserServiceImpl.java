@@ -8,7 +8,8 @@ import com.github.ivansenchukov.topjavagraduation.repository.UserRepository;
 import com.github.ivansenchukov.topjavagraduation.to.UserTo;
 import com.github.ivansenchukov.topjavagraduation.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,19 +33,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
 
         // TODO - remove this workaround for duplicates check after solving it on the Repository layer
         //<editor-fold desc="Duplicate by email workaround">
         User presentUser = repository.getByEmail(user.getEmail());
-        if (Objects.nonNull(presentUser)) throw new DuplicateException(String.format("User with email %s is already exists", user.getEmail()));
+        if (Objects.nonNull(presentUser))
+            throw new DuplicateException(String.format("User with email %s is already exists", user.getEmail()));
         //</editor-fold>
 
         return repository.save(user);
     }
 
     @Override
+    @CacheEvict(value = "users", allEntries = true)
     public void delete(int id) throws NotFoundException {
         checkNotFoundWithId(repository.delete(id), id);
     }
@@ -60,11 +64,13 @@ public class UserServiceImpl implements UserService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
+    @Cacheable("users")
     @Override
     public List<User> getAll() {
         return repository.getAll();
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     @Override
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
@@ -72,6 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void update(UserTo userTo) {
         User user = get(userTo.getId());
@@ -79,6 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void enable(int id, boolean enabled) {
         User user = get(id);

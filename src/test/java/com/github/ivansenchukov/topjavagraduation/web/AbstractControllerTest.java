@@ -3,10 +3,13 @@ package com.github.ivansenchukov.topjavagraduation.web;
 import com.github.ivansenchukov.topjavagraduation.configuration.RootApplicationConfig;
 import com.github.ivansenchukov.topjavagraduation.configuration.security.SecurityConfig;
 import com.github.ivansenchukov.topjavagraduation.configuration.web.WebConfig;
+import com.github.ivansenchukov.topjavagraduation.repository.JpaUtil;
 import com.github.ivansenchukov.topjavagraduation.service.DishService;
 import com.github.ivansenchukov.topjavagraduation.service.RestaurantService;
 import com.github.ivansenchukov.topjavagraduation.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -36,13 +39,11 @@ abstract public class AbstractControllerTest {
 
     protected MockMvc mockMvc;
 
-//    todo - add for caching
-//    @Autowired
-//    private CacheManager cacheManager;
+    @Autowired
+    private CacheManager cacheManager;
 
-//    todo - add for caching
-//    @Autowired(required = false)
-//    private JpaUtil jpaUtil;
+    @Autowired(required = false)
+    private JpaUtil jpaUtil;
 
     @Autowired
     protected UserService userService;
@@ -65,11 +66,13 @@ abstract public class AbstractControllerTest {
                 .build();
     }
 
-//    @BeforeEach
-//    void setUp() {
-//        cacheManager.getCache("users").clear();
-//        if (jpaUtil != null) {
-//            jpaUtil.clear2ndLevelHibernateCache();
-//        }
-//    }
+    @BeforeEach
+    void setUp() {
+        cacheManager.getCache("users").clear();
+        cacheManager.getCache("restaurants").clear();
+        cacheManager.getCache("dishes").clear();
+        if (jpaUtil != null) {
+            jpaUtil.clear2ndLevelHibernateCache();
+        }
+    }
 }

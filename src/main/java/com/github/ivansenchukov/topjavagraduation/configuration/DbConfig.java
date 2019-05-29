@@ -1,5 +1,6 @@
 package com.github.ivansenchukov.topjavagraduation.configuration;
 
+import com.github.ivansenchukov.topjavagraduation.repository.JpaUtil;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -99,5 +100,10 @@ public class DbConfig {
         populator.addScript(schemaScript);
         populator.addScript(dataScript);
         return populator;
+    }
+
+    @Bean
+    public JpaUtil jpaUtil() {
+        return new JpaUtil();
     }
 }

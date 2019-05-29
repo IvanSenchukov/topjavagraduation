@@ -1,5 +1,6 @@
 package com.github.ivansenchukov.topjavagraduation.model;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Table(name = "dishes")
 @NamedQueries({
         @NamedQuery(name = Dish.GET_BY_RESTAURANT_AND_DATE, query = "SELECT d FROM Dish d WHERE d.restaurant=:restaurant AND d.date=:date ORDER BY d.name"),

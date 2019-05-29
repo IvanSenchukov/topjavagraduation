@@ -20,7 +20,7 @@
 
         <spring.version>5.1.4.RELEASE</spring.version>
 
-        <!--    Web-->
+        <!--    Web   -->
         <javax.servlet.version>3.1.0</javax.servlet.version>
         <jstl.version>1.2</jstl.version>
         <jackson-json.version>2.9.8</jackson-json.version>
@@ -28,6 +28,9 @@
 
         <!--    Database  -->
         <spring-data-jpa.version>2.1.5.RELEASE</spring-data-jpa.version>
+
+        <!--    Cache  -->
+        <ehcache.version>3.7.0</ehcache.version>
 
         <!-- Hibernate -->
         <hibernate.version>5.4.1.Final</hibernate.version>
@@ -173,6 +176,26 @@
             <version>2.3.4</version>
         </dependency>
 
+
+        <!-- Cache -->
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <scope>runtime</scope>
+            <version>${ehcache.version}</version>
+        </dependency>
+
+        <!--https://medium.com/criciumadev/its-time-migrating-to-java-11-5eb3868354f9-->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.4.0-b180830.0438</version>
+        </dependency>
 
         <!--- ORM -->
         <dependency>

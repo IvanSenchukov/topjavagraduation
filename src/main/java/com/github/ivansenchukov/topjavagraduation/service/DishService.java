@@ -5,6 +5,8 @@ import com.github.ivansenchukov.topjavagraduation.model.Dish;
 import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import com.github.ivansenchukov.topjavagraduation.repository.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -23,6 +25,7 @@ public class DishService {
         this.repository = repository;
     }
 
+    @CacheEvict(value = "dishes", allEntries = true)
     public Dish create(Dish dish) {
         Assert.notNull(dish, "dish must not be null");
         Assert.notNull(dish.getDate(), "dish date property must not be null");
@@ -36,14 +39,17 @@ public class DishService {
         return checkNotFoundWithId(repository.get(id), id);
     }
 
+    @Cacheable(value = "dishes")
     public List<Dish> getByRestaurantAndDate(Restaurant restaurant, LocalDate date) {
         return repository.getByRestaurantAndDate(restaurant, date);
     }
 
+    @Cacheable(value = "dishes")
     public List<Dish> getByRestaurantIdAndDate(Integer restaurantId, LocalDate date) {
         return repository.getByRestaurantIdAndDate(restaurantId, date);
     }
 
+    @CacheEvict(value = "dishes", allEntries = true)
     public void update(Dish dish) {
         Assert.notNull(dish, "dish must not be null");
         Assert.notNull(dish.getDate(), "dish date property must not be null");
@@ -52,6 +58,7 @@ public class DishService {
         checkNotFoundWithId(repository.save(dish), dish.getId());
     }
 
+    @CacheEvict(value = "dishes", allEntries = true)
     public void delete(int id) throws NotFoundException {
         checkNotFoundWithId(repository.delete(id), id);
     }

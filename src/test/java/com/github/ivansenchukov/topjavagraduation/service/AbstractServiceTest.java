@@ -1,7 +1,11 @@
 package com.github.ivansenchukov.topjavagraduation.service;
 
 import com.github.ivansenchukov.topjavagraduation.configuration.RootApplicationConfig;
+import com.github.ivansenchukov.topjavagraduation.repository.JpaUtil;
+import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.bridge.SLF4JBridgeHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 })
 @Transactional
 abstract class AbstractServiceTest {
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @Autowired(required = false)
+    private JpaUtil jpaUtil;
 
     static {
         // needed only for java.util.logging (postgres driver)
@@ -30,4 +40,15 @@ abstract class AbstractServiceTest {
             }
         });
     }
+
+    @BeforeEach
+    void setUp() {
+        cacheManager.getCache("users").clear();
+        cacheManager.getCache("restaurants").clear();
+        cacheManager.getCache("dishes").clear();
+        if (jpaUtil != null) {
+            jpaUtil.clear2ndLevelHibernateCache();
+        }
+    }
+
 }

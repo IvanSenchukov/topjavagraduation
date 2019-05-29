@@ -8,7 +8,7 @@ import org.springframework.context.annotation.*;
 import java.time.LocalTime;
 
 @Configuration
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, CacheConfig.class})
 @ComponentScan(basePackages = "com.github.ivansenchukov.topjavagraduation.**.service")
 @PropertySource(
         value = {"classpath:app.properties"}
