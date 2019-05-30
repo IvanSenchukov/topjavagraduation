@@ -13,7 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-// todo - may change example values in future
+// todo - should add example values for Swagger in the future
 @Api(description = "Endpoint for admins to work with Restaurants")
 @RestController
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -24,11 +24,6 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     //<editor-fold desc="GET">
 
-    /**
-     * Returns list of all restaurants that are in the repository
-     *
-     * @return List of all restaurants.
-     */
     @ApiOperation(value = "Returns list of all Restaurants that are in the repository")
     @Override
     @GetMapping
@@ -36,12 +31,6 @@ public class AdminRestaurantController extends AbstractRestaurantController {
         return super.getAllRestaurants();
     }
 
-    /**
-     * Returns restaurant by given id
-     *
-     * @param id - id of wanted restaurant
-     * @return - restaurant by id
-     */
     @ApiOperation(value = "Returns Restaurant by given ID")
     @Override
     @GetMapping("/{id}")
@@ -55,15 +44,9 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     //<editor-fold desc="CREATE">
 
-    /**
-     * Create given restaurant
-     *
-     * @param restaurant - restaurant to create. id property must be NULL
-     * @return - created restaurant object
-     */
-    @ApiOperation(value = "Saves given Restaurant to repository")
+    @ApiOperation(value = "Saves given Restaurant to repository. Returns location of created restaurant object")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createRestaurant(
+    public ResponseEntity<Restaurant> createWithLocation(
             @ApiParam(required = true, value = "Restaurant to create. ID property must be NULL") @RequestBody Restaurant restaurant
     ) {
         Restaurant created = super.create(restaurant);
@@ -76,12 +59,6 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
 
     //<editor-fold desc="UPDATE">
-    /**
-     * Update given restaurant.
-     *
-     * @param restaurant - Restaurant to update
-     * @param id         - id of updated restaurant
-     */
     @ApiOperation(value = "Update given Restaurant in repository")
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -96,11 +73,6 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     //<editor-fold desc="DELETE">
 
-    /**
-     * Delete restaurant by given id
-     *
-     * @param id - id of restaurant to delete
-     */
     @ApiOperation(value = "Delete Restaurant from repository by given ID")
     @Override
     @DeleteMapping("/{id}")

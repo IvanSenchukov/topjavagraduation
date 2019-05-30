@@ -54,6 +54,7 @@ Steps to make this thing work:
 #### TODO-s
 
 - Full documentation in Swagger
+- Enabeled and Disabeled users support
 - Checkout response keys.
 - Implement idempotency in POST and PUT requests;
 - Try out some Spring Security features;

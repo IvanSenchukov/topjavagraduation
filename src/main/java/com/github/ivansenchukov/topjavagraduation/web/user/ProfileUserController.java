@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.github.ivansenchukov.topjavagraduation.util.SecurityUtil.authUserId;
 
+// todo - should add example values for Swagger in the future
 @RestController
 @RequestMapping(ProfileUserController.REST_URL)
 public class ProfileUserController extends AbstractUserController {

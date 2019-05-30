@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+// todo - should add example values for Swagger in the future
 @RestController
 @RequestMapping(value = CommonVoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class CommonVoteController extends AbstractVoteController {

@@ -21,19 +21,31 @@ public abstract class AbstractUserController {
 
 
     //<editor-fold desc="GET">
-    //todo - make documentation
+
+    /**
+     *
+     * @return - list of all users
+     */
     public List<User> getAll() {
         log.info("get all users");
         return service.getAll();
     }
 
-    //todo - make documentation
+    /**
+     *
+     * @param id    - ID of wanted User
+     * @return      - User by ID
+     */
     public User get(int id) {
         log.info("get user with id |{}|", id);
         return service.get(id);
     }
 
-    //todo - make documentation
+    /**
+     *
+     * @param email     - email of wanted user
+     * @return          - User by Email
+     */
     public User getByMail(String email) {
         log.info("get user by email |{}|", email);
         return service.getByEmail(email);
@@ -42,7 +54,13 @@ public abstract class AbstractUserController {
 
 
     //<editor-fold desc="CREATE">
-    //todo - make documentation
+
+    /**
+     * Create new User
+     *
+     * @param user  - prototype User to create (ID must be NULL)
+     * @return      - created User
+     */
     public User create(User user) {
         log.info("create user |{}|", user);
         checkNew(user);
@@ -52,14 +70,25 @@ public abstract class AbstractUserController {
 
 
     //<editor-fold desc="UPDATE">
-    //todo - make documentation
+
+    /**
+     * Update User
+     *
+     * @param user  - prototype User to update
+     * @param id    - ID of User for update
+     */
     public void update(User user, int id) {
         log.info("update user |{}| with id=|{}|", user, id);
         assureIdConsistent(user, id);
         service.update(user);
     }
 
-    //todo - make documentation
+    /**
+     * Update User by User Transport object
+     *
+     * @param userTo    - Transport Object of prototype User to update
+     * @param id        - ID of User for update
+     */
     public void update(UserTo userTo, int id) {
         log.info("update user |{}| with id=|{}|", userTo, id);
         assureIdConsistent(userTo, id);
@@ -67,7 +96,8 @@ public abstract class AbstractUserController {
     }
 
     // todo - make implementation for it or delete
-    //todo - make documentation
+    // todo - and then make changes to all code - disabled users must not be authorized
+    // todo - make documentation
     public void enable(int id, boolean enabled) {
         log.info(enabled ? "enable user with id=|{}|" : "disable user with id=|{}|", id);
         service.enable(id, enabled);
@@ -76,7 +106,12 @@ public abstract class AbstractUserController {
 
 
     //<editor-fold desc="DELETE">
-    //todo - make documentation
+
+    /**
+     * Delete User by given ID
+     *
+     * @param id - ID of User to delete
+     */
     public void delete(int id) {
         log.info("delete user with id=|{}|", id);
         service.delete(id);

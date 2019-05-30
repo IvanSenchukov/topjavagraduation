@@ -2,7 +2,6 @@ package com.github.ivansenchukov.topjavagraduation.web.dish;
 
 
 import com.github.ivansenchukov.topjavagraduation.model.Dish;
-import com.github.ivansenchukov.topjavagraduation.model.Restaurant;
 import com.github.ivansenchukov.topjavagraduation.service.DishService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +20,25 @@ public abstract class AbstractDishController {
     private DishService dishService;
 
     //<editor-fold desc="GET">
-    //todo - make documentation
+
+    /**
+     * Returns dish by given ID
+     *
+     * @param id - ID of wanted dish
+     * @return - dish by ID
+     */
     public Dish get(int id) {
         log.info("get dish with id |{}|", id);
         return dishService.get(id);
     }
 
-    //todo - make documentation
+    /**
+     * Returns Restaurant menu by restaurantId and date
+     *
+     * @param restaurantId   - ID of the Restaurant, which menu wants to see user
+     * @param requestDateStr - date, on which user wants to see menu. If absent - today
+     * @return - List of Dish objects, ordered by name
+     */
     public List<Dish> getByRestaurantAndDate(int restaurantId, String requestDateStr) {
         log.info("get dish by restaurantId |{}| and date |{}|", restaurantId, requestDateStr);
 
@@ -41,7 +52,14 @@ public abstract class AbstractDishController {
 
 
     //<editor-fold desc="CREATE">
-    //todo - make documentation
+
+    /**
+     * Create given dish
+     * Returns location of created Dish object
+     *
+     * @param dish - Dish object to create. ID property must be NULL
+     * @return - location of created Dish Object
+     */
     public Dish create(Dish dish) {
 
         log.info("create dish |{}|", dish);
@@ -53,7 +71,12 @@ public abstract class AbstractDishController {
 
 
     //<editor-fold desc="UPDATE">
-    //todo - make documentation
+    /**
+     * Update given dish
+     *
+     * @param dish  - Dish object to update.
+     * @param id    - ID of dish, that must be updated.
+     */
     public void update(Dish dish, int id) {
         log.info("update dish |{}| with id=|{}|", dish, id);
         assureIdConsistent(dish, id);
@@ -63,7 +86,11 @@ public abstract class AbstractDishController {
 
 
     //<editor-fold desc="DELETE">
-    //todo - make documentation
+    /**
+     * Delete Dish by given ID
+     *
+     * @param id - ID of dish to delete
+     */
     public void delete(int id) {
         log.info("delete dish with id=|{}|", id);
         dishService.delete(id);
