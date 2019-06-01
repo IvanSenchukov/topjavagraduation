@@ -7,7 +7,6 @@ import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.V
 import com.github.ivansenchukov.topjavagraduation.service.VoteService;
 import com.github.ivansenchukov.topjavagraduation.web.AbstractControllerTest;
 import com.github.ivansenchukov.topjavagraduation.web.TestUtil;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -17,11 +16,11 @@ import org.springframework.web.util.NestedServletException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collections;
-import java.util.List;
 
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.RestaurantTestData.*;
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData.*;
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.VoteTestData.*;
+import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.VoteTestData.assertMatch;
 import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -48,8 +47,8 @@ class CommonVoteControllerTest extends AbstractControllerTest {
                 .param("restaurantId", String.valueOf(MCDONNELS_ID))
                 .param("requestDate", TEST_DATE.toString())
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(VoteTestData.contentJson(FIRST_USER_VOTE));
     }
 
@@ -63,8 +62,8 @@ class CommonVoteControllerTest extends AbstractControllerTest {
         mockMvc.perform(get(REST_URL + "by_restaurant")
                 .param("restaurantId", String.valueOf(MCDONNELS_ID))
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(VoteTestData.contentJson(returned));
     }
 
@@ -73,8 +72,8 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         mockMvc.perform(get(REST_URL + "by_user")
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(VoteTestData.contentJson(YESTERDAY_FIRST_USER_VOTE, FIRST_USER_VOTE));
     }
 
@@ -87,8 +86,8 @@ class CommonVoteControllerTest extends AbstractControllerTest {
                 .param("restaurantId", String.valueOf(MCDONNELS_ID))
                 .param("requestDate", TEST_DATE.minusDays(1).toString())
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(VoteTestData.contentJson());
     }
 
@@ -121,15 +120,12 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         LocalDate dateTooLate = getDateTooLate();
 
-        assertThrows(NestedServletException.class/* todo - think, how to change to this -> RestrictedOperationException.class*/, () -> {
-            ResultActions action = mockMvc.perform(post(REST_URL)
-                    .param("restaurantId", String.valueOf(MCDONNELS_ID))
-                    .param("requestDate", dateTooLate.toString())
-                    .with(TestUtil.userHttpBasic(USER_SECOND)))
-                    .andDo(print())
-                    .andExpect(status().isCreated());
-
-        });
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .param("restaurantId", String.valueOf(MCDONNELS_ID))
+                .param("requestDate", dateTooLate.toString())
+                .with(TestUtil.userHttpBasic(USER_SECOND)))
+                .andDo(print())
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -160,15 +156,12 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         LocalDate dateAllowed = getDateAllowed();
 
-        assertThrows(NestedServletException.class/* todo - think, how to change to this -> RestrictedOperationException.class*/, () -> {
-            ResultActions action = mockMvc.perform(post(REST_URL)
-                    .param("restaurantId", String.valueOf(MCDONNELS_ID))
-                    .param("requestDate", dateAllowed.toString())
-                    .with(TestUtil.userHttpBasic(ADMIN)))
-                    .andDo(print())
-                    .andExpect(status().isCreated());
-
-        });
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .param("restaurantId", String.valueOf(MCDONNELS_ID))
+                .param("requestDate", dateAllowed.toString())
+                .with(TestUtil.userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -176,15 +169,12 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         LocalDate dateAllowed = getDateAllowed();
 
-        assertThrows(NestedServletException.class/* todo - think, how to change to this -> RestrictedOperationException.class*/, () -> {
-            ResultActions action = mockMvc.perform(post(REST_URL)
-                    .param("restaurantId", String.valueOf(1))
-                    .param("requestDate", dateAllowed.toString())
-                    .with(TestUtil.userHttpBasic(USER_FIRST)))
-                    .andDo(print())
-                    .andExpect(status().isCreated());
-
-        });
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .param("restaurantId", String.valueOf(1))
+                .param("requestDate", dateAllowed.toString())
+                .with(TestUtil.userHttpBasic(USER_FIRST)))
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
     //</editor-fold>
 
@@ -205,7 +195,6 @@ class CommonVoteControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), Collections.emptyList());
     }
 
@@ -225,7 +214,6 @@ class CommonVoteControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), Collections.emptyList());
     }
 
@@ -239,12 +227,10 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
 
-
         mockMvc.perform(delete(REST_URL + created.getId())
                 .with(TestUtil.userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), Collections.emptyList());
     }
@@ -259,14 +245,10 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
 
-        assertThrows(NestedServletException.class/* todo - think, how to change to this -> RestrictedOperationException.class*/, () -> {
             mockMvc.perform(delete(REST_URL + created.getId())
                     .with(TestUtil.userHttpBasic(USER_FIRST)))
                     .andDo(print())
-                    .andExpect(status().isNoContent());
-
-        });
-
+                    .andExpect(status().isForbidden());
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
     }
@@ -281,14 +263,10 @@ class CommonVoteControllerTest extends AbstractControllerTest {
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
 
-        assertThrows(NestedServletException.class/* todo - think, how to change to this -> RestrictedOperationException.class*/, () -> {
             mockMvc.perform(delete(REST_URL + created.getId())
                     .with(TestUtil.userHttpBasic(USER_SECOND)))
                     .andDo(print())
-                    .andExpect(status().isNoContent());
-
-        });
-
+                    .andExpect(status().isForbidden());
 
         assertMatch(voteService.getByRestaurantAndDate(MCDONNELS, testDate), created);
     }
@@ -296,14 +274,10 @@ class CommonVoteControllerTest extends AbstractControllerTest {
     @Test
     void testDeleteNotFound() throws Exception {
 
-        assertThrows(NestedServletException.class/* todo - think, how to change to this -> RestrictedOperationException.class*/, () -> {
-            mockMvc.perform(delete(REST_URL + 1)
-                    .with(TestUtil.userHttpBasic(USER_SECOND)))
-                    .andDo(print())
-                    .andExpect(status().isNoContent());
-
-        });
-
+        mockMvc.perform(delete(REST_URL + 1)
+                .with(TestUtil.userHttpBasic(USER_SECOND)))
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
     //</editor-fold>
 }

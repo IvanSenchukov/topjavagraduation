@@ -39,6 +39,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(TestUtil.userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(expected)))
+                .andDo(print())
                 .andExpect(status().isCreated());
 
         Restaurant returned = TestUtil.readFromJson(action, Restaurant.class);
@@ -65,6 +66,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     void testGetAll() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(TestUtil.userHttpBasic(ADMIN)))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RestaurantTestData.contentJson(MCDONNELS, VABI_VOBBLE));
@@ -73,6 +75,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     @Test
     void testGetUnAuth() throws Exception {
         mockMvc.perform(get(REST_URL))
+                .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
 
@@ -80,6 +83,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     void testGetForbidden() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
+                .andDo(print())
                 .andExpect(status().isForbidden());
     }
     //</editor-fold>
@@ -94,6 +98,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(TestUtil.userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(updated)))
+                .andDo(print())
                 .andExpect(status().isNoContent());
 
         assertMatch(restaurantService.get(MCDONNELS_ID), updated);

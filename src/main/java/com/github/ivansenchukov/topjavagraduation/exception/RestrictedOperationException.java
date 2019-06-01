@@ -1,7 +1,10 @@
 package com.github.ivansenchukov.topjavagraduation.exception;
 
-public class RestrictedOperationException extends Exception {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class RestrictedOperationException extends ResponseStatusException {
     public RestrictedOperationException(String message) {
-        super(message);
+        super(HttpStatus.FORBIDDEN, message);
     }
 }

@@ -36,6 +36,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(expected)))
+                .andDo(print())
                 .andExpect(status().isCreated());
 
         User returned = readFromJson(action, User.class);
@@ -62,6 +63,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
     void testGetByEmail() throws Exception {
         mockMvc.perform(get(REST_URL + "by?email=" + ADMIN.getEmail())
                 .with(userHttpBasic(ADMIN)))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(ADMIN));
@@ -71,6 +73,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
     void testGetAll() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(ADMIN)))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(ADMIN, USER_FIRST, USER_SECOND));
@@ -79,6 +82,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
     @Test
     void testGetUnAuth() throws Exception {
         mockMvc.perform(get(REST_URL))
+                .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
 
@@ -86,6 +90,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
     void testGetForbidden() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(USER_FIRST)))
+                .andDo(print())
                 .andExpect(status().isForbidden());
     }
     //</editor-fold>
@@ -100,6 +105,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(updated)))
+                .andDo(print())
                 .andExpect(status().isNoContent());
 
         assertMatch(userService.get(USER_FIRST_ID), updated);

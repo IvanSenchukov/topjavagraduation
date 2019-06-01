@@ -58,8 +58,8 @@ class CommonRestaurantControllerTest extends AbstractControllerTest {
                 .param("restaurantId", String.valueOf(MCDONNELS_ID))
                 .param("requestDate", "2019-05-10")
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(contentJson(expected));
     }
 
@@ -77,8 +77,8 @@ class CommonRestaurantControllerTest extends AbstractControllerTest {
         mockMvc.perform(get(REST_URL + "offer")
                 .param("restaurantId", String.valueOf(MCDONNELS_ID))
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(contentJson(expected));
     }
 
@@ -87,6 +87,7 @@ class CommonRestaurantControllerTest extends AbstractControllerTest {
     void testGetAll() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RestaurantTestData.contentJson(MCDONNELS, VABI_VOBBLE));
@@ -95,6 +96,7 @@ class CommonRestaurantControllerTest extends AbstractControllerTest {
     @Test
     void testGetUnAuth() throws Exception {
         mockMvc.perform(get(REST_URL))
+                .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
     //</editor-fold>

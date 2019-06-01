@@ -46,8 +46,8 @@ class AdminVoteControllerTest extends AbstractControllerTest {
     void testGet() throws Exception {
         mockMvc.perform(get(REST_URL + FIRST_USER_VOTE_ID)
                 .with(TestUtil.userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(VoteTestData.contentJson(FIRST_USER_VOTE));
     }
 
@@ -58,8 +58,8 @@ class AdminVoteControllerTest extends AbstractControllerTest {
                 .param("restaurantId", String.valueOf(MCDONNELS_ID))
                 .param("requestDate", TEST_DATE.toString())
                 .with(TestUtil.userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(VoteTestData.contentJson(FIRST_USER_VOTE));
     }
 
@@ -73,8 +73,8 @@ class AdminVoteControllerTest extends AbstractControllerTest {
         mockMvc.perform(get(REST_URL + "by_restaurant")
                 .param("restaurantId", String.valueOf(MCDONNELS_ID))
                 .with(TestUtil.userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(VoteTestData.contentJson(returned));
     }
 
@@ -87,8 +87,8 @@ class AdminVoteControllerTest extends AbstractControllerTest {
                 .param("restaurantId", String.valueOf(MCDONNELS_ID))
                 .param("requestDate", TEST_DATE.minusDays(1).toString())
                 .with(TestUtil.userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(VoteTestData.contentJson());
     }
 
@@ -98,8 +98,8 @@ class AdminVoteControllerTest extends AbstractControllerTest {
         mockMvc.perform(get(REST_URL + "by_user")
                 .param("userId", String.valueOf(USER_FIRST_ID))
                 .with(TestUtil.userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(VoteTestData.contentJson(YESTERDAY_FIRST_USER_VOTE, FIRST_USER_VOTE));
     }
 
@@ -107,6 +107,7 @@ class AdminVoteControllerTest extends AbstractControllerTest {
     @Test
     void testGetUnAuth() throws Exception {
         mockMvc.perform(get(REST_URL))
+                .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
 
@@ -114,6 +115,7 @@ class AdminVoteControllerTest extends AbstractControllerTest {
     void testGetForbidden() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
+                .andDo(print())
                 .andExpect(status().isForbidden());
     }
 

@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import static com.github.ivansenchukov.topjavagraduation.util.ValidationUtil.checkNotFoundWithId;
@@ -43,7 +42,7 @@ public class VoteService {
 
 
     public Vote get(Integer id) {
-        return checkNotFoundWithId(repository.get(id), id);
+        return checkNotFoundWithId(repository.get(id), Vote.class, id);
     }
 
     /**
@@ -114,7 +113,7 @@ public class VoteService {
         checkStoptime(presentVote, votingTime, String.format("You can't change your choice after %s", stopVotingTime.toString()));
         vote.setId(presentVote.getId());
         vote = repository.save(vote);
-        return checkNotFoundWithId(vote, presentVote.getId());
+        return checkNotFoundWithId(vote, Vote.class, presentVote.getId());
     }
 
     /**
@@ -137,9 +136,9 @@ public class VoteService {
         Vote presentVote = repository.get(id);
         if (Objects.nonNull(presentVote)) {
             checkUserAuthorizationAndStoptime(user, dateTime, presentVote);
-            checkNotFoundWithId(repository.delete(id), id);
+            checkNotFoundWithId(repository.delete(id), Vote.class, id);
         } else {
-            checkNotFoundWithId(repository.delete(id), id);
+            checkNotFoundWithId(repository.delete(id), Vote.class, id);
         }
     }
 

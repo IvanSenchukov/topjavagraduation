@@ -36,7 +36,7 @@ public class DishService {
 
 
     public Dish get(Integer id) {
-        return checkNotFoundWithId(repository.get(id), id);
+        return checkNotFoundWithId(repository.get(id), Dish.class, id);
     }
 
     @Cacheable(value = "dishes")
@@ -55,11 +55,11 @@ public class DishService {
         Assert.notNull(dish.getDate(), "dish date property must not be null");
         Assert.notNull(dish.getRestaurant(), "dish restaurant property must not be null");
 
-        checkNotFoundWithId(repository.save(dish), dish.getId());
+        checkNotFoundWithId(repository.save(dish), Dish.class, dish.getId());
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
     public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id), id);
+        checkNotFoundWithId(repository.delete(id), Dish.class, id);
     }
 }

@@ -25,6 +25,7 @@ class ProfileUserControllerTest extends AbstractControllerTest {
     void testGet() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(USER_FIRST)))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(USER_FIRST));
@@ -33,6 +34,7 @@ class ProfileUserControllerTest extends AbstractControllerTest {
     @Test
     void testGetUnAuth() throws Exception {
         mockMvc.perform(get(REST_URL))
+                .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
 
@@ -40,6 +42,7 @@ class ProfileUserControllerTest extends AbstractControllerTest {
     void testDelete() throws Exception {
         mockMvc.perform(delete(REST_URL)
                 .with(userHttpBasic(USER_FIRST)))
+                .andDo(print())
                 .andExpect(status().isNoContent());
         assertMatch(userService.getAll(), ADMIN, USER_SECOND);
     }

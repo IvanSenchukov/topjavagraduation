@@ -31,7 +31,7 @@ public class RestaurantService {
 
 
     public Restaurant get(Integer id) {
-        return checkNotFoundWithId(repository.get(id), id);
+        return checkNotFoundWithId(repository.get(id), Restaurant.class, id);
     }
 
     @Cacheable("restaurants")
@@ -42,11 +42,11 @@ public class RestaurantService {
     @CacheEvict(value = "restaurants", allEntries = true)
     public void update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
-        checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
+        checkNotFoundWithId(repository.save(restaurant), Restaurant.class, restaurant.getId());
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id), id);
+        checkNotFoundWithId(repository.delete(id), Restaurant.class, id);
     }
 }

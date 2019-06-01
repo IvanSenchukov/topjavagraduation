@@ -8,22 +8,22 @@ public class ValidationUtil {
     private ValidationUtil() {
     }
 
-    public static <T> T checkNotFoundWithId(T object, int id) {
-        return checkNotFound(object, "id=" + id);
+    public static <T> T checkNotFoundWithId(T object, Class objectClass, int id) {
+        return checkNotFound(object, objectClass, "id=" + id);
     }
 
-    public static void checkNotFoundWithId(boolean found, int id) {
-        checkNotFound(found, "id=" + id);
+    public static void checkNotFoundWithId(boolean found, Class objectClass, int id) {
+        checkNotFound(found, objectClass, "id=" + id);
     }
 
-    public static <T> T checkNotFound(T object, String msg) {
-        checkNotFound(object != null, msg);
+    public static <T> T checkNotFound(T object, Class objectClass, String msg) {
+        checkNotFound(object != null,objectClass, msg);
         return object;
     }
 
-    public static void checkNotFound(boolean found, String msg) {
+    public static void checkNotFound(boolean found, Class objectClass, String msg) {
         if (!found) {
-            throw new NotFoundException("Not found entity with " + msg);
+            throw new NotFoundException(String.format("Not found entity with type=|%s| %s", objectClass.getSimpleName(), msg));
         }
     }
 

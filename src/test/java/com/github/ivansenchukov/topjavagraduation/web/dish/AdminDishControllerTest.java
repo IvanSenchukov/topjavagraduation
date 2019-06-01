@@ -68,14 +68,15 @@ class AdminDishControllerTest extends AbstractControllerTest {
                 .param("restaurantId", String.valueOf(MCDONNELS_ID))
                 .param("requestDate", TEST_DATE.toString())
                 .with(TestUtil.userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(contentJson(MCDONNELS_BURGER, MCDONNELS_FRIES));
     }
 
     @Test
     void testGetUnAuth() throws Exception {
         mockMvc.perform(get(REST_URL))
+                .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
 
@@ -83,6 +84,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
     void testGetForbidden() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
+                .andDo(print())
                 .andExpect(status().isForbidden());
     }
     //</editor-fold>
@@ -97,6 +99,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(TestUtil.userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(updated)))
+                .andDo(print())
                 .andExpect(status().isNoContent());
 
         assertMatch(dishService.get(MCDONNELS_BURGER_ID), updated);
