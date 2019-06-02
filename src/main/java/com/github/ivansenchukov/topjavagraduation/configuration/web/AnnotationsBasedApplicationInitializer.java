@@ -4,6 +4,8 @@ import com.github.ivansenchukov.topjavagraduation.configuration.DbConfig;
 import com.github.ivansenchukov.topjavagraduation.configuration.RootApplicationConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.ServletRegistration;
+
 public class AnnotationsBasedApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 
@@ -20,5 +22,10 @@ public class AnnotationsBasedApplicationInitializer extends AbstractAnnotationCo
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
     }
 }
