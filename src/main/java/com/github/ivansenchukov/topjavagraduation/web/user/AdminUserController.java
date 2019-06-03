@@ -85,9 +85,7 @@ public class AdminUserController extends AbstractUserController {
             @PathVariable
                     int id) {
 
-        User userToEnable = service.get(id);
-        userToEnable.setEnabled(enabled);
-        super.update(userToEnable, id);
+        service.enable(id, enabled);
     }
 
     @ApiOperation(value = "Update User Roles")
@@ -115,4 +113,12 @@ public class AdminUserController extends AbstractUserController {
             @PathVariable int id) {
         super.delete(id);
     }
+
+    //<editor-fold desc="Request Transfer Objects">
+    public static class CreateNewUserRequestTO {
+        public String name;
+        public String eMail;
+        public String password;
+    }
+    //</editor-fold>
 }

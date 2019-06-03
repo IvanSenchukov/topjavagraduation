@@ -45,7 +45,7 @@ public class ProfileUserController extends AbstractUserController {
         super.update(userToUpdate, userId);
 
         // todo - reset user authentication here
-
+        // todo -  add to documentation -> reset user authentication here
     }
 
 
@@ -82,6 +82,7 @@ public class ProfileUserController extends AbstractUserController {
         super.update(userToUpdate, userId);
 
         // todo - reset user authentication here
+        // todo -  add to documentation -> reset user authentication here
     }
 
     //todo - make documentation

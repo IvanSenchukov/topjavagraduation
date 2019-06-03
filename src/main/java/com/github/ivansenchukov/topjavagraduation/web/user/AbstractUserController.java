@@ -95,9 +95,13 @@ public abstract class AbstractUserController {
         service.update(userTo);
     }
 
-    // todo - make implementation for it or delete
     // todo - and then make changes to all code - disabled users must not be authorized
-    // todo - make documentation
+    /**
+     * Set User property "enabled" to state, that is in parameter
+     *
+     * @param id        - id of User to be enabled/disabled
+     * @param enabled   - state that will be set to the User
+     */
     public void enable(int id, boolean enabled) {
         log.info(enabled ? "enable user with id=|{}|" : "disable user with id=|{}|", id);
         service.enable(id, enabled);
