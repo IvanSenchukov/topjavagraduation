@@ -26,7 +26,7 @@ public class UserTestData {
     public static final User USER_SECOND = new User(USER_SECOND_ID, "Second_User", "seconduser@example.com", "password", true, new Date(), Role.ROLE_USER);
 
     public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "password");
         log.info(String.format("Users are match. %s", actual.toString()));
     }
 
@@ -35,7 +35,7 @@ public class UserTestData {
     }
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("registered").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("registered", "password").isEqualTo(expected);
     }
 
     public static ResultMatcher contentJson(User... expected) {

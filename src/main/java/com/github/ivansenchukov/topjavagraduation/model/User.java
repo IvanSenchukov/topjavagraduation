@@ -1,5 +1,6 @@
 package com.github.ivansenchukov.topjavagraduation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.util.CollectionUtils;
 
@@ -128,6 +129,7 @@ public class User extends AbstractBaseEntity {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }

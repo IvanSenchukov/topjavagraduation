@@ -1,6 +1,7 @@
 package com.github.ivansenchukov.topjavagraduation.web.user;
 
 
+import com.github.ivansenchukov.topjavagraduation.model.Role;
 import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.web.WebUtil;
 import io.swagger.annotations.Api;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 // todo - should add example values for Swagger in the future
+// todo - build tests for new methods
 @Api(description = "Endpoint for admin to work with Users")
 @RestController
 @RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,30 +52,58 @@ public class AdminUserController extends AbstractUserController {
     }
 
     @ApiOperation(value = "Create new User")
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<User> createWithLocation(
-            @ApiParam(required = true, value = "prototype User to create (ID must be NULL)")
-            @RequestBody
-                    User user) {
-        User created = super.create(user);
+            @ApiParam(required = true, value = "Name of new User")
+            @RequestParam
+                    String name,
+            @ApiParam(required = true, value = "EMail of new User")
+            @RequestParam
+                    String email,
+            @ApiParam(required = true, value = "New User password.") /*todo - not good - rebuild this*/
+            @RequestParam
+                    String password // todo - workaround to hide password with @JsonIgnore
+    ) {
+
+        User newUser = new User(null, name, email, password, true, new Date(), Role.ROLE_USER);
+        User created = super.create(newUser);
+
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @ApiOperation(value = "Update User")
-    @Override
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Set Enabled")
+    @PatchMapping(value = "/enable{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(
-            @ApiParam(required = true, value = "Prototype User to update")
-            @RequestBody
-                    User user,
+    public void setEnabled(
+            @ApiParam(required = true, value = "Enable/Disable user")
+            @RequestParam
+                    boolean enabled,
             @ApiParam(required = true, value = "ID of User for update")
             @PathVariable
                     int id) {
-        super.update(user, id);
+
+        User userToEnable = service.get(id);
+        userToEnable.setEnabled(enabled);
+        super.update(userToEnable, id);
+    }
+
+    @ApiOperation(value = "Update User Roles")
+    @PatchMapping(value = "/roles{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void updateUserRoles(
+            @ApiParam(required = true, value = "Roles to give User")
+            @RequestParam
+                    List<Role> roles,
+            @ApiParam(required = true, value = "ID of User for update")
+            @PathVariable
+                    int id) {
+
+        User userToEnable = service.get(id);
+        userToEnable.setRoles(roles);
+        super.update(userToEnable, id);
     }
 
     @ApiOperation(value = "Delete User by ID")

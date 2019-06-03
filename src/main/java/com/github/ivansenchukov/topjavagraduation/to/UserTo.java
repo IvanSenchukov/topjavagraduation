@@ -1,5 +1,7 @@
 package com.github.ivansenchukov.topjavagraduation.to;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -29,6 +31,7 @@ public class UserTo extends BaseTo implements Serializable {
         this.password = password;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
