@@ -6,6 +6,7 @@ import com.github.ivansenchukov.topjavagraduation.model.User;
 import com.github.ivansenchukov.topjavagraduation.web.WebUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -27,36 +28,41 @@ public class ProfileUserController extends AbstractUserController {
     }
 
     //todo - make documentation
+    // todo - handle email validation exception (now it's 500 and we need 400)
     @PatchMapping(value = "/email")
+    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateEmail(
-            @RequestParam String email,
-            @RequestParam String password  /*todo - not good - rebuild this*/
+            @RequestBody UpdateEmailRequestTO updateEmailRequestTO
     ) {
 
         int userId = authUserId();
 
         User userToUpdate = service.get(userId);
-        checkPassword(userToUpdate, password);
+        checkPassword(userToUpdate, updateEmailRequestTO.password);
 
-        userToUpdate.setEmail(email);
+        userToUpdate.setEmail(updateEmailRequestTO.email);
         super.update(userToUpdate, userId);
+
+        // todo - reset user authentication here
+
     }
+
 
     //todo - make documentation
     @PatchMapping(value = "/name")
+    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateName(
-            @RequestParam String name,
-            @RequestParam String password /*todo - not good - rebuild this*/
+            @RequestBody UpdateNameRequestTO updateNameRequestTO
     ) {
 
         int userId = authUserId();
 
         User userToUpdate = service.get(userId);
-        checkPassword(userToUpdate, password);
+        checkPassword(userToUpdate, updateNameRequestTO.password);
 
-        userToUpdate.setName(name);
+        userToUpdate.setName(updateNameRequestTO.name);
         super.update(userToUpdate, userId);
     }
 
@@ -64,17 +70,18 @@ public class ProfileUserController extends AbstractUserController {
     @PatchMapping(value = "/password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePassword(
-            @RequestParam String newPassword,  /*todo - not good - rebuild this*/
-            @RequestParam String oldPassword   /*todo - not good - rebuild this*/
+            @RequestBody UpdatePasswordRequestTO updatePasswordRequestTO
     ) {
 
         int userId = authUserId();
 
         User userToUpdate = service.get(userId);
-        checkPassword(userToUpdate, oldPassword);
+        checkPassword(userToUpdate, updatePasswordRequestTO.oldPassword);
 
-        userToUpdate.setPassword(newPassword);
+        userToUpdate.setPassword(updatePasswordRequestTO.newPassword);
         super.update(userToUpdate, userId);
+
+        // todo - reset user authentication here
     }
 
     //todo - make documentation
@@ -90,4 +97,24 @@ public class ProfileUserController extends AbstractUserController {
             throw new RestrictedOperationException("Wrong Password!");
         }
     }
+
+    //<editor-fold desc="Nested Transport Objects">
+
+    static class UpdateEmailRequestTO {
+        public String email;
+        public String password;
+    }
+
+    static class UpdateNameRequestTO {
+        public String name;
+        public String password;
+    }
+
+    static class UpdatePasswordRequestTO {
+        public String oldPassword;
+        public String newPassword;
+    }
+
+    //</editor-fold>
+
 }
