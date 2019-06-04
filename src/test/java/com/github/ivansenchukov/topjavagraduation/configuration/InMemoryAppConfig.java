@@ -44,7 +44,6 @@ public class InMemoryAppConfig {
     }
 
 
-    // TODO - workaround this
     // Mock for enabeling @Transaction annotation work in AbstractServiceTest classes
     @Bean
     @Autowired

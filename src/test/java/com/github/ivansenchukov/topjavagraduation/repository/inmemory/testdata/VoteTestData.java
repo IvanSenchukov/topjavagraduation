@@ -25,7 +25,6 @@ public class VoteTestData {
     public static final int BAD_RESTAURANT_VOTE_ID = 100013;
     public static final int BAD_DATE_VOTE_ID = 100014;
 
-    // TODO - delete admin vote, as it is restiction for the admins to make votes
     public static final Vote FIRST_USER_VOTE = new Vote(FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 05, 10));
     public static final Vote YESTERDAY_FIRST_USER_VOTE = new Vote(YESTERDAY_FIRST_USER_VOTE_ID, UserTestData.USER_FIRST, RestaurantTestData.MCDONNELS, LocalDate.of(2019, 05, 9));
     public static final Vote SECOND_USER_VOTE = new Vote(SECOND_USER_VOTE_ID, UserTestData.USER_SECOND, RestaurantTestData.VABI_VOBBLE, LocalDate.of(2019, 05, 10));

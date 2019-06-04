@@ -35,7 +35,6 @@ public class Vote extends AbstractBaseEntity {
     @NotNull
     private User user;
 
-    // todo - change this to "LocalDate" only
     @Column(name = "date", nullable = false)
     @NotNull
     private LocalDate date;

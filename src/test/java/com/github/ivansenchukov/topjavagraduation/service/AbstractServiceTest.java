@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import static com.github.ivansenchukov.topjavagraduation.util.ValidationUtil.getRootCause;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// TODO - make normal context loading here and loading of another context in InMemoryService tests if it is possible
 @SpringJUnitConfig(classes = {
         RootApplicationConfig.class
 })
