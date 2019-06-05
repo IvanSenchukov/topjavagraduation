@@ -72,8 +72,7 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
                 .sorted((o1, o2) -> {
                     int restaurantCompare = o1.getRestaurant().getName().compareTo(o2.getRestaurant().getName());
                     if (restaurantCompare != 0) return restaurantCompare;
-                    int userCompare = o1.getUser().getName().compareTo(o2.getUser().getName());
-                    return userCompare;
+                    return o1.getUser().getName().compareTo(o2.getUser().getName());
                 })
                 .collect(Collectors.toList());
     }
@@ -90,9 +89,22 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
                     public int compare(Vote o1, Vote o2) {
                         int restaurantCompare = o1.getRestaurant().getName().compareTo(o2.getRestaurant().getName());
                         if (restaurantCompare != 0) return restaurantCompare;
-                        int userCompare = o1.getUser().getName().compareTo(o2.getUser().getName());
-                        return userCompare;
+                        return o1.getUser().getName().compareTo(o2.getUser().getName());
                     }
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Vote> getByDate(LocalDate dateTime) {
+        return getCollection().stream()
+                .filter(vote ->
+                        Objects.nonNull(vote.getUser())
+                                && Objects.nonNull(vote.getDate()) && dateTime.equals(vote.getDate()))
+                .sorted((o1, o2) -> {
+                    int restaurantCompare = o1.getRestaurant().getName().compareTo(o2.getRestaurant().getName());
+                    if (restaurantCompare != 0) return restaurantCompare;
+                    return o1.getUser().getName().compareTo(o2.getUser().getName());
                 })
                 .collect(Collectors.toList());
     }

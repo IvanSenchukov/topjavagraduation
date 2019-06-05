@@ -32,15 +32,25 @@ public abstract class AbstractVoteController {
     private RestaurantService restaurantService;
 
     //<editor-fold desc="GET">
-    //todo - make documentation
-    // todo - make decision delete this or not
-    @Deprecated
+
+    /**
+     * Return vote by ID
+     *
+     * @param voteId
+     * @return
+     */
     public Vote get(int voteId) {
         log.info("get vote by id=|{}|", voteId);
         return voteService.get(voteId);
     }
 
-    //todo - make documentation
+    /**
+     * List of voters for current restaurant.
+     *
+     * @param restaurantId
+     * @param requestDateStr
+     * @return
+     */
     public List<Vote> getByRestaurantAndDate(int restaurantId, String requestDateStr) {
         log.info("get votes by restaurantId=|{}| and date=|{}|", restaurantId, requestDateStr);
 
@@ -51,7 +61,32 @@ public abstract class AbstractVoteController {
         return voteService.getByRestaurantAndDate(restaurantId, date);
     }
 
-    //todo - make documentation
+
+    /**
+     * List of voters for current day.
+     *
+     * @param requestDateStr
+     * @return
+     */
+    //todo - make implementation in admin and common controllers
+    public List<Vote> getByDate(String requestDateStr) {
+        log.info("get votes by date=|{}|", requestDateStr);
+
+        LocalDate date = requestDateStr != null
+                ? LocalDate.parse(requestDateStr)   // todo - map this in request parameter.
+                : LocalDate.now();
+
+        return voteService.getByDate(date);
+    }
+
+
+    /**
+     * Return all user votes for all time.
+     * It is a user history of votes.
+     *
+     * @param userId
+     * @return
+     */
     public List<Vote> getByUserId(int userId) {
         log.info("get votes by userId=|{}|", userId);
 
@@ -60,9 +95,15 @@ public abstract class AbstractVoteController {
     //</editor-fold>
 
     //<editor-fold desc="CREATE">\
-    //todo - make documentation
-    // todo - think how handle RestrictedOperationException well
-    // todo - think how it is best to make vote.
+
+    /**
+     * Make vote by Restaurant ID and Date
+     *
+     * @param restaurantId
+     * @param requestDateStr
+     * @return
+     * @throws RestrictedOperationException
+     */
     @Transactional
     public Vote createVote(int restaurantId, String requestDateStr) throws RestrictedOperationException {
 
@@ -82,7 +123,13 @@ public abstract class AbstractVoteController {
     //</editor-fold>
 
     //<editor-fold desc="DELETE">
-    //todo - make documentation
+
+    /**
+     * Delete vote by id
+     *
+     * @param voteId
+     * @throws RestrictedOperationException
+     */
     @Transactional
     public void delete(int voteId) throws RestrictedOperationException {
         User voteMaker = userService.get(SecurityUtil.authUserId());

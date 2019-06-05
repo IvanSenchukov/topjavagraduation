@@ -23,6 +23,9 @@ public interface VoteRepository {
     // Empty list if not found
     List<Vote> getByRestaurantAndDate(Integer restaurantId, LocalDate date);
 
+    // Empty list if not found
+    List<Vote> getByDate(LocalDate date);
+
     // NULL if not found
     Vote getByUserAndDate(User user, LocalDate date);
 

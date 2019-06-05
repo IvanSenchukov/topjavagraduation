@@ -54,16 +54,14 @@ public class AdminUserController extends AbstractUserController {
     @ApiOperation(value = "Create new User")
     @PostMapping
     public ResponseEntity<User> createWithLocation(
-            @ApiParam(required = true, value = "Name of new User")
+            @ApiParam(required = true, value = "Representation of new User")
             @RequestParam
-                    String name,
-            @ApiParam(required = true, value = "EMail of new User")
-            @RequestParam
-                    String email,
-            @ApiParam(required = true, value = "New User password.") /*todo - not good - rebuild this*/
-            @RequestParam
-                    String password // todo - workaround to hide password with @JsonIgnore
+                    CreateNewUserRequestTO requestTO
     ) {
+
+        String name     = requestTO.name;
+        String email    = requestTO.eMail;
+        String password = requestTO.password;
 
         User newUser = new User(null, name, email, password, true, new Date(), Role.ROLE_USER);
         User created = super.create(newUser);

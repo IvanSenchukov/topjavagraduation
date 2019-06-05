@@ -47,6 +47,11 @@ public class DataJpaVoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
+    public List<Vote> getByDate(LocalDate date) {
+        return voteDataJpaRepository.getByDate(date);
+    }
+
+    @Override
     public Vote getByUserAndDate(User user, LocalDate date) {
         Vote vote = null;
 

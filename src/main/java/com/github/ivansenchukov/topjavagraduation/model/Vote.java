@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NamedQueries({
         @NamedQuery(name = Vote.GET_BY_RESTAURANT_AND_DATE, query = "SELECT v FROM Vote v WHERE v.restaurant=:restaurant AND v.date=:date ORDER BY v.restaurant, v.user"),
         @NamedQuery(name = Vote.GET_BY_RESTAURANT_ID_AND_DATE, query = "SELECT v FROM Vote v WHERE v.restaurant.id=:restaurantId AND v.date=:date ORDER BY v.restaurant, v.user"),
+        @NamedQuery(name = Vote.GET_BY_DATE, query = "SELECT v FROM Vote v WHERE v.date=:date ORDER BY v.restaurant, v.user"),
         @NamedQuery(name = Vote.GET_BY_USER_AND_DATE, query = "SELECT v FROM Vote v WHERE v.user=:user AND v.date=:date ORDER BY v.restaurant, v.user"),
         @NamedQuery(name = Vote.GET_BY_USER_ID_AND_DATE, query = "SELECT v FROM Vote v WHERE v.user.id=:userId AND v.date=:date ORDER BY v.restaurant, v.user"),
         @NamedQuery(name = Vote.GET_BY_USER_ID, query = "SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.date"),
@@ -22,6 +23,7 @@ public class Vote extends AbstractBaseEntity {
 
     public static final String GET_BY_RESTAURANT_AND_DATE = "Vote.getByRestaurantAndDate";
     public static final String GET_BY_RESTAURANT_ID_AND_DATE = "Vote.getByRestaurantIdAndDate";
+    public static final String GET_BY_DATE = "Vote.getByDate";
     public static final String GET_BY_USER_AND_DATE = "Vote.getByUserAndDate";
     public static final String GET_BY_USER_ID_AND_DATE = "Vote.getByUserIdAndDate";
     public static final String GET_BY_USER_ID = "Vote.getByUserId";

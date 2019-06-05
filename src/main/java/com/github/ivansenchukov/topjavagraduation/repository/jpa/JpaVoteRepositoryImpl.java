@@ -57,6 +57,13 @@ public class JpaVoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
+    public List<Vote> getByDate(LocalDate date) {
+        return em.createNamedQuery(Vote.GET_BY_DATE)
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    @Override
     public Vote getByUserAndDate(User user, LocalDate date) {
         Vote vote = null;
 

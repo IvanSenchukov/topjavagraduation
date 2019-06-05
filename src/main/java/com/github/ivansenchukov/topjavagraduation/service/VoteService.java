@@ -73,6 +73,10 @@ public class VoteService {
         return repository.getByUser(userId);
     }
 
+    public List<Vote> getByDate(LocalDate date) {
+        return repository.getByDate(date);
+    }
+
 
     /**
      * only user with role "USER" can make votes.
