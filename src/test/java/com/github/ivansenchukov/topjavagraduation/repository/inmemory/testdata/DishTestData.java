@@ -45,7 +45,7 @@ public class DishTestData {
         assertThat(actual).isEqualTo(expected);
     }
 
-    public static ResultMatcher contentJson(Dish... expected) {
+    public static ResultMatcher contentJsonArray(Dish... expected) {
         return result -> assertMatch(readListFromJsonMvcResult(result, Dish.class), List.of(expected));
     }
 

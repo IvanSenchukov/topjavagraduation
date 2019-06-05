@@ -10,14 +10,10 @@ import org.springframework.util.Assert;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.VoteTestData.*;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.summingInt;
 
 @Repository
 public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote> implements VoteRepository {
@@ -100,11 +96,13 @@ public class InMemoryVoteRepositoryImpl extends InMemoryBaseRepositoryImpl<Vote>
         return getCollection().stream()
                 .filter(vote ->
                         Objects.nonNull(vote.getUser())
-                                && Objects.nonNull(vote.getDate()) && dateTime.equals(vote.getDate()))
+                                && Objects.nonNull(vote.getDate()) && Objects.nonNull(vote.getRestaurant())
+                                && dateTime.equals(vote.getDate())
+                )
                 .sorted((o1, o2) -> {
-                    int restaurantCompare = o1.getRestaurant().getName().compareTo(o2.getRestaurant().getName());
-                    if (restaurantCompare != 0) return restaurantCompare;
-                    return o1.getUser().getName().compareTo(o2.getUser().getName());
+                    if (Objects.isNull(o1) || Objects.isNull(o1.getDate())) return 1;
+                    if (Objects.isNull(o2) || Objects.isNull(o2.getDate())) return -1;
+                    return o1.getDate().compareTo(o2.getDate());
                 })
                 .collect(Collectors.toList());
     }

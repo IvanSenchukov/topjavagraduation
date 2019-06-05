@@ -51,46 +51,6 @@ class AdminVoteControllerTest extends AbstractControllerTest {
                 .andExpect(VoteTestData.contentJson(FIRST_USER_VOTE));
     }
 
-    @Test
-    void getByRestaurantIdAndDate() throws Exception {
-
-        mockMvc.perform(get(REST_URL + "by_restaurant")
-                .param("restaurantId", String.valueOf(MCDONNELS_ID))
-                .param("requestDate", TEST_DATE.toString())
-                .with(TestUtil.userHttpBasic(ADMIN)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(VoteTestData.contentJson(FIRST_USER_VOTE));
-    }
-
-    @Test
-    void getByRestaurantIdAndDateToday() throws Exception {
-
-        LocalDate testDate = LocalDate.now();
-        Vote expected = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDate);
-        Vote returned = voteService.makeVote(expected, testDate.atStartOfDay());
-
-        mockMvc.perform(get(REST_URL + "by_restaurant")
-                .param("restaurantId", String.valueOf(MCDONNELS_ID))
-                .with(TestUtil.userHttpBasic(ADMIN)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(VoteTestData.contentJson(returned));
-    }
-
-    @Test
-    void getEmptyListByRestaurantAndDate() throws Exception {
-
-        LocalDate requestDate = TEST_DATE;
-
-        mockMvc.perform(get(REST_URL + "by_restaurant")
-                .param("restaurantId", String.valueOf(MCDONNELS_ID))
-                .param("requestDate", TEST_DATE.minusDays(1).toString())
-                .with(TestUtil.userHttpBasic(ADMIN)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(VoteTestData.contentJson());
-    }
 
     @Test
     void getByUser() throws Exception {

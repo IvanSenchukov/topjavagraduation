@@ -19,9 +19,7 @@ public class ApiError {
     }
 
     public ApiError(HttpStatus httpStatus, String message, String error) {
-        this.httpStatus = httpStatus;
-        this.message = message;
-        this.errors = List.of(error);
+        this(httpStatus, message, List.of(error));
     }
     //</editor-fold>
 

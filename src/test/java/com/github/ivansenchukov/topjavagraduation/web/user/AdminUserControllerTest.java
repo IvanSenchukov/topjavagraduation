@@ -16,10 +16,9 @@ import java.util.Date;
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readFromJson;
 import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.userHttpBasic;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringJUnitConfig(DbConfig.class)
 // todo - make tests for common users, that try to send request on admin servlet
@@ -31,13 +30,16 @@ class AdminUserControllerTest extends AbstractControllerTest {
     @Test
     void testCreate() throws Exception {
         User expected = new User(new User(null, "New", "new@example.com", "newPass", true, new Date(), Collections.singleton(Role.ROLE_USER)));
+
+        AdminUserController.CreateNewUserRequestTO createRequestTO = new AdminUserController.CreateNewUserRequestTO();
+        createRequestTO.name = expected.getName();
+        createRequestTO.eMail = expected.getEmail();
+        createRequestTO.password = expected.getPassword();
+
         ResultActions action = mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
-                .param("name", expected.getName())
-                .param("email", expected.getEmail())
-                .param("password", expected.getPassword())
-                .content(JsonUtil.writeValue(expected)))
+                .content(JsonUtil.writeValue(createRequestTO)))
                 .andDo(print())
                 .andExpect(status().isCreated());
 
@@ -99,18 +101,34 @@ class AdminUserControllerTest extends AbstractControllerTest {
 
     //<editor-fold desc="UPDATE">
     @Test
-    void testUpdate() throws Exception {
-        User updated = new User(USER_FIRST);
-        updated.setName("UpdatedName");
-        updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
-        mockMvc.perform(put(REST_URL + USER_FIRST_ID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(updated)))
-                .andDo(print())
-                .andExpect(status().isNoContent());
+    void testEnabled() throws Exception {
+        User expected = new User(USER_FIRST);
+        expected.setEnabled(false);
 
-        assertMatch(userService.get(USER_FIRST_ID), updated);
+        mockMvc.perform(patch(REST_URL + "enable/" + USER_FIRST_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("enabled", "false")
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        assertMatch(userService.get(USER_FIRST_ID), expected);
+    }
+
+    @Test
+    void testUpdateRoles() throws Exception {
+        User expected = new User(USER_FIRST);
+        expected.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
+
+        mockMvc.perform(patch(REST_URL + "roles/" + USER_FIRST_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("enabled", "false")
+                .content(JsonUtil.writeValue(Collections.singletonList(Role.ROLE_ADMIN)))
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        assertMatch(userService.get(USER_FIRST_ID), expected);
     }
     //</editor-fold>
 

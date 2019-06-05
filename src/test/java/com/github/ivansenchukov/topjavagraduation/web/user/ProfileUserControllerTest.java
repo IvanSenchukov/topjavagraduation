@@ -9,8 +9,13 @@ import com.github.ivansenchukov.topjavagraduation.web.json.JsonUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.Collections;
+import java.util.Date;
 
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.UserTestData.*;
+import static com.github.ivansenchukov.topjavagraduation.web.TestUtil.readFromJson;
 import static com.github.ivansenchukov.topjavagraduation.web.user.ProfileUserController.REST_URL;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -48,15 +53,60 @@ class ProfileUserControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testUpdate() throws Exception {
-        UserTo updatedTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
+    void testUpdateEmail() throws Exception {
+        User expected = new User(USER_FIRST);
+        expected.setEmail("newEmail@example.com");
 
-        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+        ProfileUserController.UpdateEmailRequestTO updateEmailRequestTO = new ProfileUserController.UpdateEmailRequestTO();
+        updateEmailRequestTO.eMail = expected.getEmail();
+        updateEmailRequestTO.password = expected.getPassword();
+
+        ResultActions action = mockMvc.perform(patch(REST_URL + "email")
+                .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(USER_FIRST))
-                .content(JsonUtil.writeValue(updatedTo)))
+                .content(JsonUtil.writeValue(updateEmailRequestTO)))
                 .andDo(print())
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
 
-        assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER_FIRST), updatedTo));
+        assertMatch(userService.get(USER_FIRST_ID), expected);
+        assertMatch(userService.getAll(), ADMIN, expected, USER_SECOND);
+    }
+    @Test
+    void testUpdateName() throws Exception {
+        User expected = new User(USER_FIRST);
+        expected.setName("newName");
+
+        ProfileUserController.UpdateNameRequestTO updateNameRequestTO = new ProfileUserController.UpdateNameRequestTO();
+        updateNameRequestTO.name = expected.getName();
+        updateNameRequestTO.password = expected.getPassword();
+
+        ResultActions action = mockMvc.perform(patch(REST_URL + "name")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER_FIRST))
+                .content(JsonUtil.writeValue(updateNameRequestTO)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        assertMatch(userService.get(USER_FIRST_ID), expected);
+        assertMatch(userService.getAll(), ADMIN, USER_SECOND, expected);
+    }
+    @Test
+    void testUpdatePassword() throws Exception {
+        User expected = new User(USER_FIRST);
+        expected.setPassword("newPassword");
+
+        ProfileUserController.UpdatePasswordRequestTO updatePasswordRequestTO = new ProfileUserController.UpdatePasswordRequestTO();
+        updatePasswordRequestTO.newPassword = expected.getEmail();
+        updatePasswordRequestTO.oldPassword = USER_FIRST.getPassword();
+
+        ResultActions action = mockMvc.perform(patch(REST_URL + "password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER_FIRST))
+                .content(JsonUtil.writeValue(updatePasswordRequestTO)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        assertMatch(userService.get(USER_FIRST_ID), expected);
+        assertMatch(userService.getAll(), ADMIN, expected, USER_SECOND);
     }
 }
