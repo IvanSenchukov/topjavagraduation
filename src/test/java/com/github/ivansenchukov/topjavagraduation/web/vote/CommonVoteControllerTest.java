@@ -27,7 +27,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// todo remake all tests in scope of voting dates
 @SpringJUnitConfig(DbConfig.class)
 class CommonVoteControllerTest extends AbstractControllerTest {
 

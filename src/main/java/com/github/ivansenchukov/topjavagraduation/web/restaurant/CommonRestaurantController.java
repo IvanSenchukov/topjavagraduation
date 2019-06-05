@@ -40,7 +40,7 @@ public class CommonRestaurantController extends AbstractRestaurantController {
             @ApiParam(required = true, value = "ID of wanted Restaurant Offer")
             @RequestParam(required = true)
                     int restaurantId,
-            @ApiParam(required = false, value = "Date, on which user wants to take Restaurant Offer. Today if absent.")
+            @ApiParam(required = false, value = "YYYY-MM-DD - Date, on which user wants to take Restaurant Offer. Today if absent.")
             @RequestParam(required = false, name = "requestDate")
                     String requestDateString // todo - map this right
     ) {

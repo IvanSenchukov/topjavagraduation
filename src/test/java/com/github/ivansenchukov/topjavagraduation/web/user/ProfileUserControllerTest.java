@@ -44,6 +44,18 @@ class ProfileUserControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void testGetByDisabledUser() throws Exception {
+
+        userService.enable(USER_FIRST.getId(), false);
+
+        mockMvc.perform(get(REST_URL)
+                .with(userHttpBasic(USER_FIRST)))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
+
+
+    @Test
     void testDelete() throws Exception {
         mockMvc.perform(delete(REST_URL)
                 .with(userHttpBasic(USER_FIRST)))

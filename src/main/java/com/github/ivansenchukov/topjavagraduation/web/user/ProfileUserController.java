@@ -17,7 +17,6 @@ import java.util.Objects;
 import static com.github.ivansenchukov.topjavagraduation.util.SecurityUtil.authUserId;
 
 // todo - should add example values for Swagger in the future
-// todo - make tests for new methods
 @Api(description = "Endpoint for user to work with his own profile")
 @RestController
 @RequestMapping(ProfileUserController.REST_URL)

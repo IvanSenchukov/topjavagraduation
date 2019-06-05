@@ -21,7 +21,6 @@ import javax.annotation.PostConstruct;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
-// TODO - make normal context loading here and loading of another context in InMemoryService tests if it is possible
 @SpringJUnitWebConfig(classes = {
         RootApplicationConfig.class,
         WebConfig.class,

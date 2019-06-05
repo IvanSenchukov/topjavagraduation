@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.List;
 
 // todo - should add example values for Swagger in the future
-// todo - build tests for new methods
 @Api(description = "Endpoint for admin to work with Users")
 @RestController
 @RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
