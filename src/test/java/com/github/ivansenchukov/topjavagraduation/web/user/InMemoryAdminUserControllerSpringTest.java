@@ -18,7 +18,6 @@ import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.tes
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// todo - make tests for common users, that try to send request on admin servlet
 @SpringJUnitConfig(classes = {
         InMemoryAppConfig.class
 })

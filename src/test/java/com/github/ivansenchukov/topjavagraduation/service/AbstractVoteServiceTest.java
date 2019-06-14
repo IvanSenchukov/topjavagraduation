@@ -118,6 +118,12 @@ public abstract class AbstractVoteServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    void getByDate() throws Exception {
+        List<Vote> votes = service.getByDate(TEST_DATE);
+        assertMatch(votes, FIRST_USER_VOTE, SECOND_USER_VOTE);
+    }
+
+    @Test
     void getByUser() throws Exception {
         LocalDateTime testDateTime = getTestDateTimeAllowed(stopVotingTime);
 

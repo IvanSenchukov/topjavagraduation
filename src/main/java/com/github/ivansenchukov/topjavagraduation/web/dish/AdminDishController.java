@@ -41,7 +41,7 @@ public class AdminDishController extends AbstractDishController {
             @ApiParam(required = true, value = "ID of the Restaurant, which menu wants to see user")
             @RequestParam
                     int restaurantId,
-            @ApiParam(value = "date, on which user wants to see menu. If absent - Today")
+            @ApiParam(value = "YYYY-MM-DD - date, on which user wants to see menu. If absent - Today")
             @RequestParam(required = false, name = "requestDate")
                     String requestDateStr) {
         return super.getByRestaurantAndDate(restaurantId, requestDateStr);

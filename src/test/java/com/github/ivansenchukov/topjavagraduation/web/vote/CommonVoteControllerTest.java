@@ -27,7 +27,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// todo remake all tests in scope of voting dates
 @SpringJUnitConfig(DbConfig.class)
 class CommonVoteControllerTest extends AbstractControllerTest {
 
@@ -68,13 +67,38 @@ class CommonVoteControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void getByUser() throws Exception {
+    void getMyVotes() throws Exception {
 
-        mockMvc.perform(get(REST_URL + "by_user")
+        mockMvc.perform(get(REST_URL + "my_votes")
                 .with(TestUtil.userHttpBasic(USER_FIRST)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(VoteTestData.contentJson(YESTERDAY_FIRST_USER_VOTE, FIRST_USER_VOTE));
+    }
+
+    @Test
+    void getByDate() throws Exception {
+
+        mockMvc.perform(get(REST_URL + "by_date")
+                .param("requestDate", TEST_DATE.toString())
+                .with(TestUtil.userHttpBasic(USER_FIRST)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(VoteTestData.contentJson(FIRST_USER_VOTE, SECOND_USER_VOTE));
+    }
+
+    @Test
+    void getToday() throws Exception {
+
+        LocalDate testDate = LocalDate.now();
+        Vote expected = new Vote(USER_SECOND, RestaurantTestData.MCDONNELS, testDate);
+        expected = voteService.makeVote(expected, testDate.atStartOfDay());
+
+        mockMvc.perform(get(REST_URL + "by_date")
+                .with(TestUtil.userHttpBasic(USER_FIRST)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(VoteTestData.contentJson(expected));
     }
 
     @Test

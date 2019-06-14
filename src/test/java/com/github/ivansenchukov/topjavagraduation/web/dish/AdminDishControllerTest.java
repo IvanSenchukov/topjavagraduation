@@ -2,6 +2,7 @@ package com.github.ivansenchukov.topjavagraduation.web.dish;
 
 import com.github.ivansenchukov.topjavagraduation.configuration.DbConfig;
 import com.github.ivansenchukov.topjavagraduation.model.Dish;
+import com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.DishTestData;
 import com.github.ivansenchukov.topjavagraduation.web.AbstractControllerTest;
 import com.github.ivansenchukov.topjavagraduation.web.TestUtil;
 import com.github.ivansenchukov.topjavagraduation.web.json.JsonUtil;
@@ -11,6 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.DishTestData.*;
 import static com.github.ivansenchukov.topjavagraduation.repository.inmemory.testdata.DishTestData.assertMatch;
@@ -70,7 +72,21 @@ class AdminDishControllerTest extends AbstractControllerTest {
                 .with(TestUtil.userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(contentJson(MCDONNELS_BURGER, MCDONNELS_FRIES));
+                .andExpect(DishTestData.contentJsonArray(MCDONNELS_BURGER, MCDONNELS_FRIES));
+    }
+
+    @Test
+    void testGetByRestaurantToday() throws Exception {
+
+        Dish expected = new Dish("Latte", new BigDecimal(100), VABI_VOBBLE, LocalDate.now());
+        dishService.create(expected);
+
+        mockMvc.perform(get(REST_URL + "by_restaurant")
+                .param("restaurantId", String.valueOf(VABI_VOBBLE_ID))
+                .with(TestUtil.userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(contentJsonArray(expected));
     }
 
     @Test

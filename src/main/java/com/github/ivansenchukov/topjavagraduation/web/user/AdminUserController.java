@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.List;
 
 // todo - should add example values for Swagger in the future
-// todo - build tests for new methods
 @Api(description = "Endpoint for admin to work with Users")
 @RestController
 @RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,7 +54,7 @@ public class AdminUserController extends AbstractUserController {
     @PostMapping
     public ResponseEntity<User> createWithLocation(
             @ApiParam(required = true, value = "Representation of new User")
-            @RequestParam
+            @RequestBody
                     CreateNewUserRequestTO requestTO
     ) {
 
@@ -73,8 +72,8 @@ public class AdminUserController extends AbstractUserController {
     }
 
     @ApiOperation(value = "Set Enabled")
-    @PatchMapping(value = "/enable{id}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @PatchMapping(value = "/enable/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
     public void setEnabled(
             @ApiParam(required = true, value = "Enable/Disable user")
             @RequestParam
@@ -87,11 +86,11 @@ public class AdminUserController extends AbstractUserController {
     }
 
     @ApiOperation(value = "Update User Roles")
-    @PatchMapping(value = "/roles{id}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @PatchMapping(value = "/roles/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
     public void updateUserRoles(
             @ApiParam(required = true, value = "Roles to give User")
-            @RequestParam
+            @RequestBody
                     List<Role> roles,
             @ApiParam(required = true, value = "ID of User for update")
             @PathVariable

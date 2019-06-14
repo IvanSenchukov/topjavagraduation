@@ -17,13 +17,12 @@ import java.util.Objects;
 import static com.github.ivansenchukov.topjavagraduation.util.SecurityUtil.authUserId;
 
 // todo - should add example values for Swagger in the future
-// todo - make tests for new methods
 @Api(description = "Endpoint for user to work with his own profile")
 @RestController
 @RequestMapping(ProfileUserController.REST_URL)
 public class ProfileUserController extends AbstractUserController {
 
-    public static final String REST_URL = WebUtil.COMMON_URL + "/profile";
+    public static final String REST_URL = WebUtil.COMMON_URL + "/profile/";
 
     @ApiOperation(value = "Returns user profile")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +34,7 @@ public class ProfileUserController extends AbstractUserController {
     @ApiOperation(value = "Change User email. For this operation you need to type a password! Reset User authentication!")
     @PatchMapping(value = "/email")
     @PreAuthorize("isAuthenticated()")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public void updateEmail(
             @ApiParam(required = true, value = "EMail and Password.")
             @RequestBody
@@ -47,7 +46,7 @@ public class ProfileUserController extends AbstractUserController {
         User userToUpdate = service.get(userId);
         checkPassword(userToUpdate, updateEmailRequestTO.password);
 
-        userToUpdate.setEmail(updateEmailRequestTO.email);
+        userToUpdate.setEmail(updateEmailRequestTO.eMail);
         super.update(userToUpdate, userId);
 
         // todo - reset user authentication here
@@ -57,7 +56,7 @@ public class ProfileUserController extends AbstractUserController {
     @ApiOperation(value = "Change User name. For this operation you need to type a password!")
     @PatchMapping(value = "/name")
     @PreAuthorize("isAuthenticated()")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public void updateName(
             @ApiParam(required = true, value = "Name and Password.")
             @RequestBody
@@ -75,7 +74,7 @@ public class ProfileUserController extends AbstractUserController {
 
     @ApiOperation(value = "Change User password. For this operation you need to type an old password! Reset user authentication!")
     @PatchMapping(value = "/password")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public void updatePassword(
             @ApiParam(required = true, value = "New and Old and passwords.")
             @RequestBody UpdatePasswordRequestTO updatePasswordRequestTO
@@ -109,7 +108,7 @@ public class ProfileUserController extends AbstractUserController {
     //<editor-fold desc="Nested Transport Objects">
 
     static class UpdateEmailRequestTO {
-        public String email;
+        public String eMail;
         public String password;
     }
 

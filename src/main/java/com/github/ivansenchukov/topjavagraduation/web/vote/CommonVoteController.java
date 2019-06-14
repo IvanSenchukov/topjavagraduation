@@ -35,7 +35,7 @@ public class CommonVoteController extends AbstractVoteController {
             @ApiParam(required = true, value = "ID of Restaurant")
             @RequestParam
                     int restaurantId,
-            @ApiParam(required = false, value = "Date on which we want to see the votes. Today if absent")
+            @ApiParam(required = false, value = "YYYY-MM-DD - Date on which we want to see the votes. Today if absent")
             @RequestParam(required = false, name = "requestDate")
                     String requestDateStr
     ) {
@@ -46,7 +46,7 @@ public class CommonVoteController extends AbstractVoteController {
     @ApiOperation(value = "Returns list of all Votes on a given Date")
     @GetMapping("/by_date")
     public List<Vote> getByDate(
-            @ApiParam(required = false, value = "Date on which we want to see the votes. Today if absent")
+            @ApiParam(required = false, value = "YYYY-MM-DD - Date on which we want to see the votes. Today if absent")
             @RequestParam(required = false, name = "requestDate")
                     String requestDateStr
     ) {
@@ -72,7 +72,7 @@ public class CommonVoteController extends AbstractVoteController {
     public ResponseEntity<Vote> makeVote(
             @ApiParam(required = true, value = "ID of Restaurant")
             @RequestParam int restaurantId,
-            @ApiParam(required = false, value = "Date on which we want to make our Vote. Today if absent")
+            @ApiParam(required = false, value = "YYYY-MM-DD - Date on which we want to make our Vote. Today if absent")
             @RequestParam(required = false) String requestDate
     ) throws RestrictedOperationException {
         Vote created = super.createVote(restaurantId, requestDate);
