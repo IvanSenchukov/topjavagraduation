@@ -53,10 +53,8 @@ Steps to make this thing work:
 
 #### TODO-s
 
-- Full documentation in Swagger
-- Enabeled and Disabeled users support
-- Checkout response keys.
 - Implement idempotency in POST and PUT requests;
+- Password encoding;
 - Try out some Spring Security features;
 - Add embedded Tomcat support;
 - Add logs, that usable in ELK-stack analysis;
