@@ -23,7 +23,7 @@
         <!--    Web   -->
         <javax.servlet.version>3.1.0</javax.servlet.version>
         <jstl.version>1.2</jstl.version>
-        <jackson-json.version>2.9.8</jackson-json.version>
+        <jackson-json.version>2.9.10.8</jackson-json.version>
         <swagger.version>2.9.2</swagger.version>
 
         <!--    Database  -->
