@@ -27,7 +27,7 @@
         <swagger.version>2.9.2</swagger.version>
 
         <!--    Database  -->
-        <spring-data-jpa.version>2.1.5.RELEASE</spring-data-jpa.version>
+        <spring-data-jpa.version>2.1.9.RELEASE</spring-data-jpa.version>
 
         <!--    Cache  -->
         <ehcache.version>3.7.0</ehcache.version>
